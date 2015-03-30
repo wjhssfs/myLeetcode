@@ -36,3 +36,6 @@ public:
         return totalProfit;
     }
 };
+
+// Solution 2:
+// https://leetcode.com/discuss/26745/c-solution-with-o-n-klgn-time-using-max-heap-and-stack
