@@ -10,6 +10,7 @@
 // 
 // Related problem: Reverse Words in a String II
 
+// Tag:{Array, Thread}
 class Solution {
 public:
     void rotate(int nums[], int n, int k) {
@@ -28,6 +29,21 @@ public:
                 nMoved++;
                 curP = nextP;
             } while (curP != curStart);
+        }
+    }
+};
+
+// Tag:{Recursive}
+class Solution2 {
+public:
+    void rotate(int nums[], int n, int k) {
+        if (n <= 0 || !(k % n)) return;
+        int p = n - (k % n), s = 0, e = p;
+        while(s != e)
+        {
+            swap(nums[s++], nums[e++]);
+            if(e == n) e = p;
+            if(s == p) p = e; // Recurse to the case that will fall into the if above
         }
     }
 };
