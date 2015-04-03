@@ -1,0 +1,75 @@
+120 Triangle 
+Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+
+For example, given the following triangle
+[
+     [2],
+    [3,4],
+   [6,5,7],
+  [4,1,8,3]
+]
+The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+
+Note:
+Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.
+
+
+class Solution {
+public:
+	int minimumTotal(vector<vector<int> > &triangle) {
+		int sz = triangle.size();
+		if (!sz) return 0;
+		vector<vector<int>> c(2);
+		c[0].resize(sz); c[1].resize(sz);
+		for (int j = sz - 1; j >= 0; j--){
+			for (int i = sz - 1; i >= j; i--){
+				int sumUnder = (i < sz - 1 ? min(c[j % 2][i+1], c[(j + 1) % 2][i + 1]) : 0);
+				c[j % 2][i] = triangle[i][j] + sumUnder;
+			}
+		}
+		return c[0][0];
+	}
+};
+
+class Solution2 {
+public:
+    int minimumTotal(vector<vector<int>> &triangle) {
+        return minimumTotal_2(triangle);
+    }
+
+    int minimumTotal_1(vector<vector<int>> &triangle) {
+        int res = INT_MAX;
+        minimumTotal_1_Re(triangle, 0, res, 0, 0);
+        return res;
+    }
+
+    void minimumTotal_1_Re(vector<vector<int>> &triangle, int partSum, int &res, int deep, int j)
+    {
+        if (deep == triangle.size()) {
+            res = min(res, partSum);
+            return;
+        }
+        for (int i = j; i < triangle[deep].size() && i <= j + 1; ++i)
+            minimumTotal_1_Re(triangle, partSum + triangle[deep][i], res, deep + 1, i);
+    }
+
+    int minimumTotal_2(vector<vector<int>> &triangle) {
+        for (int i = triangle.size() - 2; i >= 0; --i)
+            for (int j = 0; j < i + 1; ++j)
+                triangle[i][j] = triangle[i][j] + min(triangle[i+1][j], triangle[i+1][j+1]);
+        return triangle[0][0];
+    }
+
+    int minimumTotal_3(vector<vector<int>> &triangle) {
+        int N = triangle.size();
+        int *dp = new int[N];
+        for (int i = 0; i < N; ++i)
+            dp[i] = triangle[N-1][i];
+        for (int i = N - 2; i >= 0; --i)
+            for (int j = 0; j < i + 1; ++j)
+                dp[j] = triangle[i][j] + min(dp[j], dp[j+1]);
+        int res = dp[0];
+        delete [] dp;
+        return res;
+    }
+};
