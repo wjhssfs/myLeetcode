@@ -8,7 +8,7 @@
 // Input: numbers={2, 7, 11, 15}, target=9
 // Output: index1=1, index2=2
 
-
+// Hash map, O(n) space, O(n) time
 class Solution {
 public:
 	vector<int> twoSum(vector<int> &numbers, int target) {
@@ -20,25 +20,14 @@ public:
 	}
 };
 
-/*
- Solution: 1. Sort first. O(nlgn)
-           2. Hash table. O(n)
-           
- Note:  Hash Table solution has been updated.  In case that the two elements are the same, 
-        all the indices should be stored in the map.
- */
-
+// Sort first. O(nlgn) time, reuse space used by parameter.
 bool compare(pair<int, int> a, pair<int, int> b) {
     return a.first < b.first;
 }
 
-class Solution {
+class Solution2 {
 public:
     vector<int> twoSum(vector<int> &numbers, int target) {
-        return twoSum_1(numbers, target);
-    }
-    
-    vector<int> twoSum_1(vector<int> &numbers, int target) {
         vector<pair<int, int>> nums(numbers.size());
         for (int i = 0; i < numbers.size(); ++i)
             nums[i] = make_pair(numbers[i], i+1);
@@ -53,35 +42,6 @@ public:
             else r--;
         }
 
-        vector<int> res;
-        res.push_back(min(nums[l].second, nums[r].second));
-        res.push_back(max(nums[l].second, nums[r].second));
-        return res;
-    }
-    
-    typedef unordered_map<int, vector<int> > MAP;
-    
-    vector<int> twoSum_2(vector<int> &numbers, int target) {
-        MAP map;
-        for (int i = 0; i < numbers.size(); ++i)
-            map[numbers[i]].push_back(i+1);
-        
-        for (int i = 0; i < numbers.size(); ++i)
-        {
-            MAP::iterator it = map.find(target - numbers[i]);
-            if (it == map.end()) continue;
-            
-            int index1 = it->second[0], index2 = i + 1;
-            
-            if (numbers[i] == target - numbers[i]) { // two elements are the same
-                if (it->second.size() == 1) continue;
-                index2 = it->second[1];
-            }
-            
-            vector<int> res;
-            res.push_back(min(index1, index2));
-            res.push_back(max(index1, index2));
-            return res;
-        }
+        return {min(nums[l].second, nums[r].second), max(nums[l].second, nums[r].second)};
     }
 };

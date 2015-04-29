@@ -12,37 +12,8 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
-class Solution {
-public:
-    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
-        ListNode *vhead = new ListNode(0);
-        ListNode *cur = vhead;
-        int carry = 0;
-        while(l1 || l2){
-            int v = (l1?l1->val:0) + (l2?l2->val:0) + carry;
-            if(v > 9){
-                v=v%10;
-                carry = 1;
-            }else{
-                carry = 0;
-            }
-            ListNode *newNode = new ListNode (v);
-            cur->next = newNode;
-            cur = newNode;
-            if(l1)l1=l1->next;
-            if(l2)l2=l2->next;
-        }
-        if(carry){
-            ListNode *newNode1 = new ListNode (1);
-            cur->next = newNode1;
-        }
-        cur = vhead->next;
-        delete vhead;
-        return cur;
-    }
-};
 
-class Solution2 {
+class Solution {
 public:
     ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
         ListNode dummy(0), *cur = &dummy;
