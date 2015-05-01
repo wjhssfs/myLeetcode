@@ -1,6 +1,7 @@
 // 4 Median of Two Sorted Arrays 
 // There are two sorted arrays A and B of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
 
+// O(log(m+n))
 class Solution {
 public:
     double findMedianSortedArrays(int A[], int m, int B[], int n) {
@@ -25,8 +26,7 @@ private:
 
 /*
 Solution: 1. O(m+n)
-           2. O(log(m+n))
-           3. O(logm + logn)
+          2. O(logm + logn)
 */
 
 class Solution2 {
@@ -57,30 +57,6 @@ public:
     }
 
     double findMedianSortedArrays_2(int A[], int m, int B[], int n) {
-        int total = m + n;
-        if (total & 0x1)
-            return findKthSortedArrays(A, m, B, n, total / 2 + 1);
-        else
-            return (findKthSortedArrays(A, m, B, n, total / 2) + findKthSortedArrays(A, m, B, n, total / 2 + 1)) / 2;
-    }
-
-    double findKthSortedArrays(int A[], int m, int B[], int n, int k) {
-        if (m > n)
-            return findKthSortedArrays(B, n, A, m, k);
-        if (m == 0) return B[k-1];
-        if (k == 1) return min(A[0], B[0]);
-
-        int i = min(k / 2, m);
-        int j = k - i;
-        int a = A[i-1];
-        int b = B[j-1];
-
-        if (a < b) return findKthSortedArrays(A + i, m - i, B, n, k - i);
-        else if (a > b) return findKthSortedArrays(A, m, B + j, n - j, k - j);
-        else return a;
-    }
-
-    double findMedianSortedArrays_3(int A[], int m, int B[], int n) {
         return findMedian(A, m, B, n, max(0, (m + n) / 2 - n), min(m - 1, (m + n) / 2));
     }
 
