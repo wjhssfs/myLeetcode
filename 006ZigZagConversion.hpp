@@ -31,7 +31,7 @@ public:
 	}
 };
 
-// j point to the top row's index
+// j point to the top row's index，2 columns at a time
 class Solution2 {
 public:
     string convert(string s, int nRows) {

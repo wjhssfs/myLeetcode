@@ -28,7 +28,6 @@ private:
 Solution: 1. O(m+n)
           2. O(logm + logn)
 */
-
 class Solution2 {
 public:
     double findMedianSortedArrays(int A[], int m, int B[], int n) {

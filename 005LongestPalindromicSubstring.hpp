@@ -33,6 +33,7 @@ public:
 	}
 };
 
+// Time O(n), Space O(n) (Manacher's Algorithm)
 class Solution2 {
 public:
 	string longestPalindrome(string s) {
@@ -79,7 +80,6 @@ public:
 Solution: 1. Time O(n^2), Space O(n^2)
            2. Time O(n^2), Space O(n)
            3. Time O(n^2), Space O(1) (actually much more efficient than 1 & 2)
-           4. Time O(n), Space O(n) (Manacher's Algorithm)
  */
 
 class Solution {
@@ -143,36 +143,5 @@ public:
             }
         }
         return s.substr(res.first, res.second);
-    }
-
-    string longestPalindrome_4(string s) {
-        int N = s.size();
-        int dp[2 * N + 1];
-        int id = 0, mx = 0;
-        for (int i = 0; i < 2 * N + 1; ++i)
-        {
-            int j = 2 * id - i;
-            dp[i] = mx > i ? min(dp[j], mx - i) : 1;
-            int left = i - dp[i], right = i + dp[i];
-            for (; left >= 0 && right <= 2 * N; left--, right++)
-            {
-                if (left % 2 == 0 || s[left/2] == s[right/2]) // padding or char
-                    dp[i]++;
-                else
-                    break;
-            }
-            if (i + dp[i] > mx)
-            {
-                id = i;
-                mx = id + dp[id];
-            }
-        }
-
-        int res = 0;
-        for (int i = 1; i < 2 * N + 1; ++i)
-            if (dp[i] > dp[res])
-                res = i;
-
-        return s.substr(res / 2 - (dp[res] - 1) / 2, dp[res] - 1);
     }
 };
