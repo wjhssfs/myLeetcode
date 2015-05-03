@@ -8,67 +8,6 @@
 class Solution {
 public:
     int threeSumClosest(vector<int> &num, int target) {
-        int sz = num.size();
-        sort(num.begin(), num.end());
-        bool init = false;
-        int minDiff = 0;
-        int fsum = 0;
-        for (int i = 0; i < sz - 2; i++)
-        {
-            int j = i + 1;
-            int k = sz - 1;
-            while (j < k)
-            {
-                int sum3 = num[i] + num[j] + num[k];
-                if (init)
-                {
-                    int cDiff = abs(sum3 - target);
-                    if (cDiff == 0)
-                    {
-                        return target;
-                    }
-                    if (minDiff > cDiff)
-                    {
-                        minDiff = cDiff;
-                        fsum = sum3;
-                    }
-
-                    if (sum3 > target)
-                    {
-                        k--;
-                    }
-                    else
-                    {
-                        j++;
-                    }
-                }
-                else
-                {
-                    fsum = sum3;
-                    minDiff = abs(sum3 - target);
-                    if (minDiff == 0)
-                    {
-                        return target;
-                    }
-                    init = true;
-                    if (sum3 > target)
-                    {
-                        k--;
-                    }
-                    else
-                    {
-                        j++;
-                    }
-                }
-            }
-        }
-        return fsum;
-    }
-};
-
-class Solution2 {
-public:
-    int threeSumClosest(vector<int> &num, int target) {
         int res = INT_MAX;
         int N = num.size();
         sort(num.begin(), num.end());

@@ -14,77 +14,6 @@
 class Solution {
 public:
     vector<vector<int> > fourSum(vector<int> &num, int target) {
-        int sz = num.size();
-        sort(num.begin(), num.end());
-        int i, j, k, l;
-        i = 0;
-        vector<vector<int> > result;
-        while (i < sz - 3)
-        {
-            j = i + 1;
-            while (j < sz - 2)
-            {
-                int remainTarget = target - (num[i] + num[j]);
-                k = j + 1;
-                l = sz - 1;
-                while (k < l)
-                {
-                    int curSum = num[k] + num[l];
-                    if (curSum == remainTarget)
-                    {
-                        result.push_back({ num[i], num[j], num[k], num[l] });
-                        do l--; while (k < l && num[l] == num[l + 1]);
-                        do k++; while (k < l && num[k] == num[k - 1]);
-                    }
-                    else if (curSum > remainTarget)
-                    {
-                        do l--; while (k < l && num[l] == num[l + 1]);
-                    }
-                    else
-                    {
-                        do k++; while (k < l && num[k] == num[k - 1]);
-                    }
-                }
-                ++j;
-            }
-            i++;
-        }
-        sort(result.begin(), result.end());
-        auto p = unique(result.begin(), result.end());
-        result.erase(p, result.end());
-        return result;
-    }
-};
-
-class Solution2 {
-public:
-    vector<vector<int> > fourSum(vector<int> &num, int target) {
-        sort(num.begin(), num.end());
-        unordered_map<int, set<pair<int, int>>> hash;
-        set<vector<int>> ans;
-        int n = num.size();
-        for (int i = 0; i < n; i ++) {
-            for (int j = i + 1; j < n; j ++) {
-                int a = num[i] + num[j];
-                if (hash.count(target - a)) {
-                    for (auto &p: hash[target - a]) {
-                        vector<int> b = {p.first, p.second, num[i], num[j]};
-                        ans.insert(b);
-                    }
-                }
-            }
-            for (int j = 0; j < i; j ++) {
-                int a = num[j], b = num[i];
-                hash[a + b].insert(make_pair(a, b));
-            }
-        }
-        return vector<vector<int>>(ans.begin(), ans.end());
-    }
-};
-
-class Solution3 {
-public:
-    vector<vector<int> > fourSum(vector<int> &num, int target) {
         int N = num.size();
         vector<vector<int> > res;
         if (N < 4) return res;
@@ -101,12 +30,7 @@ public:
                 {
                     int sum = num[l] + num[r];
                     if (sum == twosum) {
-                        vector<int> quadruplet(4);
-                        quadruplet[0] = num[i];
-                        quadruplet[1] = num[j];
-                        quadruplet[2] = num[l];
-                        quadruplet[3] = num[r];
-                        res.push_back(quadruplet);
+                        res.push_back({num[i], num[j], num[l], num[r]});
                         while (l < r && num[l+1] == num[l]) l++; // avoid duplicates
                         while (l < r && num[r-1] == num[r]) r--; // avoid duplicates
                         l++; r--;

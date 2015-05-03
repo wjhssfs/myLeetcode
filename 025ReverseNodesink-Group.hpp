@@ -22,40 +22,8 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
 class Solution {
-public:
-    ListNode *reverseKGroup(ListNode *head, int k) {
-        if (k <= 1) return head;
-        ListNode vhead(0);
-        vhead.next = head;
-        ListNode *p0, *p1, *p2, *p3, *p4, *p5;
-        p0 = &vhead;
-        while (p0 && p0->next)
-        {
-            p1 = p0;
-            for (int i = 0; i <= k; i++) {
-                if (!p1) return vhead.next;
-                p1 = p1->next;
-            }
-            p4 = p1;
-            p2 = p5 = p0->next;
-            p3 = p2->next;
-            while (p2 != p1)
-            {
-                p2->next = p4;
-                p4 = p2;
-                p2 = p3;
-                if(p3)p3 = p3->next;
-            }
-            p0->next = p4;
-            p0 = p5;
-        }
-
-        return vhead.next;
-    }
-};
-
-class Solution2 {
 public:
     ListNode *reverseKGroup(ListNode *head, int k) {
         if (k <= 1) return head;

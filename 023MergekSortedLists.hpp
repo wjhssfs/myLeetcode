@@ -11,56 +11,6 @@
  * };
  */
 
-class Solution {
-public:
-    ListNode *mergeKLists(vector<ListNode *> &lists) {
-        priority_queue<pair<ListNode *, int>, vector<pair<ListNode *, int>>, myComp> pq;
-        ListNode *head = nullptr, *tail = nullptr;
-        size_t lastPop = 0;
-        for (size_t i = 0; i < lists.size(); i++) {
-            if (lists[i]) {
-                ListNode *cur = lists[i];
-                lists[i] = cur->next;
-                cur->next = nullptr;
-                pq.push(make_pair(cur, i));
-            }
-        }
-        
-        while (!pq.empty()) {
-            if (!head) {
-                head = tail = pq.top().first;
-            }
-            else {
-                tail->next = pq.top().first;
-                tail = tail->next;
-            }
-            lastPop = pq.top().second;
-            pq.pop();
-
-            ListNode *cur = lists[lastPop];
-            while (cur && !pq.empty() && cur->val < pq.top().first->val) {
-                tail->next = cur;
-                tail = cur;
-                lists[lastPop] = cur->next;
-                cur = cur->next;
-                tail->next = nullptr;
-            }
-            if (cur) {
-                pq.push(make_pair(cur, lastPop));
-                lists[lastPop] = cur->next;
-            }
-        }
-        return head;
-    }
-private:
-    struct myComp{
-        bool operator()(const pair<ListNode *, int> &a, const pair<ListNode *, int> &b)
-        {
-            return a.first->val > b.first->val;
-        }
-    };
-};
-
 class Mycompare {
 public:
     bool operator()(ListNode *a, ListNode *b) {
@@ -68,7 +18,7 @@ public:
     }
 };
 
-class Solution2 {
+class Solution {
 public:
     ListNode *mergeKLists(vector<ListNode *> &lists) {
         priority_queue<ListNode *, vector<ListNode *>, Mycompare> q;

@@ -8,53 +8,6 @@
 
 class Solution {
 public:
-    vector<string> letterCombinations(string digits)
-    {
-        static char const dTL[8][4] = {
-            { 'a', 'b', 'c' },
-            { 'd', 'e', 'f' },
-            { 'g', 'h', 'i' },
-            { 'j', 'k', 'l' },
-            { 'm', 'n', 'o' },
-            { 'p', 'q', 'r', 's' },
-            { 't', 'u', 'v' },
-            { 'w', 'x', 'y', 'z' },
-        };
-        _result.clear();
-        _digits.swap(digits);
-        _dTL = &dTL;
-        doWork(0);
-        return _result;
-    }
-
-private:
-    void doWork(int curDigits)
-    {
-        if ((_digits.size() == curDigits))
-        {
-            _result.push_back(_strBuff);
-        }
-        else
-        {
-            int digitIndex = _digits[curDigits] - '2';
-            assert(digitIndex >= 0 && digitIndex < 8);
-            for (size_t j = 0; j < 4 && (*_dTL)[digitIndex][j] != 0; j++)
-            {
-                _strBuff.push_back((*_dTL)[digitIndex][j]);
-                doWork(curDigits + 1);
-                _strBuff.pop_back();
-            }
-        }
-    }
-
-    string _strBuff;
-    string _digits;
-    vector<string> _result;
-    char const (*_dTL)[8][4];
-};
-
-class Solution2 {
-public:
     vector<string> res;
     vector<string> letterCombinations(string digits) {
         string mapping[] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};

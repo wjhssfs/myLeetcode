@@ -14,30 +14,8 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
 class Solution {
-public:
-	ListNode *swapPairs(ListNode *head) {
-		ListNode *pTail, *pNext, *pNext2, *preHead = new ListNode(0);
-		preHead->next = head;
-		pTail = preHead;
-		pNext = pTail->next;
-		while (pNext){
-			pNext2 = pNext->next;
-			if (!pNext2) break;
-			pTail->next = pNext2;
-			pNext->next = pNext2->next;
-			pNext2->next = pNext;
-
-			pTail = pNext;
-			pNext = pTail->next;
-		}
-		head = preHead->next;
-		delete preHead;
-		return head;
-	}
-};
-
-class Solution2 {
 public:
     ListNode *swapPairs(ListNode *head) {
         return swapPairs_1(head);
