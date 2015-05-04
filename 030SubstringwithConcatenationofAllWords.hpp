@@ -10,48 +10,6 @@
 
 class Solution {
 public:
-	vector<int> findSubstring(string S, vector<string> &L) {
-		vector<int> result;
-		unordered_map<string, int> m;
-		for (auto &s : L) m[s]++;
-		int lSz = L.size(), wSz = L[0].size(), total = lSz;
-		for (int i = 0; i < wSz; i++){
-			int start = i;
-			for (int j = start; j + wSz <= S.size(); j += wSz){
-				string curS = S.substr(j, wSz);
-				if (m.count(curS)){
-					if (m[curS]>0) {
-						m[curS]--; total--;
-						if (!total)result.push_back(start);
-					}
-					else{
-						string headS = S.substr(start, wSz);
-						m[headS]++; total++;
-						start += wSz; j -= wSz;
-					}
-				}
-				else{
-					for (; start <= j; start += wSz){
-						string curS = S.substr(start, wSz);
-						if (m.count(curS)){
-							m[curS]++; total++;
-						}
-					}
-				}
-			}
-			for (; start <S.size(); start += wSz){
-				string curS = S.substr(start, wSz);
-				if (m.count(curS)){
-					m[curS]++; total++;
-				}
-			}
-		}
-		return result;
-	}
-};
-
-class Solution {
-public:
     vector<int> findSubstring(string S, vector<string> &L) {
         vector<int> res;
         if (S.empty() || L.empty()) return res;

@@ -6,23 +6,6 @@
 class Solution {
 public:
     int removeElement(int A[], int n, int elem) {
-        int j = n-1;
-        int i = 0; 
-        while(i <= j)
-        {
-            if(A[i] == elem){
-                swap(A[i], A[j]);
-                j--;
-            }
-            else i++;
-        }
-        return i;
-    }
-};
-
-class Solution2 {
-public:
-    int removeElement(int A[], int n, int elem) {
         int i = 0;
         for (int j = 0; j < n; ++j)
             if (A[j] != elem)

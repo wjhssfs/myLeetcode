@@ -3,27 +3,22 @@
 
 // Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
 
-
 class Solution {
 public:
-	char *strStr(char *haystack, char *needle) {
-		if (!haystack || !needle) return nullptr;
-		char *start = haystack, *needleP = needle;
-		while (*haystack){
-			if (!*needleP) return start;
-			if (*haystack == *needleP){
-				haystack++; needleP++;
-			}else{
-				while (*haystack && *haystack++ != *needleP)
-					start++;
-				if (!*haystack) return nullptr;
-				haystack = start;
-				needleP = needle;
-			}
-		}
-		if (*needleP) return nullptr;
-		return start;
-	}
+    char *strStr(char *haystack, char *needle) {
+        while(true)
+        {
+            char *h = haystack, *n = needle;
+            while (*n != '\0' && *h == *n)
+            {
+                h++; 
+                n++;
+            }
+            if (*n == '\0') return haystack;
+            if (*h == '\0') return NULL;
+            haystack++;
+        }
+    }
 };
 
 class Solution2 {
@@ -63,20 +58,3 @@ public:
     }
 };
 
-class Solution3 {
-public:
-    char *strStr(char *haystack, char *needle) {
-        while(true)
-        {
-            char *h = haystack, *n = needle;
-            while (*n != '\0' && *h == *n)
-            {
-                h++; 
-                n++;
-            }
-            if (*n == '\0') return haystack;
-            if (*h == '\0') return NULL;
-            haystack++;
-        }
-    }
-};

@@ -13,46 +13,12 @@
 class Solution {
 public:
     void nextPermutation(vector<int> &num) {
-        int sz = num.size();
-        if (sz)
-        {
-            int i = sz - 1;
-            for (; i >= 1; i--){
-                if (num[i] > num[i - 1])
-                {
-                    break;
-                }
-            }
-            if (i != 0)
-            {
-                int j = i;
-                for (; j < sz-1; j++)
-                {
-                    if (num[j + 1] <= num[i - 1])
-                    {
-                        break;
-                    }
-                }
-                swap(num[i - 1], num[j]);
-            }
-
-            reverse(num.begin() + i, num.end());
-        }
-    }
-};
-
-class Solution2 {
-public:
-    void nextPermutation(vector<int> &num) {
         int i = num.size() - 1;
-        while (i > 0 && num[i] <= num[i-1]) 
-            i--;
-        sort(num.begin() + i, num.end());
-        if (i == 0) 
-            return;
+        while (i > 0 && num[i] <= num[i-1]) i--;
+        reverse(num.begin() + i, num.end());
+        if (i == 0) return;
         int j = i;
-        while (j < num.size() && num[j] <= num[i-1])
-            j++;
+        while (j < num.size() && num[j] <= num[i-1]) j++;
         swap(num[j], num[i-1]);
     }
 };

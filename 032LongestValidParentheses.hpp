@@ -5,7 +5,7 @@
 
 // Another example is ")()())", where the longest valid parentheses substring is "()()", which has length = 4.
 
-
+// DP
 class Solution {
 public:
 	int longestValidParentheses(string s) {
@@ -49,7 +49,7 @@ public:
             }
         }
         return res * 2;
-    }
+    } 
     
     // Solution 2, my original version.
     // Traverse the string twice, taking O(n) time.
