@@ -16,44 +16,6 @@
 
 class Solution {
 public:
-    vector<vector<int> > combinationSum2(vector<int> &num, int target) {
-        can.clear(); result.clear(); m.clear(); s = 0; t = target;
-        for (auto i : num)m[i]++;
-        gen(0);
-        return result;
-    }
-private:
-    void gen(int index)
-    {
-        if (s == t) { result.push_back(can); return; }
-        else if (s > t || index == m.size()) return;
-
-        auto it = m.begin();
-        int step = index;
-        while (step--) it++;
-        for (int i = 0; i < it->second; i++)
-        {
-            can.push_back(it->first);
-            s += it->first;
-            gen(index + 1);
-        }
-
-        for (int i = 0; i < it->second; i++)
-        {
-            s -= it->first;
-            can.pop_back();
-        }
-        gen(index + 1);
-    }
-
-    int s, t;
-    vector<int> can;
-    vector<vector<int>>result;
-    map<int, int> m;
-};
-
-class Solution {
-public:
     vector<vector<int>> combinationSum2(vector<int> &num, int target) {
         vector<vector<int>> res;
         sort(num.begin(), num.end());
@@ -69,9 +31,9 @@ public:
             return;
         }
         for (int i = start; i < num.size() && num[i] <= target; ++i) {
-            if (i > start && num[i] == num[i-1]) continue;
+            if (i > start && num[i] == num[i-1]) continue; // avoid duplicate
             com.push_back(num[i]);
-            combinationSum2Re(num, target-num[i], i+1, com, res);
+            combinationSum2Re(num, target-num[i], i+1, com, res); // i+1
             com.pop_back();
         }
     }

@@ -13,11 +13,10 @@ public:
         int i = 0;
         while (i < n)
         {
-            if (A[i] > 0 && A[i] != i+1 &&
-                A[i] -1 >= 0 && A[i] -1 < n && A[A[i] - 1] != A[i] ) swap(A[i], A[A[i] - 1]);
+            if (A[i] > 0 && A[i] < n -1 && A[i] != i+1) swap(A[i], A[A[i] - 1]);
             else i++;
         }
-        for (i = 0; i < n && A[i] > 0 && A[i] == i + 1; i++){}
+        for (i = 0; i < n && A[i] == i + 1; i++){}
         return i + 1;
     }
 };

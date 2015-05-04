@@ -24,25 +24,3 @@ public:
         return nj;
     }
 };
-
-class Solution2 {
-public:
-    int jump(int A[], int n) {
-        vector<int>m(n), l(n)/*max index after covering i*/;
-        for (int i = 0; i < n; i++)
-        {
-            if (A[i] + i <= l[i]) continue;
-            if (i > 0 && !m[i]) continue;
-            for (int j = 1; j <= A[i] && i+j < n; j++)
-            {
-                if (m[i + j] == 0)
-                {
-                    m[i + j] = m[i] + 1;
-                }
-                else m[i + j] = min(m[i + j], m[i] + 1);
-                if(l[i + j] == 0) l[i+j] = A[i] + i;
-            }
-        }
-        return m[n - 1];
-    }
-};

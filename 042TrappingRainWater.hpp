@@ -8,49 +8,12 @@ class Solution {
 public:
     int trap(int A[], int n) {
         if (n == 0) return 0;
-        vector<int>b(n);
-        vector<int>a(n);
-        a[n - 1] = 0; b[0] = 0;
-        for (int i = n - 2; i >= 0; i--)
-        {
-            a[i] = max(a[i+1], A[i + 1]);
-        }
-        for (int i = 1; i < n; i++)
-        {
-            b[i] = max(b[i-1], A[i - 1]);
-        }
+        vector<int>left(n), right(n);
+        right[n - 1] = left[0] = 0;
+        for (int i = n - 2; i >= 0; i--) right[i] = max(right[i+1], A[i + 1]);
+        for (int i = 1; i < n; i++) left[i] = max(left[i-1], A[i - 1]);
         int sumR = 0;
-        for (int i = 0; i < n; i++)
-            sumR = max(sumR, sumR + min(a[i], b[i]) - A[i]);
+        for (int i = 0; i < n; i++)  sumR = max(sumR, sumR + min(left[i], right[i]) - A[i]);
         return sumR;
-    }
-};
-
-class Solution2 {
-public:
-    int trap(int A[], int n) {
-        if (n == 0) return 0;
-        int left[n];
-        int right[n];
-
-        int lmax = A[0];
-        for (int i = 0; i < n; ++i)
-        {
-            lmax = max(lmax, A[i]);
-            left[i] = lmax;
-        }
-
-        int rmax = A[n-1];
-        for (int i = n - 1; i >= 0; --i)
-        {
-            rmax = max(rmax, A[i]);
-            right[i] = rmax;
-        }
-
-        int res = 0;
-        for (int i = 0; i < n; ++i)
-            res += min(left[i], right[i]) - A[i];
-
-        return res;
     }
 };

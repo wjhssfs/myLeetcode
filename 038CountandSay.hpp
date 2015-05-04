@@ -12,14 +12,9 @@
 class Solution {
 public:
     string countAndSay(int n) {
-        string s;
-        if (n <= 0) return s;
-        s = "1";
-
-        string st;
-        while (--n)
-        {
-            st.clear();
+        string s = "1";
+        while (--n >= 0) {
+            string st;
             int curNum = s[0];
             int cDup = 1;
             for (size_t i = 1; i <= s.size(); i++)

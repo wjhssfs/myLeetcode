@@ -14,35 +14,6 @@
 
 class Solution {
 public:
-    vector<vector<int> > combinationSum(vector<int> &num, int target) {
-        t = target; s = 0; n = num.size();
-        sort(num.begin(), num.end());
-        gen(num, 0);
-        return result;
-    }
-private:
-    void gen(vector<int> &num, int start)
-    {
-        if (s == t){ result.push_back(can); return; }
-        if (s > t) return;
-        for (int index = start; index < n; index++)
-        {
-            int i = num[index];
-            s += i;
-            can.push_back(i);
-            gen(num, index);
-            can.pop_back();
-            s -= i;
-        }
-    }
-
-    int s, t, n;
-    vector<int> can;
-    vector<vector<int>>result;
-};
-
-class Solution2 {
-public:
     vector<vector<int>> combinationSum(vector<int> &candidates, int target) {
         vector<vector<int>> res;
         sort(candidates.begin(), candidates.end());
