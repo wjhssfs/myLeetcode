@@ -11,60 +11,7 @@
 // ]
 // You should return [1,2,3,6,9,8,7,4,5].
 
- class Solution {
-public:
-	vector<int> spiralOrder(vector<vector<int> > &matrix) {
-		vector<int> ret;
-		int m = matrix.size();
-		if (!m) return ret;
-		int n = matrix[0].size();
-		int x = 0, y = 0;
-		while (m>1&& n>1){
-			for (int i = 0; i < 4; i++){
-				switch (i){
-				case 0://top&(left to right)
-					for (int j = 0; j < n - 1; j++){
-						ret.push_back(matrix[x][y++]);
-					}
-					break;
-				case 1://right&(top to bottom)
-					for (int j = 0; j < m - 1; j++){
-						ret.push_back(matrix[x++][y]);
-					}
-					break;
-				case 2://bottom&(left to right)
-					for (int j = 0; j < n - 1; j++){
-						ret.push_back(matrix[x][y--]);
-					}
-					break;
-				case 3://left&(bottom to top)
-					for (int j = 0; j < m - 1; j++){
-						ret.push_back(matrix[x--][y]);
-					}
-					break;
-				default:
-					break;
-				}
-			}
-            m -= 2; n -= 2; x++; y++;
-		}
-		if (m == 1)
-        {//include m==1 && n==1
-			for (int i = 0; i < n; i++){
-				ret.push_back(matrix[x][y++]);
-			}
-		} 
-        else if (n == 1)
-        {
-			for (int i = 0; i < m; i++){
-				ret.push_back(matrix[x++][y]);
-			}
-		}
-		return ret;
-	}
-};
-
-class Solution2 {
+class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int> > &matrix) {
         vector<int> res;

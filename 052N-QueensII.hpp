@@ -68,76 +68,16 @@ public:
 	}
 };
 
-/*
-Solution: 1. Recursion.
-           2. Recursion + bit version. (fast)
-              The idea is from http://www.matrix67.com/blog/archives/266 (in chinese).
-           3. Iteration.
-*/
-
+// solution 3: iterative solution
 class Solution3 {
 public:
-    int totalNQueens(int n) {
-        return totalNQueens_2(n);
-    }
-    
-    // solution 1: recursion
-    int totalNQueens_1(int n) 
-    {
-        int board[n];
-        memset(board, -1, sizeof(board));
-        int res = 0;
-        totalNQueensRe(n, 0, board, res);
-        return res;
-    }
-    
-    void totalNQueensRe(int n, int row, int board[], int &res)
-    {
-        if (row  == n)
-        {
-            res++;
-            return;
-        }
-        for (int i = 0; i < n; ++i)
-        {
-            if (isValid(board, row, i))
-            {
-                board[row] = i;
-                totalNQueensRe(n, row + 1, board, res);
-                board[row] = -1;
-            }
-        }
-    }
-    
+   
     bool isValid(int board[], int row, int col)
     {
         for (int i = 0; i < row; ++i)
             if (board[i] == col || row - i == abs(col - board[i]))
                 return false;
         return true;
-    }
-    
-    // solution 2: bit version
-    int totalNQueens_2(int n) {
-        int res = 0;
-        totalNQueensRe_2(n, 0, 0, 0, res);
-        return res;
-    }
-
-    void totalNQueensRe_2(int n, int row, int ld, int rd, int &res)
-    {
-        if (row == (1 << n) - 1)
-        {
-            res++;
-            return;
-        }
-        int avail = ~(row | ld | rd);
-        for (int i = n - 1; i >= 0; --i)
-        {
-            int pos = 1 << i;
-            if (avail & pos)
-                totalNQueensRe_2(n, row | pos, (ld | pos) << 1, (rd | pos) >> 1, res);
-        }
     }
     
     // solution 3: iterative solution
