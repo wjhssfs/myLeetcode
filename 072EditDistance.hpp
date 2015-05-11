@@ -9,36 +9,6 @@
 
 class Solution {
 public:
-	int minDistance(string word1, string word2) {
-		size_t s1 = word1.size(), s2 = word2.size();
-		if (!s1 || !s2) return s1 ? s1 : s2;
-		vector<vector<int>> m(s1);
-		for (auto & row : m) row.resize(s2);
-		m[0][0] = word1[0] == word2[0] ? 0 : 1;
-		for (size_t i = 1; i != s1; i++)
-		{
-			m[i][0] = (word1[i] == word2[0] || m[i - 1][0] == i-1) ? i : i + 1;
-		}
- 		for (size_t i = 1; i != s2; i++){
-			m[0][i] = (word1[0] == word2[i] || m[0][i-1] == i - 1) ? i : i + 1;
-		}
-		for (size_t i = 1; i != s1; i++){
-			for (size_t j = 1; j != s2; j++){
-				if (word1[i] == word2[j]) m[i][j] = m[i - 1][j - 1];//match
-				else m[i][j] = min({
-					1 + m[i - 1][j - 1],/*change*/
-					1 + m[i - 1][j],/*delete*/
-					1 + m[i][j - 1]/*add*/
-				});
-			}
-		}
-		return m[s1 - 1][s2 - 1];
-	}
-};
-
-
-class Solution2 {
-public:
     int minDistance(string word1, string word2) {
         return minDistance_2(word1, word2);
     }

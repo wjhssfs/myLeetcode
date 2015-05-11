@@ -12,36 +12,7 @@
 // Another corner case is the path might contain multiple slashes '/' together, such as "/home//foo/".
 // In this case, you should ignore redundant slashes and return "/home/foo".
 
-
 class Solution {
-public:
-	string simplifyPath(string path) {
-		if (!path.size()) return path;
-		int i = 1, ep = 1;
-		while (i < (int)path.size()){//looking forward till next '/'
-			int j = 0;
-			while (i + j < (int)path.size() && path[i + j] != '/') j++;
-			if (j == 0){
-				i++;
-			}else if (j == 1 && path[i] == '.'){
-				i += 2;
-			}
-			else if (j == 2 && path[i] == '.' && path[i + 1] == '.'){
-				while (ep > 1 && path[ep-- - 1] != '/'); //backtrack, ep moved to last '/' if ep > 1
-				i += 3;
-			}
-			else{
-				if(ep!=1)path[ep++] = '/';
-				for (int k = 0; k < j; k++){
-					path[ep++] = path[i++];
-				}
-			}
-		}
-		return path.substr(0, ep);
-	}
-}; 
-
-class Solution2 {
 public:
     string simplifyPath(string path) {
         string res;

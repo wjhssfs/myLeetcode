@@ -16,44 +16,6 @@
 
 class Solution {
 public:
-	bool searchMatrix(vector<vector<int> > &matrix, int target) {
-		int rowSz = matrix.size();
-		if (!rowSz) return false;
-		int colSz = matrix[0].size();
-		if (!colSz) return false;
-		int rLow = 0, rHigh = rowSz - 1;
-		while (rLow <= rHigh){
-			int rMiddle = (rLow + rHigh) / 2;
-			if (matrix[rMiddle][0] > target){
-				rHigh = rMiddle-1;
-			}
-			else if (matrix[rMiddle][0] < target){
-				if (rMiddle + 1 == rowSz || matrix[rMiddle + 1][0] > target) {
-					rLow = rMiddle;
-					break;
-				}
-				rLow = rMiddle + 1;
-			}
-			else return true;
-		}
-		int cLow = 0, cHigh = colSz - 1;
-		while (cLow <= cHigh){
-			int cMiddle = (cLow + cHigh) / 2;
-			if (matrix[rLow][cMiddle] > target){
-				cHigh = cMiddle - 1;
-			}
-			else if (matrix[rLow][cMiddle] < target){
-				cLow = cMiddle + 1;
-			}
-			else return true;
-		}
-		return false;
-	}
-};
-
-
-class Solution2 {
-public:
     bool searchMatrix(vector<vector<int> > &matrix, int target) {
         return searchMatrix_2(matrix, target);
     }

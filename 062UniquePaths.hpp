@@ -10,35 +10,13 @@
 // 
 // Note: m and n will be at most 100.
 
-class Solution {
-public:
-	int uniquePaths(int m, int n) {
-		if (m == 0 || n == 0) return 0;
-		vector<vector<int>> matrix;
-		matrix.resize(m);
-		for (auto & row : matrix) row.resize(n);
-		for (int i = 0; i < m; i++){
-			matrix[i][0] = 1;
-		}
-		for (int j = 0; j < n; j++){
-			matrix[0][j] = 1;
-		}
-		for (int i = 1; i < m; i++){
-			for (int j = 1; j < n; j++){
-				matrix[i][j] = matrix[i - 1][j] + matrix[i][j - 1];
-			}
-		}
-		return matrix[m - 1][n - 1];
-	}
-};
-
 /*
  Solution: 
  1. Use formula C(x,t) = t!/(x!*(t-x)!) (x should be large for calculation).
  2. Dynamic programming. UP(i,j) = UP(i-1,j) + UP(i,j-1).
  */
 
-class Solution2 {
+class Solution {
 public:
     int uniquePaths_1(int m, int n) {
         if (m == 1  || n == 1) return 1;

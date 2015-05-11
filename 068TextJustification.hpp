@@ -25,65 +25,7 @@
 // A line other than the last line might contain only one word. What should you do in this case?
 // In this case, that line should be left-justified.
 
- 
 class Solution {
-public:
-	vector<string> fullJustify(vector<string> &words, int L) {
-		vector<string> result;
-		int start = 0;
-		int n = 0;
-		int curLen = 0;
-		while (start + n< words.size()){
-			curLen = curLen + (n>0) + words[start + n].size();
-			if (curLen == L){
-				result.push_back(format(words, start, n + 1, L));
-				curLen = 0;
-				start = start + n + 1;
-				n = 0;
-			}
-			else if (curLen > L){
-				result.push_back(format(words, start, n, L));
-				curLen = 0;
-				start = start + n;
-				n = 0;
-			}
-			else{
-				n++;
-				if (start + n == words.size()){
-					string temp = words[start];
-					for (int i = 1; i < n; i++){
-						temp += " " + words[start + i];
-					}
-					temp += string(L - temp.size(), ' ');
-					result.push_back(temp);
-				}
-			}
-		}
-		return result;
-	}
-
-	string format(vector<string> &words, int start, int n, int L){
-		string ret;
-		int totalLen = 0;
-		for (int i = 0; i < n; i++){
-			totalLen += words[start+i].size();
-		}
-		int totalspce = L - totalLen;
-		if (n == 1){
-			ret = words[start] + string(totalspce, ' ');
-		}
-		else{
-			ret = words[start];
-			for (int i = 1; i < n; i++){
-				int iNSpace = totalspce / (n-1) + (i <= totalspce % (n-1));
-				ret += string(iNSpace, ' ') + words[start + i];
-			}
-		}
-		return ret;
-	}
-};
-
-class Solution2 {
 public:
     vector<string> fullJustify(vector<string> &words, int L) {
         vector<string> res;
@@ -98,7 +40,7 @@ public:
             string s(words[i]);
             bool isLastLine = (j == N);
             bool oneWord = (j == i + 1);
-            int average = isLastLine || oneWord ? 1 : (L - length) / (j - i - 1);
+            int average = isLastLine || oneWord ? 1 : (L - length) / (j - i - 1); //oneWord guard for devide by 0
             int extra = isLastLine || oneWord ? 0 : (L - length) % (j - i - 1);
             for (int k = i + 1; k < j; ++k) {
                 s.append(extra > 0 ? average + 1 : average, ' ');

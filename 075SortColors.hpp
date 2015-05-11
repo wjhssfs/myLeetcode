@@ -37,7 +37,7 @@ public:
               ->        ->     <-  
  */
 
-class Solution {
+class Solution2 {
 public:
     void sortColors(int A[], int n) {
         int zero = -1, two = n;
