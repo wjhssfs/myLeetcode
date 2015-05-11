@@ -24,27 +24,6 @@
 class Solution {
 public:
     vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
-        intervals.push_back(newInterval);
-        return merge(intervals);
-    }
-    vector<Interval> merge(vector<Interval> &intervals) {
-        vector<Interval> ret;
-        sort(intervals.begin(), intervals.end(), [](const Interval &a, const Interval &b){return a.start < b.start; });
-        int i = 0, j = 1;
-        while (j < intervals.size()){
-            if (intervals[i].end < intervals[j].start){
-                intervals[++i] = intervals[j++];
-            }
-            else{ intervals[i].end = max(intervals[i].end,intervals[j].end); j++; }
-        }
-        if (intervals.size()) ret.assign(intervals.begin(), intervals.begin() + i + 1);
-        return ret;
-    }
-};
-
-class Solution2 {
-public:
-    vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
         vector<Interval> res;
         vector<Interval>::iterator it = intervals.begin();
         bool inserted = false;
