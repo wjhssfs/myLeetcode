@@ -14,35 +14,8 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+]
 class Solution {
-public:
-	ListNode *deleteDuplicates(ListNode *head) {
-		ListNode *preHead = new ListNode(0);
-		preHead->next = head;
-		ListNode *deleteN, *preDupe = preHead;
-		while (preDupe->next){
-			if (preDupe->next->next){
-				if (preDupe->next->val == preDupe->next->next->val){
-					while (preDupe->next->next && preDupe->next->val == preDupe->next->next->val){
-					    deleteN = preDupe->next;
-						preDupe->next = preDupe->next->next;
-						delete deleteN;
-					}
-					deleteN = preDupe->next;
-					preDupe->next = preDupe->next->next;
-					delete deleteN;
-					continue;
-				}
-			}
-			preDupe = preDupe->next;
-		}
-		ListNode * result = preHead->next;
-		delete preHead;
-		return result;
-	}
-};
-
-class Solution2 {
 public:
     ListNode *deleteDuplicates(ListNode *head) {
         return deleteDuplicates_1(head);
