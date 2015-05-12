@@ -4,22 +4,16 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-		bool appeared[256] = {false};
-        decltype(s.size()) i = 0, j = 0, maxLen = 0;//, maxStart = 0;
-		while(j<s.size())
-		{
-			if(!appeared[s[j]]){
-				if(maxLen < j-i+1){
-					maxLen = j-i+1;
-					//maxStart = i;
-				}
-				appeared[s[j]] = true;
-				++j;
-			}else{
-				appeared[s[i]] = false;
-				++i;
-			}
-		}
-		return maxLen;
+        bool appeared[256] = {false};
+        int i = 0, j = 0, maxLen = 0;
+        while(j<s.size())
+        {
+            if(!appeared[s[j]]){
+                maxLen = max(maxLen, j-i+1);
+                appeared[s[j++]] = true;
+            }
+            else appeared[s[i++]] = false;
+        }
+        return maxLen;
     }
 };
