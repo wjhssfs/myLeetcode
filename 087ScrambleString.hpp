@@ -59,20 +59,14 @@ public:
 
 
 /*
- Solution: 1. 3-dimensional dp. Contributed by yinlinglin. I really appreciate it!
+ Solution: 3-dimensional dp. Contributed by yinlinglin. I really appreciate it!
               'dp[k][i][j] == true' means string s1(start from i, length k) is a scrambled string of 
               string s2(start from j, length k).
-           2. Recursion + pruning.
 */
 
 class Solution2 {
 public:
     bool isScramble(string s1, string s2) {
-        return isScramble_2(s1, s2);
-    }
-    
-    // solution 1: dp.
-    bool isScramble_1(string s1, string s2) {
         if(s1.size() != s2.size()) return false;
         int N = s1.size();
         bool dp[N+1][N][N];
@@ -88,33 +82,6 @@ public:
                             dp[k][i][j] = true;
                 }
         return dp[N][0][0];
-    }
-
-    // solution 2: recursion + pruning.
-    typedef string::iterator Iterator;
-    
-    bool isScramble_2(string s1, string s2) {
-        if (s1.size() != s2.size()) return false;
-        return isScrambleRe(s1.begin(), s2.begin(), s1.size());
-    }
-
-    bool isScrambleRe(Iterator s1, Iterator s2, int len) {
-        if (!hasSameLetters(s1, s2, len)) return false;
-        if (len == 0 || len == 1) return true;
-        for (int i = 1; i < len; ++i)  // highlight
-            if (isScrambleRe(s1, s2, i) && isScrambleRe(s1 + i, s2 + i, len - i) ||
-                isScrambleRe(s1, s2 + len - i, i) && isScrambleRe(s1 + i, s2, len - i))
-                return true;
-        return false;
-    }
-
-    bool hasSameLetters(Iterator s1, Iterator s2, int len) {
-        int count[256] = {0};
-        for (int i = 0; i < len; ++i) count[*s1++]++;
-        for (int i = 0; i < len; ++i) count[*s2++]--;
-        for (int i = 0; i < 256; ++i)
-            if (count[i] != 0) return false;
-        return true;
     }
 };
 

@@ -11,45 +11,12 @@
 // Given height = [2,1,5,6,2,3],
 // return 10.
 
-class Solution {
-    struct Bar
-    {
-        int index;
-        int height;
-        Bar(int i, int h) :index(i), height(h){}
-    };
-public:
-    int largestRectangleArea(vector<int> &height) {
-        int maxArea = 0;
-        int sz = height.size();
-        stack<Bar> s;
-        Bar b(0, 0);
-        for (int i = 0; i < sz; i++)
-        {
-            while (!s.empty() && height[i] < s.top().height)
-            {
-                b = s.top(); s.pop();
-                int start = s.empty() ? 0 : s.top().index + 1;
-                maxArea = max(maxArea, (i - start) * b.height);
-            }
-            s.emplace(i, height[i]);
-        }
-        while (!s.empty())
-        {
-            b = s.top(); s.pop();
-            int start = s.empty() ? 0 : s.top().index + 1;
-            maxArea = max(maxArea, (sz - start) * b.height);
-        }
-        return maxArea;
-    }
-};
-
 /*
  Solution: 1. Only calucate area when reaching local maximum value.
            2. Keep a non-descending stack. O(n).
 */
 
-class Solution2 {
+class Solution {
 public:
     int largestRectangleArea(vector<int> &height) {
         return largestRectangleArea_2(height);
