@@ -9,36 +9,6 @@
 class Solution {
 public:
     vector<string> restoreIpAddresses(string s) {
-        vector<string> result;
-        int i, j, k;
-        for (i = 1; i <= 3 && i + 3 <= s.size(); i++){
-            if (i > 1 && s[0] == '0') break;
-            if (i == 3 && !lessThen(&s[0])) break;
-            for (j = 1; j <= 3 && i+j +2 <= s.size(); j++){
-                if (j>1 && s[i] == '0') break;
-                if (j == 3 && !lessThen(&s[i])) break;
-                for (k = 1; k <= 3&&i+j+k + 1 <= s.size(); k++){
-                    if (k>1 && s[i + j] == '0') break;
-                    if (k == 3 && !lessThen(&s[i + j])) break;
-                    if (i + j + k +3 < s.size()) continue;
-                    if (i + j + k + 1 < s.size() && s[i + j + k] == '0') continue;
-                    if (i + j + k + 3 == s.size() && !lessThen(&s[i + j + k])) continue;
-                    result.push_back(s.substr(0, i) + "." + s.substr(i, j) + "." +
-                        s.substr(i + j, k) + "." + s.substr(i + j + k));
-                }
-            }
-        }
-        return result;
-    }
-private:
-    bool lessThen(char *s){
-        return (*s - '0') * 100 + (*(s + 1) - '0') * 10 + *(s + 2) - '0' < 256;
-    }
-};
-
-class Solution2 {
-public:
-    vector<string> restoreIpAddresses(string s) {
         vector<string> res;
         string ip;
         restoreIpAddressRe(s, res, ip, 0, 0);

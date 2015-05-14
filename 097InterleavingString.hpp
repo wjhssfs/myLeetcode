@@ -9,48 +9,12 @@
 // When s3 = "aadbbcbcac", return true.
 // When s3 = "aadbbbaccc", return false.
 
-class Solution {
-public:
-	bool isInterleave(string s1, string s2, string s3) {
-	    if (s1.size() + s2.size() != s3.size())
-	        return false;
-	    if (s1.size() < s2.size())
-	        s1.swap(s2);
-	    vector<bool>  dp(s1.size() + 1);
-	    dp[0] = true;
-	    for (size_t j = 0; j <= s2.size(); ++j)
-	        for (size_t i = 1; i <= s1.size(); ++i)
-	            dp[i] = ((dp[i - 1] && s1[i - 1] == s3[i + j - 1])
-	                    || (j > 0 && dp[i] && s2[j - 1] == s3[i + j - 1]));
-	    return dp[s1.size()];
-	}
-};
-
-class Solution2 {
-public:
-    bool isInterleave(string s1, string s2, string s3) {
-        if (s1.size() + s2.size() != s3.size()) return false;
-        vector<vector<bool>> m(s1.size() + 1);
-        for (auto &r : m) r.resize(s2.size() + 1);
-        m[0][0] = true;
-        for (int i = 1; i <= s1.size(); i++) m[i][0] &= s1[i - 1] == s3[i - 1];
-        for (int j = 1; j <= s2.size(); j++) m[0][j] &= s2[j - 1] == s3[j - 1];
-        for (int i = 1; i <= s1.size(); i++){
-            for (int j = 1; j <= s2.size(); j++){
-                m[i][j] = m[i - 1][j] && s1[i - 1] == s3[i + j - 1]
-                    || m[i][j - 1] && s2[j - 1] == s3[i + j - 1];
-            }
-        }
-        return m[s1.size()][s2.size()];
-    }
-};
-
 /*
  Solution: 1. dp. O(MN) time & space. 'dp[i][j] == true' means that there is at least one way to construct 
               the string s3[0...i+j-1] by interleaving s1[0...j-1] and s2[0...i-1].
            2. Recursion. Okay for Small but TLE for Large Test data.
  */
-class Solution2 {
+class Solution {
 public:
     bool isInterleave(string s1, string s2, string s3) {
         return isInterleave_1(s1, s2, s3);

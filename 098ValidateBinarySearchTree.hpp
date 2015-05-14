@@ -35,12 +35,8 @@ public:
 
 class Solution2 {
 public:
+    // solution: lower bound + higher bound
     bool isValidBST(TreeNode *root) {
-        return isValidBST_1(root);
-    }
-
-    // solution 1: lower bound + higher bound
-    bool isValidBST_1(TreeNode *root) {
         return isValidBSTRe_1(root, INT_MIN, INT_MAX);
     }
 
@@ -50,24 +46,5 @@ public:
 
         return isValidBSTRe_1(node->left, lower, node->val) && 
                isValidBSTRe_1(node->right, node->val, upper);
-    }
-
-    // solution 2: inorder
-    bool isValidBST_2(TreeNode *root) {
-        int val = INT_MIN;
-        return isValidBSTRe_2(root, val);
-    }
-
-    bool isValidBSTRe_2(TreeNode *node, int &val)
-    {
-        if (!node) return true;
-        if (node->left && !isValidBSTRe_2(node->left, val))
-            return false;
-        if (node->val <= val)
-            return false;
-        val = node->val;
-        if (node->right && !isValidBSTRe_2(node->right, val))
-            return false;
-        return true;
     }
 };

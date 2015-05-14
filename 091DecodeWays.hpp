@@ -14,23 +14,6 @@
 
 class Solution {
 public:
-	int numDecodings(string s) {
-		if (!s.size()|| s[0]=='0') return 0;
-		vector<int> cache(s.size());
-		cache[0] = 1;
-		for (int i = 1; i <(int) s.size(); i++){
-			if (i>1 && s[i] == '0' &&(s[i - 1] == '0' || s[i-1]-'0'>2)) return 0;
-			if(s[i]!='0')cache[i] = cache[i - 1];
-			if (s[i-1]!='0' &&((s[i - 1] - '0') * 10 + s[i] - '0' < 27)){
-				cache[i] += i<2 ? 1 : cache[i - 2];
-			}
-		}
-		return cache[s.size() - 1];
-	}
-};
-
-class Solution2 {
-public:
     int numDecodings(string s) {
         if (s.empty() || s[0] == '0') 
             return 0;

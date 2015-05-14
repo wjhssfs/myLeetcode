@@ -21,30 +21,6 @@
 class Solution {
 public:
     ListNode *reverseBetween(ListNode *head, int m, int n) {
-        n -= m;
-        ListNode vhead(0);
-        ListNode *p1 = &vhead, *p2, *p3, *p4;
-        vhead.next = head;
-        while (--m > 0) p1 = p1->next;
-        p3 = p2 = p1->next;
-        p4 = p2->next;
-        p2->next = nullptr;
-        while (n-- > 0)
-        {
-            ListNode *cur = p4;
-            p4 = p4->next;
-            p1->next = cur;
-            cur->next = p3;
-            p3 = cur;
-        }
-        p2->next = p4;
-        return vhead.next;
-    }
-};
-
-class Solution2 {
-public:
-    ListNode *reverseBetween(ListNode *head, int m, int n) {
         ListNode dummy(0), *ins = &dummy;
         dummy.next = head;
         for (int i = 0; i < m-1; ++i)

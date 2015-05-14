@@ -22,33 +22,6 @@
 
 class Solution {
 public:
-	vector<TreeNode *> generateTrees(int n) {
-		return generateNode(1, n+1);
-	}
-	vector<TreeNode *> generateNode(int start, int end){
-		vector<TreeNode *> results;
-		for (int i = start; i != end; i++){
-			vector<TreeNode *> resultsL = generateNode(start, i);
-			vector<TreeNode *> resultsR = generateNode(i + 1, end);
-			if (!resultsL.empty() && !resultsR.empty()){
-				for (int j = 0; j != resultsL.size(); j++){
-					for (int k = 0; k != resultsR.size(); k++){
-						TreeNode *node = new TreeNode(i);
-						node->left = resultsL[j];
-						node->right = resultsR[k];
-						results.push_back(node);
-					}
-				}
-
-			}
-		}
-		if (!results.size()) results.push_back(nullptr);
-		return results;
-	}
-};
-
-class Solution2 {
-public:
     vector<TreeNode *> generateTrees(int n) {
         return generateTrees_1(n);
     }

@@ -16,40 +16,7 @@
 //   []
 // ]
 
- 
 class Solution {
-public:
-    vector<vector<int> > subsetsWithDup(vector<int> &S) {
-        for (auto i : S) m[i]++;
-        result.clear(); candidate.clear();
-        recursiveGen(0);
-        return result;
-    }
-private:
-    void recursiveGen(int index)
-    {
-        if (index == m.size()) {
-            result.push_back(candidate);
-            return;
-        }
-        auto it = m.begin();
-        for(int i = 0; i < index; i++) it++;
-        recursiveGen(index+1);
-        for (int i = 0; i < it->second; i++)
-        {
-            candidate.push_back(it->first);
-            recursiveGen(index + 1);
-        }
-        for (int i = 0; i < it->second; i++)
-            candidate.pop_back();        
-    }
-
-    vector<vector<int> > result;
-    vector<int> candidate;
-    map<int, int> m;
-};
-
-class Solution2 {
 public:
     vector<vector<int>> subsetsWithDup(vector<int> &S) {
         vector<vector<int> > res(1, vector<int>());
