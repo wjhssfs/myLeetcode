@@ -25,60 +25,30 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-class Solution {
+ class Solution {
 public:
     vector<vector<int> > pathSum(TreeNode *root, int sum) {
-        path.clear();  curSum = 0; targetSum = sum; result.clear();
-        pathSumInner(root);
-        return result;
+        vector<vector<int>> res;
+        vector<int> path;
+        pathSumRe(root, sum, res, path);
+        return res;
     }
-
-private:
-    void pathSumInner(TreeNode *root)
+    void pathSumRe(TreeNode *root, int sum, vector<vector<int>> &res, vector<int> &path)
     {
         if (!root) return;
-        path.push_back(root->val);
-        curSum += root->val;
-        if (curSum == targetSum && !root->left && !root->right){
-            result.push_back(path);
+        if (!root->left && !root->right)
+        {
+            if (sum == root->val)
+            {
+                path.push_back(root->val);
+                res.push_back(path);
+                path.pop_back();
+            }
+            return;
         }
-        pathSumInner(root->left);
-        pathSumInner(root->right);
-        path.pop_back();
-        curSum -= root->val;
-    }
-
-    vector<int> path;
-    int curSum;
-    vector<vector<int> > result;
-    int targetSum;
-};
-
-class Solution2 {
-public:
-    vector<vector<int> > pathSum(TreeNode *root, int sum) {
-        path.clear();  curSum = 0; targetSum = sum; result.clear();
-        pathSumInner(root);
-        return result;
-    }
-
-private:
-    void pathSumInner(TreeNode *root)
-    {
-        if (!root) return;
         path.push_back(root->val);
-        curSum += root->val;
-        if (curSum == targetSum && !root->left && !root->right){
-            result.push_back(path);
-        }
-        pathSumInner(root->left);
-        pathSumInner(root->right);
+        pathSumRe(root->left, sum - root->val, res, path);
+        pathSumRe(root->right, sum - root->val, res, path);
         path.pop_back();
-        curSum -= root->val;
     }
-
-    vector<int> path;
-    int curSum;
-    vector<vector<int> > result;
-    int targetSum;
 };

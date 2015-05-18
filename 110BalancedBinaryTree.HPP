@@ -12,21 +12,8 @@ For this problem, a height-balanced binary tree is defined as a binary tree in w
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-class Solution {
-public:
-	bool isBalanced(TreeNode *root) {
-		if (!root) return true;
-		return (isBalanced(root->left) && 
-			isBalanced(root->right) && 
-			abs(Depth(root->left) - Depth(root->right))<=1);
-	}
-	int Depth(TreeNode *root){
-		if (!root) return 0;
-		return max(Depth(root->left), Depth(root->right)) + 1;
-	}
-};
 
-class Solution2 {
+class Solution {
 public:
     bool isBalanced(TreeNode *root) {
         int height = 0;
