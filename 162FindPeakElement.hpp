@@ -22,3 +22,21 @@ public:
         return -1;
     }
 };
+
+
+// Log(n) complexity
+class Solution2 {
+public:
+    int findPeakElement(vector<int>& nums) {
+        if(nums.empty()) return -1;
+        int l = 0, r = nums.size()-1;
+        while(l < r){
+            if(r == l+1) return nums[l] > nums[r] ? l : r;
+            int m = (l+r)/2;
+            if(nums[m-1] < nums[m] && nums[m] > nums[m+1]) return m;
+            if(nums[m-1] > nums[m]) {r = m; continue;}
+            if(nums[m+1] > nums[m]) {l = m; continue;}
+        }
+        return l;
+    }
+};
