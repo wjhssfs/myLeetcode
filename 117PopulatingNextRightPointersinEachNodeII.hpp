@@ -30,33 +30,6 @@
  */
 class Solution {
 public:
-void connect(TreeLinkNode *root) {
-		while (root){
-			TreeLinkNode *curNode = root;
-			while (curNode)
-			{
-				if (curNode->left) 
-				    curNode->right? curNode->left->next = curNode->right:curNode->left->next = firstLeftChild(curNode->next);
-				if (curNode->right) curNode->right->next = firstLeftChild(curNode->next);
-				curNode = curNode->next;
-			}
-			root = firstLeftChild(root);
-		}
-	}
-
-	TreeLinkNode* firstLeftChild(TreeLinkNode *root)
-	{
-		while (root && !root->left && !root->right){
-			root = root->next;
-		}
-		if (!root) return root;
-		return root->left ? root->left : root->right;
-	}
-};
-
-
-class Solution2 {
-public:
     void connect(TreeLinkNode *root) {
         connect_1(root);
     }

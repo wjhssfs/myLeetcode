@@ -12,28 +12,6 @@
 //  [1,4,6,4,1]
 // ]
 
-	class Solution {
-public:
-	vector<vector<int> > generate(int numRows) {
-		vector<vector<int> >  result;
-		if (numRows <= 0) return result;
-		result.push_back({1});
-		if (numRows == 1) return result;
-		result.push_back({ 1 , 1});
-		numRows -= 2;
-		while (numRows--){
-			vector<int> subResult;
-			subResult.push_back(1);
-			for (int i = 0; i < (int)result[result.size() - 1].size() - 1; i++){
-				subResult.push_back(result[result.size() - 1][i] + result[result.size() - 1][i + 1]);
-			}
-			subResult.push_back(1);
-			result.push_back(subResult);
-		}
-		return result;
-	}
-};
-
 class Solution {
 public:
     vector<vector<int> > generate(int numRows) {

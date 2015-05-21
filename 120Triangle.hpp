@@ -1,37 +1,19 @@
-120 Triangle 
-Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+// 120 Triangle 
+// Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
 
-For example, given the following triangle
-[
-     [2],
-    [3,4],
-   [6,5,7],
-  [4,1,8,3]
-]
-The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+// For example, given the following triangle
+// [
+//      [2],
+//     [3,4],
+//    [6,5,7],
+//   [4,1,8,3]
+// ]
+// The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
 
-Note:
-Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.
-
+// Note:
+// Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.
 
 class Solution {
-public:
-	int minimumTotal(vector<vector<int> > &triangle) {
-		int sz = triangle.size();
-		if (!sz) return 0;
-		vector<vector<int>> c(2);
-		c[0].resize(sz); c[1].resize(sz);
-		for (int j = sz - 1; j >= 0; j--){
-			for (int i = sz - 1; i >= j; i--){
-				int sumUnder = (i < sz - 1 ? min(c[j % 2][i+1], c[(j + 1) % 2][i + 1]) : 0);
-				c[j % 2][i] = triangle[i][j] + sumUnder;
-			}
-		}
-		return c[0][0];
-	}
-};
-
-class Solution2 {
 public:
     int minimumTotal(vector<vector<int>> &triangle) {
         return minimumTotal_2(triangle);
