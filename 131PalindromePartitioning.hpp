@@ -16,9 +16,7 @@ public:
 	vector<vector<string>> partition(string s) {
 		vector<vector<string>> results;
 		vector<string> result;
-		vector<vector<bool>> m(s.size());
-		for (auto &e : m) e.resize(s.size());
-
+		vector<vector<bool>> m(s.size(), vector<bool>(s.size()));
 		buildM(m, s);
 		buildResults(results, result, s, m, 0);
 		return results;
@@ -37,6 +35,7 @@ public:
 			}
 		}
 	}
+	
 	void buildM(vector<vector<bool>> &m, string &s){
 		int sz = s.size();
 		for (int n = 1; n <= sz; n++){

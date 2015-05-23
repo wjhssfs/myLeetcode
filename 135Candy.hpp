@@ -9,43 +9,6 @@
 
 class Solution {
 public:
-	int candy(vector<int> &ratings) {
-		int sz = ratings.size();
-		if (sz <= 1) return sz;
-		int preN = 1, total = 1;
-		for (int i = 1; i < sz; i++){
-			if (ratings[i] > ratings[i - 1]){
-				preN++;
-				total += preN;
-			}
-			else if (ratings[i] == ratings[i - 1]){
-				preN = 1;
-				total++;
-			}
-			else{
-				int t = preN;
-				while (i < sz && ratings[i] < ratings[i - 1]) {
-					preN--;
-					total += preN;
-					i++;
-				}
-				i--;
-				if (preN < 1) {
-					total += (1 - preN)*(t - preN+1);
-				}
-				else if(preN > 1){
-					total -= (preN - 1) *(t - preN);
-				}
-				preN = 1;
-			}
-		}
-
-		return total;
-	}
-};
-
-class Solution2 {
-public:
     int candy(vector<int> &ratings) {
         return candy_1(ratings);
     }

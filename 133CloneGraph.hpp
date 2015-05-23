@@ -11,30 +11,6 @@
  */
 class Solution {
 public:
-	UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node) {
-		if (!node) return nullptr;
-		queue<UndirectedGraphNode*> q;
-		unordered_map<UndirectedGraphNode*, UndirectedGraphNode *> m;
-		q.push(node);
-		m[node] = new UndirectedGraphNode(node->label);
-		while (!q.empty()){
-			auto curN = q.front();
-			q.pop();
-			for (auto childN : curN->neighbors){
-				if (!m.count(childN)){
-					m[childN] = new UndirectedGraphNode(childN->label);
-					q.push(childN);
-				}
-				m[curN]->neighbors.push_back(m[childN]);
-			}
-		}
-		return m[node];
-	}
-};
-
-
-class Solution2 {
-public:
     typedef UndirectedGraphNode GraphNode;
     typedef unordered_map<GraphNode *, GraphNode *> MAP;
     
