@@ -17,58 +17,6 @@
 
 class Solution {
 public:
-	void solve(vector<vector<char>> &board) {
-		int m = board.size();
-		if (!m) return;
-		int n = board[0].size();
-		if (!n) return;
-		bool changed = true;
-		while (changed){
-			changed = false;
-			for (int i = 0; i < m; i++){
-				for (int j = 0; j < n; j++){
-					if (board[i][j] == 'X' || board[i][j] == 'S')continue;
-					if (i == 0 || i == m - 1 || j == 0 || j == n - 1) {
-						board[i][j] = 'S';
-						changed = true;
-					}
-					else if (i>0 && board[i - 1][j] == 'S'){
-						board[i][j] = 'S';
-						changed = true;
-					}
-					else if (j > 0 && board[i][j - 1] == 'S'){
-						board[i][j] = 'S';
-						changed = true;
-					}
-				}
-			}
-			for (int i = m - 1; i >= 0; i--){
-				for (int j = n - 1; j >= 0; j--){
-					if (board[i][j] == 'X' || board[i][j] == 'S')continue;
-					else if (i < m - 1 && board[i + 1][j] == 'S'){
-						board[i][j] = 'S'; changed = true;
-					}
-					else if (j < n - 1 && board[i][j + 1] == 'S'){
-						board[i][j] = 'S'; changed = true;
-					}
-				}
-			}
-		}
-		for (int i = 0; i < m; i++){
-			for (int j = 0; j < n; j++){
-				if (board[i][j] == 'X') continue;
-				else if (board[i][j] == 'S') board[i][j] = 'O';
-				else board[i][j] = 'X';
-			}
-		}
-	}
-};
-
-
-
-
-class Solution {
-public:
     typedef vector<vector<char> > BOARDTYPE;
     
     void solve(BOARDTYPE &board) {

@@ -10,42 +10,6 @@
 class Solution {
 public:
 	int longestConsecutive(vector<int> &num) {
-		unordered_set<int> v(num.begin(), num.end());
-		int maxC = 0;
-		while (!v.empty()){
-			int curC = 1;
-			int key = *v.begin();
-			v.erase(key);
-			int keyCopy = key;
-			while (keyCopy != INT_MAX){
-				keyCopy++;
-				if (v.count(keyCopy)){
-					v.erase(keyCopy);
-					curC++;
-				}
-				else{
-					break;
-				}
-			}
-			while (key != INT_MIN){
-				key--;
-				if (v.count(key)){
-					v.erase(key);
-					curC++;
-				}
-				else{
-					break;
-				}
-			}
-			maxC = max(curC, maxC);
-		}
-		return maxC;
-	}
-};
-
-class Solution2 {
-public:
-	int longestConsecutive(vector<int> &num) {
 		unordered_map<int, int> uii;
 		int maxlen=0;
 		for (auto &val : num) {
@@ -62,54 +26,3 @@ public:
 	}
 };
 
-
-class Solution3 {
-public:
-    int longestConsecutive(vector<int> &num) {
-        return longestConsecutive1(num);
-    }
-    
-    int longestConsecutive1(vector<int> &num) {
-        unordered_set<int> s;
-        int res = 0;
-        for (int i = 0; i < num.size(); ++i)
-            s.insert(num[i]);
-        for (int i = 0; i < num.size() && !s.empty(); ++i)
-        {
-            if (s.find(num[i]) == s.end())
-                continue;
-            int upper = num[i], lower = num[i];
-            while (s.find(upper+1) != s.end())
-                s.erase(++upper);
-            while (s.find(lower-1) != s.end())
-                s.erase(--lower);
-            if (upper != lower)
-                s.erase(num[i]);
-            res = max(res, upper - lower + 1);
-        }
-        return res;
-    }
-    
-    int longestConsecutive2(vector<int> &num) {
-        int longest = 0;
-        unordered_map<int, int> table;
-        for(int i = 0, count = num.size(); i < count; ++i) 
-            if(table.find(num[i]) == table.end()) {
-                int val = num[i], update;
-                if(table.find(val - 1) != table.end() && table.find(val + 1) != table.end())
-                    // assigning to table[val] here is only for adding val as a key of the hashtable.
-                    update = table[val] = 
-                             table[val - table[val - 1]] = 
-                             table[val + table[val + 1]] = 
-                             table[val - 1] + table[val + 1] + 1; 
-                else if(table.find(val - 1) != table.end())
-                    update = table[val] = ++table[val - table[val - 1]];
-                else if(table.find(val + 1) != table.end())
-                    update = table[val] = ++table[val + table[val + 1]];
-                else 
-                    update = table[val] = 1;
-                longest = max(longest, update);
-            }
-        return longest;
-    }
-};
