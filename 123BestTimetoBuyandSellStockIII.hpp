@@ -35,6 +35,7 @@ public:
 	}
 };
 
+// Traverse the array two times. First from right to left, second from left to right.
 class Solution2 {
 public:
 	int maxProfit(vector<int> &prices) {
@@ -60,8 +61,8 @@ public:
 	}
 };
 
-// Solution: dp. max profit =  max { l2r[0...i] + r2l[i+1...N-1] }.
-class Solution {
+// Solution: dp.  max profit =  max { l2r[0...i] + r2l[i+1...N-1] }. (almost same as solution 2)
+class Solution3 {
 public:
     int maxProfit(vector<int> &prices) {
         int N = prices.size();
