@@ -13,40 +13,8 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
-class Solution {
-public:
-    ListNode *detectCycle(ListNode *head) {
-       	if (!head) return NULL;
-		ListNode *slowP = head;
-		ListNode *fastP = head->next;
-		while (fastP){
-			if (slowP == fastP) break;
-			slowP = slowP->next;
-			fastP = fastP->next;
-			if (fastP == NULL) return NULL;
-			fastP = fastP->next;
-		}
-		if(!fastP) return NULL;
-		int loopLength = 0;
-		while (loopLength == 0 || slowP != fastP){
-			slowP = slowP->next;
-			fastP = fastP->next;
-			fastP = fastP->next;
-			loopLength++;
-		}
-		slowP = fastP = head;
-		while(loopLength--){
-		    fastP = fastP->next;
-		}
-		while(slowP!=fastP){
-		    slowP = slowP->next;
-			fastP = fastP->next;
-		}
-		return slowP;
-    }
-};
 
-class Solution2 {
+class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
         if (!head || !head->next) return NULL;
@@ -59,6 +27,10 @@ public:
         
         if (slow != fast) return NULL;
         
+        // l1 is head to cycle length, l2 is cycle length
+        // when slow is at the joint, fast is at l1%l2
+        // when fast and slow meet, they are at l2 - l1%l2
+        // if we start from head, after l1 steps, fast and slow are both at the joint.
         fast = head;
         while (fast != slow) {
             fast = fast->next;

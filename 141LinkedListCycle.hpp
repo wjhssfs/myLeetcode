@@ -12,24 +12,8 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
-class Solution {
-public:
-    bool hasCycle(ListNode *head) {
-		if (!head) return false;
-		ListNode *slowP = head;
-		ListNode *fastP = head->next;
-		while (fastP){
-			if (slowP == fastP) return true;
-			slowP = slowP->next;
-			fastP = fastP->next;
-			if (fastP == NULL) return false;
-			fastP = fastP->next;
-		}
-		return false;
-    }
-};
 
-class Solution2 {
+class Solution {
 public:
     bool hasCycle(ListNode *head) {
         if (!head || !head->next) return false;
