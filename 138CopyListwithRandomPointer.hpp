@@ -13,37 +13,7 @@
  * };
  */
  
- class Solution {
-public:
-	RandomListNode *copyRandomList(RandomListNode *head) {
-		if (!head) return 0;
-		unordered_map<RandomListNode *, RandomListNode *> org2New;
-		RandomListNode *nHead = new RandomListNode(head->label);
-		org2New[head] = nHead;
-		RandomListNode * cur = head;
-		while (cur){
-			if (cur->random){
-				if (org2New.find(cur->random) == org2New.end()){
-					RandomListNode *newRandom = new RandomListNode(cur->random->label);
-					org2New[cur->random] = newRandom;
-				}
-				org2New[cur]->random = org2New[cur->random];
-			}
-			if (cur->next){
-				if (org2New.find(cur->next) == org2New.end()){
-					RandomListNode *newNext = new RandomListNode(cur->next->label);
-					org2New[cur->next] = newNext;
-				}
-				org2New[cur]->next = org2New[cur->next];
-			}
-			cur = cur->next;
-		}
-
-		return nHead;
-	}
-};
-
-class Solution2 {
+class Solution {
 public:
     RandomListNode *copyRandomList(RandomListNode *head) {
         return copyRandomList_1(head);

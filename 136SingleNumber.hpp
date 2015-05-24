@@ -5,21 +5,7 @@
 // Note:
 // Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
 
-
 class Solution {
-public:
-    int singleNumber(int A[], int n) {
-        		if (n == 1) return A[0];
-		int ret = A[0];
-		for (int i = 1; i != n; i++)
-		{
-			ret ^= A[i];
-		}
-		return ret;
-    }
-};
-
-class Solution2 {
 public:
     int singleNumber(int A[], int n) {
         for (int i = 1; i < n; ++i)
