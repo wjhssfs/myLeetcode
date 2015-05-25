@@ -19,48 +19,6 @@
 
 class Solution {
 public:
-	void reorderList(ListNode *head) {
-		if (!head || !head->next) return;
-		ListNode *p1, *p2, *p3;
-		p1 = head; p2 = head->next;
-
-		//split list into 2
-		while (p2->next){//find the mid point
-			p1 = p1->next;
-			p2 = p2->next;
-			if (p2->next) p2 = p2->next;
-		}
-		p2 = p1->next;
-		p1->next = nullptr; //cut from the 1st list
-		p1 = p2; //p1 is head
-
-		//Reverse 2nd list
-		p3 = nullptr; //p3 is reversed list head
-		p2 = p1->next;
-		while (p1){
-			p1->next = p3;
-			p3 = p1;
-			p1 = p2;
-			if(p1) p2 = p1->next;
-		}
-		p2 = p3;
-		p1 = head;//p1 pints to list1, p2 points to list2
-
-		//merge 2 list
-		while (p1 && p2){
-			p3 = p1->next;
-			p1->next = p2;
-			p1 = p2->next;
-			p2->next = p3;
-			p2 = p1;
-			p1 = p3;
-		}
-	}
-};
-
-
-class Solution2 {
-public:
     void reorderList(ListNode *head) {
         if (!head || !head->next) return;
         ListNode *slow = head, *fast = head->next->next;

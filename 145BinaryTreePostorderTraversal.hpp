@@ -20,34 +20,7 @@
  * };
  */
 
- class Solution {
-public:
-    vector<int> postorderTraversal(TreeNode *root) {
-        vector<int> result;
-        if (!root) return result;
-        stack<TreeNode *> s;
-        set<TreeNode *> visited;
-        s.push(root);
-        while (!s.empty())
-        {
-            TreeNode * cur = s.top();
-            if(cur->right && visited.end() == visited.find(cur->right)) s.push(cur->right);
-            if(cur->left && visited.end() == visited.find(cur->left)) s.push(cur->left);
-            if(
-                (!cur->right || visited.end() != visited.find(cur->right))
-                &&
-                (!cur->left || visited.end() != visited.find(cur->left))
-            ){
-            s.pop();
-            result.push_back(cur->val);
-            visited.insert(cur);
-            }
-        }
-        return result;
-    }
-};
-
-class Solution2 {
+class Solution {
 public:
     vector<int> postorderTraversal(TreeNode *root) {
     	TreeNode *cur = root, *last = nullptr;

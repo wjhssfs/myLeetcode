@@ -15,57 +15,45 @@
 
 class Solution {
 public:
-	ListNode *sortList(ListNode *head) {
-		ListNode *vhead =new ListNode(0);
-		vhead->next = head;
-
-		int mergeSize = 1;
-		ListNode *p1, *p2, *p3;
-
-		bool done;
-		do 	{
-			done = true;
-			p3 = vhead;
-			while (p3->next){
-				p1 = p2 = p3;
-				int i = mergeSize;
-				int j = mergeSize * 2;
-				while (p2->next && i--) p2 = p2->next;
-				if (!p2->next) break;
-				done = false;
-				while (p3->next && j--) p3 = p3->next;
-				merge(p1, p2, p3);
-			}
-			mergeSize *= 2;
-		} while (!done);
-		ListNode *result = vhead->next;
-		delete vhead;
-		return result;
-	}
-
-	void merge(ListNode* preHead1, ListNode* preHead2, ListNode* &preNextNode){
-		ListNode *nextNode = preNextNode->next;
-		preNextNode->next = 0;
-		ListNode *vhead2= preHead2->next;
-		preHead2->next = 0;
-		ListNode *pInsert = preHead1;
-		while (vhead2){
-			while (pInsert->next && pInsert->next->val < vhead2->val){ pInsert = pInsert->next;}
-			if (!pInsert->next) {
-				pInsert->next = vhead2;
-				break;
-			}
-			else{
-				ListNode *p = vhead2;
-				vhead2 = vhead2->next;
-				p->next = pInsert->next;
-				pInsert->next = p;
-				pInsert = pInsert->next;
-			}
-		}
-
-		while (pInsert->next) pInsert = pInsert->next;
-		pInsert->next = nextNode;
-		preNextNode = pInsert;
-	}
+    ListNode *sortList(ListNode *head) {
+        return sortLinkedList(head, getLength(head));
+    }
+    
+    ListNode* sortLinkedList(ListNode *&head, int N) {
+        if (N == 0) return NULL;
+        if (N == 1) {
+            ListNode* cur = head;
+            head = head->next;
+            cur->next = NULL;
+            return cur;
+        }
+        int half = N / 2;
+        ListNode* head1 = sortLinkedList(head, half);
+        ListNode* head2 = sortLinkedList(head, N - half);
+        return mergeList(head1, head2);
+    }
+    
+    ListNode* mergeList(ListNode *head1, ListNode*head2) {
+        ListNode dummy(0); dummy.next = NULL;
+        ListNode *cur = &dummy;
+        while (head1 && head2)
+        {
+            ListNode **min = head1->val < head2->val ? &head1 : &head2;
+            cur->next = *min;
+            cur = cur->next;
+            *min = (*min)->next;
+        }
+        if (!head1) cur->next = head2;
+        if (!head2) cur->next = head1;
+        return dummy.next;
+    }
+    
+    int getLength(ListNode *head) {
+        int length = 0;
+        while (head) {
+            length++;
+            head = head->next;
+        }
+        return length;
+    }
 };

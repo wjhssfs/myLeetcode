@@ -42,7 +42,7 @@ Solution: 1. Iterative way (stack).   Time: O(n), Space: O(n).
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-class Solution {
+class Solution2 {
 public:
     vector<int> preorderTraversal(TreeNode *root) {
         return preorderTraversal_3(root);
