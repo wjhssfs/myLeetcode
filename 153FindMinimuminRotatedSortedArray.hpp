@@ -20,7 +20,7 @@ public:
                 m = (l + r) / 2;
             }
             else if (num[m] > num[r]){
-                l = m;
+                l = m + 1;
                 m = (l + r) / 2;
             }
         }
