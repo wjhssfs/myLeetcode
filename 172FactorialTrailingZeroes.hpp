@@ -4,6 +4,7 @@
 
 class Solution {
 public:
+	// number of n(5^1) + n(5^2) + f(5^3)+...
     int trailingZeroes(int n) {
         int r = 0;
         while(n/5){
