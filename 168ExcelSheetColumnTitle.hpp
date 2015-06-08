@@ -18,6 +18,8 @@ public:
     string convertToTitle(int n) {
         string r;
         if (n <= 0) return r;
+        // (a0+1) + (a1+1)*26 + (a2+1)*26^2 ... = n
+        // a0 = (n-1)%26
         do{
             r += char((n-1) % 26 + 'A');
             n = (n-1)/26; // minus 1 needed.
