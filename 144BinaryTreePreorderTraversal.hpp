@@ -60,7 +60,7 @@ public:
                 stk.push(cur);
                 cur = cur->left;
             }
-            else if (!stk.empty())
+            else
             {
                 cur = stk.top()->right;
                 stk.pop();
