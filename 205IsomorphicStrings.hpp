@@ -18,15 +18,12 @@
 class Solution {
 public:
     bool isIsomorphic(string s, string t) {
-        char m[256] = {}, mr[256] = {};
+        char m[256] = {}/*real mapping*/, mr[256] = {}/*to make sure not two characters mapped to same character*/;
         for(int i = 0; i < s.size(); i++){
             if(!m[s[i]]) {
-                if(!mr[t[i]])
-                {
-                    m[s[i]] = t[i];
-                    mr[t[i]] = 1;
-                }
-                else return false;
+                if(mr[t[i]]) return false;
+                m[s[i]] = t[i];
+                mr[t[i]] = 1;
             }
             if(m[s[i]] != t[i]) return false;
         }
