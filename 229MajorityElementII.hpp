@@ -16,6 +16,8 @@ public:
     }
 
     // http://www.cs.utexas.edu/~moore/best-ideas/mjrty/
+    // http://gregable.com/2013/10/majority-vote-algorithm-find-majority.html
+    // https://leetcode.com/discuss/43248/boyer-moore-majority-vote-algorithm-and-my-elaboration
     vector<int> majorityElement2(vector<int>& nums) {
         int cnt1=0, cnt2=0;
         int a,b;
