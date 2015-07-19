@@ -1,0 +1,10 @@
+
+kmp:
+	https://leetcode.com/discuss/36807/c-8-ms-kmp-based-o-n-time-&-o-n-memory-solution
+	        vector<int> p(l.size(), 0);
+	        for (int i = 1; i < l.size(); i++) {
+	            int j = p[i - 1];
+	            while (j > 0 && l[i] != l[j])
+	                j = p[j - 1];
+	            p[i] = (j += l[i] == l[j]);
+	        }
