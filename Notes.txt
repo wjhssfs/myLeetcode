@@ -1,4 +1,12 @@
 
+
+Pass index:233 
+
+
+
+239 Sliding Window Maximum
+
+
 kmp:
 	https://leetcode.com/discuss/36807/c-8-ms-kmp-based-o-n-time-&-o-n-memory-solution
 	        vector<int> p(l.size(), 0);

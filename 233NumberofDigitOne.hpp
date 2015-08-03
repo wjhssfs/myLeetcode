@@ -8,6 +8,22 @@
 class Solution {
 public:
     int countDigitOne(int n) {
+        if(n <= 0) return 0;
+        if(n < 10) return 1;
+        char buf[100];
+        sprintf(buf, "%d", n);
+        int base = pow(10, strlen(buf)-1);
+        int leadDigit = n/base;
+        int sum = countDigitOne(base - 1) * leadDigit;
+        sum += (leadDigit == 1) ? n - base + 1 : base;
+        sum += countDigitOne(n%base);
+        return sum;
+    }
+};
+
+class Solution {
+public:
+    int countDigitOne(int n) {
         vector<int> t;
         populateTable(t);
         int total = 0, ti= 0;
