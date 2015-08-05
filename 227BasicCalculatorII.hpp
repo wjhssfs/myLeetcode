@@ -41,6 +41,27 @@ public:
     }
 };
 
+// If you don't like the 44 - op ASCII trick, you can use op == '+' ? 1 : -1 instead
+int calculate(string s) {
+    istringstream in('+' + s + '+');
+    long long total = 0, term = 0, n;
+    char op;
+    while (in >> op) {
+        if (op == '+' || op == '-') {
+            total += term;
+            in >> term;
+            term *= 44 - op;
+        } else {
+            in >> n;
+            if (op == '*')
+                term *= n;
+            else
+                term /= n;
+        }
+    }
+    return total;
+}
+
 class Solution {
     stack<int> nums;
     stack<char> ops;
