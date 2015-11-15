@@ -68,3 +68,7 @@ public:
         return result;
     }
 };
+
+
+https://leetcode.com/discuss/69392/python-clear-solution-unionfind-class-weighting-compression
+
