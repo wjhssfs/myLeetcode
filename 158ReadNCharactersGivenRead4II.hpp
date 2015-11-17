@@ -23,7 +23,7 @@ int read4(char *buf){ // function body added for testing
 
 int readN(char *buf, int n)
 {
-	static char buf4[4];
+	static char buf4[4]; // statics are evil
 	static int nBuf4;
 	int nLeft = n;
 	if (!nLeft || !buf) return 0;
@@ -45,3 +45,29 @@ int readN(char *buf, int n)
 	}
 	return n - nLeft;
 }
+
+class Solution {
+public:
+    Solution():buf4Index(0), buf4Read(0){}
+    /**
+     * @param buf Destination buffer
+     * @param n   Maximum number of characters to read
+     * @return    The number of characters read
+     */
+    int read(char *buf, int n) {
+    	int cnt = 0;
+        while(cnt < n){
+            if(buf4Index == 0)
+                buf4Read = read4(buf4);
+            if(buf4Read == 0)  break;
+            while(cnt < n && buf4Index < buf4Read)
+                buf[cnt++] = buf4[buf4Index++];
+            if(buf4Index == buf4Read)  buf4Index = 0;
+        }
+        return cnt;
+    }
+private:
+    char buf4[4];
+    int buf4Index;
+    int buf4Read;
+};
