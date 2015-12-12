@@ -103,51 +103,48 @@ public:
 // numMatrix.sumRegion(1, 2, 3, 4);
 
 
-public class NumMatrix {
+class NumMatrix1 {
+public:
+	NumMatrix1(vector<vector<int>> &matrix) {
+		nRow = matrix.size() + 1, nCol = 0;
+		if (matrix.size()) nCol = matrix[0].size() + 1;
+		else return;
+		BIT.resize(nRow, vector<int>(nCol));
+		m.resize(matrix.size(), vector<int>(matrix[0].size(), 0));
+		for (int i = 0; i < matrix.size(); i++)
+			for (int j = 0; j < matrix[0].size(); j++)
+				update(i, j, matrix[i][j]);
+	}
 
-    int[][] tree;
-    int[][] nums;
-    int m;
-    int n;
+	void update(int row, int col, int val) {
+		int diff = val - m[row][col];
+		m[row][col] = val;
+		for (int i = row + 1; i < nRow; i += i & (-i))
+			for (int j = col + 1; j < nCol; j += j & (-j)) {
+				BIT[i][j] += diff;
+			}
+	}
 
-    public NumMatrix(int[][] matrix) {
-        if (matrix.length == 0 || matrix[0].length == 0) return;
-        m = matrix.length;
-        n = matrix[0].length;
-        tree = new int[m+1][n+1];
-        nums = new int[m][n];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                update(i, j, matrix[i][j]);
-            }
-        }
-    }
+	int sumRegion(int row1, int col1, int row2, int col2) {
+		int sum = sumRegionFromOrigin(row2, col2);
+		sum += sumRegionFromOrigin(row1 - 1, col1 - 1);
+		sum -= sumRegionFromOrigin(row1 - 1, col2);
+		sum -= sumRegionFromOrigin(row2, col1 - 1);
+		return sum;
+	}
 
-    public void update(int row, int col, int val) {
-        if (m == 0 || n == 0) return;
-        int delta = val - nums[row][col];
-        nums[row][col] = val;
-        for (int i = row + 1; i <= m; i += i & (-i)) {
-            for (int j = col + 1; j <= n; j += j & (-j)) {
-                tree[i][j] += delta;
-            }
-        }
-    }
+	int sumRegionFromOrigin(int row, int col) {
+		int sum = 0;
+		for (int i = row + 1; i > 0; i -= i & (-i))
+			for (int j = col + 1; j > 0; j -= j & (-j)) {
+				sum += BIT[i][j];
+			}
+		return sum;
+	}
+	vector<vector<int>> BIT;
+	vector<vector<int>> m;
+	int nRow, nCol;
+};
 
-    public int sumRegion(int row1, int col1, int row2, int col2) {
-        if (m == 0 || n == 0) return 0;
-        return sum(row2+1, col2+1) + sum(row1, col1) - sum(row1, col2+1) - sum(row2+1, col1);
-    }
-
-    public int sum(int row, int col) {
-        int sum = 0;
-        for (int i = row; i > 0; i -= i & (-i)) {
-            for (int j = col; j > 0; j -= j & (-j)) {
-                sum += tree[i][j];
-            }
-        }
-        return sum;
-    }
-}
 // time should be O(log(m) * log(n))
 Explanation of Binary Indexed Tree : https://www.topcoder.com/community/data-science/data-science-tutorials/binary-indexed-trees/
