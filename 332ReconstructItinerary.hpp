@@ -13,6 +13,7 @@
 // Return ["JFK","ATL","JFK","SFO","ATL","SFO"].
 // Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"]. But it is larger in lexical order.
 
+// https://leetcode.com/discuss/84659/short-ruby-python-java-c
 class Solution {
 public:
     vector<string> findItinerary(vector<pair<string, string>> tickets) {
