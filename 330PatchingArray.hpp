@@ -43,3 +43,17 @@ public:
         return nPatch;
     }
 };
+
+class Solution {
+public:
+    int minPatches(vector<int>& nums, int n) {
+        int len = nums.size(),  i=0, res=0;
+        long long bound = 0;
+        while(bound<n) 
+        {// if it does not reach to the end
+            if(i<len && nums[i]<=(bound+1)) bound+=nums[i++]; // if nums[i] is no larger than bound, then including nums[i] allow us to generate all the numbers [1.. bound+nums[i]]
+            else{++res; bound= 2*bound+1;}  // we need to add a new number bound+1, and that extend the bound to 2*bound+1
+        }
+        return res;
+    }
+};
