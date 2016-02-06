@@ -64,3 +64,22 @@ private:
         }
     }
 };
+
+// https://leetcode.com/discuss/84073/straight-forward-c-solution-with-explanation
+class Solution {
+public:
+    bool isValidSerialization(string preorder) {
+        int nNonLeaf = 0, nLeaf = 0;
+        istringstream iss(preorder);
+        string token;
+        while(std::getline(iss, token, ',')){
+            if(token == "#")
+                ++nLeaf;
+            else
+                ++nNonLeaf;
+            if(nLeaf == nNonLeaf + 1)
+                break;
+        }
+        return nLeaf == nNonLeaf + 1 && iss.eof();
+    }
+};
