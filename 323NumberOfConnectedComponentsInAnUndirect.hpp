@@ -45,3 +45,32 @@ public:
 		}
 	}
 };
+
+class Solution {
+public:
+    int countComponents(int n, vector<pair<int, int>>& edges) {
+        p.resize(n);
+        iota(p.begin(), p.end(),0);
+        for(auto && edge : edges){
+            unite(edge.first, edge.second);
+        }
+        unordered_set<int> s;
+        for(int i = 0; i < n; i++){
+            s.insert(find(i));
+        }
+        
+        return (int)s.size();
+    }
+private:
+    vector<int> p;
+    int find(int i){
+        if(p[i] == i)
+            return i;
+        p[i] = find(p[i]);
+        return p[i];
+    }
+    
+    void unite(int a, int b){
+        p[find(a)] = find(b);
+    }
+};
