@@ -12,32 +12,36 @@
 class Solution {
 public:
     string removeDuplicateLetters(string s) {
-        int n[256] = {};
-		bool in[256] = {};
-		for (char c : s) ++n[c];
-		stack<char> rs;
-		for (char c : s) {
-			if (rs.empty()) {
-				rs.push(c);
-				in[c] = true;
-			}
-			else if (!in[c]) {
-					while (!rs.empty() && n[rs.top()] > 0 && c < rs.top()) {
-						in[rs.top()] = false;
-						rs.pop();
-					}
-					rs.push(c);
-					in[c] = true;
-			}
-			--n[c];
-		}
+        vector<unsigned int> cnt(26,0); //only consider lowercase letters
+        vector<bool> inRes(26, false); //true if the letter has been added to res 
+        for(char ch:s) cnt[ ch-'a' ]++;
+        string res = ""; //use res as a stack
+        for(char ch:s){
+           cnt[ ch-'a' ]--;
+           if(inRes[ch-'a']) continue;
+           while(!res.empty() && ch<res.back() && cnt[ res.back()-'a' ]>0){
+               inRes[ res.back()-'a' ] = false;
+               res.pop_back();
 
-		string result;
-		while (!rs.empty()) {
-			result += rs.top();
-			rs.pop();
-		}
-		reverse(result.begin(), result.end());
-		return result;
+           }
+           res.push_back(ch);
+           inRes[ ch-'a' ] = true;
+        }
+        return res;
     }
 };
+
+
+// https://leetcode.com/discuss/73761/a-short-o-n-recursive-greedy-solution
+public class Solution {
+    public String removeDuplicateLetters(String s) {
+        int[] cnt = new int[26];
+        int pos = 0; // the position for the smallest s[i]
+        for (int i = 0; i < s.length(); i++) cnt[s.charAt(i) - 'a']++;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) < s.charAt(pos)) pos = i;
+            if (--cnt[s.charAt(i) - 'a'] == 0) break;
+        }
+        return s.length() == 0 ? "" : s.charAt(pos) + removeDuplicateLetters(s.substring(pos + 1).replaceAll("" + s.charAt(pos), ""));
+    }
+}

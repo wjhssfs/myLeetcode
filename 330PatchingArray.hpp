@@ -44,16 +44,21 @@ public:
     }
 };
 
-class Solution {
-public:
-    int minPatches(vector<int>& nums, int n) {
-        int len = nums.size(),  i=0, res=0;
-        long long bound = 0;
-        while(bound<n) 
-        {// if it does not reach to the end
-            if(i<len && nums[i]<=(bound+1)) bound+=nums[i++]; // if nums[i] is no larger than bound, then including nums[i] allow us to generate all the numbers [1.. bound+nums[i]]
-            else{++res; bound= 2*bound+1;}  // we need to add a new number bound+1, and that extend the bound to 2*bound+1
-        }
-        return res;
-    }
+// https://leetcode.com/discuss/73256/mergesort-solution
+def countSmaller(self, nums):
+    def sort(enum):
+        half = len(enum) / 2
+        if half:
+            left, right = sort(enum[:half]), sort(enum[half:])
+            for i in range(len(enum))[::-1]:
+                if not right or left and left[-1][1] > right[-1][1]:
+                    smaller[left[-1][0]] += len(right)
+                    enum[i] = left.pop()
+                else:
+                    enum[i] = right.pop()
+        return enum
+    smaller = [0] * len(nums)
+    sort(list(enumerate(nums)))
+    return smaller
 };
+
