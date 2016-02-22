@@ -73,3 +73,40 @@ public:
 // numArray.sumRange(0, 1);
 // numArray.update(1, 10);
 // numArray.sumRange(1, 2);
+
+
+class NumArray {
+public:
+    NumArray(vector<int> &nums) {
+        ns.resize(nums.size());
+        n = (int)ns.size();
+        BIT.resize(n+1);
+        for(int i = 0; i < n; i++) update(i, nums[i]);
+    }
+
+    void update(int i, int val) {
+        int diff = val - ns[i];
+        ns[i] = val;
+        ++i;
+        while(i <= n){
+            BIT[i] += diff;
+            i += (i & -i);
+        }
+    }
+
+    int sumRange(int i, int j) {
+        return sumToI(j) - sumToI(i-1);
+    }
+private:
+    vector<int> BIT, ns;
+    int n;
+    int sumToI(int i){
+        int s = 0;
+        ++i;
+        while(i > 0) {
+            s += BIT[i];
+            i -= (i & -i);
+        }
+        return s;
+    }
+};
