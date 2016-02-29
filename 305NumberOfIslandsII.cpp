@@ -72,3 +72,42 @@ public:
 
 https://leetcode.com/discuss/69392/python-clear-solution-unionfind-class-weighting-compression
 
+class Solution {
+public:
+    vector<int> numIslands2(int m, int n, const vector<pair<int, int>>& positions) {
+        vector<int> res;
+        p = vector<int>(m*n, -1);
+        sz = p;
+        total = 0;
+        int d[] = { -1, 0, 1, 0, -1};
+        for(auto &&pos : positions){
+            int cur = pos.first * n + pos.second;
+            if(p[cur] != -1) continue;
+            ++ total; p[cur] = cur; sz[cur] = 1;
+            for(int i = 0; i < 4; i++){
+                int x = pos.first + d[i], y = pos.second + d[i+1];
+                int next = x * n + y;
+                if(x < 0 || x >= m || y < 0 || y >= n || p[next] == -1) continue;
+                merge(cur, next);
+            }
+            res.push_back(total);
+        }
+        return res;
+    }
+private:
+    int find(int i){
+        if(p[i] == i)
+            return i;
+        p[i] = find(p[i]);
+        return p[i];
+    }
+    void merge(int x, int y){
+        x = find(x); y = find(y);
+        if(x==y) return;
+        -- total;
+        if(sz[x] < sz[y]) swap(x, y);
+        p[y] = x; sz[x] += sz[y];
+    }
+    vector<int> p, sz;
+    int total;
+};

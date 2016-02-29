@@ -23,42 +23,28 @@
 
 class NumMatrix {
 public:
-	NumMatrix(vector<vector<int>> &matrix) {
-		nRow = matrix.size(); nCol = 0; total = 0;
-		if (!nRow) return;
-		nCol = matrix[0].size();
-		auxLT = auxRB = auxLB = auxRT = matrix;
-		for (int i = 0; i < nRow; i++) {
-			int sumLT = 0, sumLB = 0, sumRT = 0, sumRB = 0;
-			for (int j = 0; j < nCol; j++) {
-				sumLT += matrix[i][j];
-				sumLB += matrix[nRow-1-i][j];
-				sumRB += matrix[nRow - 1 - i][nCol - 1 - j];
-				sumRT += matrix[i][nCol - 1 - j];
-
-				auxLT[i][j] = (i == 0 ? 0 : auxLT[i - 1][j]) + sumLT;
-				auxLB[nRow -1 -i][j] = (i == 0 ? 0 : auxLB[nRow - i][j]) + sumLB;
-				auxRB[nRow - 1 - i][nCol - 1 - j] = (i == 0 ? 0 : auxRB[nRow - i][nCol - 1 - j]) + sumRB;
-				auxRT[i][nCol - 1 - j] = (i == 0 ? 0 : auxRT[i-1][nCol - 1 - j]) + sumRT;
-			}
-			total += sumLT;
-		}
-	}
-
-	int sumRegion(int row1, int col1, int row2, int col2) {
-		if (row1 < 0 || row1 > nRow - 1 || row2 < 0 || row2 > nRow - 1 ||
-			col1 < 0 || col1 > nCol - 1 || col2 < 0 || col2 > nCol - 1) return 0;
-		int result = auxLT[row2][col2] + auxRB[row1][col1];
-		if (row2 < nRow - 1 && col1 >0) result += auxLB[row2 + 1][col1 - 1];
-		if (row1 > 0 && col2 < nCol -1) result += auxRT[row1 - 1][col2 + 1];
-		result -= total;
-		return result;
-	}
-private:
-	int total, nRow, nCol;
-	vector<vector<int>> auxLT, auxRB, auxLB, auxRT;
+    NumMatrix(vector<vector<int>> &matrix) :mat(matrix){
+    	int m = (int)mat.size(), n = 0;
+        if(m) n =  (int)mat[0].size();
+        for(int i = 0; i < m; i++) {
+            int rowSumFromLeftToRight = 0;
+            for(int j = 0; j < n; j++) {
+                rowSumFromLeftToRight += mat[i][j];
+                mat[i][j] = i > 0 ? mat[i-1][j] : 0;
+                mat[i][j] += rowSumFromLeftToRight;
+            }
+        }
+    }
+    
+    int sumRegion(int row1, int col1, int row2, int col2) {
+        int sum = mat[row2][col2];
+        if(row1 > 0) sum -= mat[row1 - 1][col2];
+        if(col1 > 0) sum -= mat[row2][col1 -1];
+        if(row1 > 0 && col1 > 0) sum += mat[row1 - 1][col1 - 1];
+        return sum;
+    }
+    vector<vector<int>> mat;
 };
-
 
 // Your NumMatrix object will be instantiated and called as such:
 // NumMatrix numMatrix(matrix);

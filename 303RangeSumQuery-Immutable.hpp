@@ -14,28 +14,16 @@
 
 class NumArray {
 public:
-    NumArray(vector<int> &nums) {
-        numSumsLTR.resize(nums.size());
-        numSumsRTL.resize(nums.size());
-        total = 0;
-        for(int i = 0; i < nums.size(); i++){
-            total += nums[i];
-            int j = nums.size() -1 - i;
-            numSumsLTR[i] = (i==0? 0:numSumsLTR[i-1]) + nums[i];
-            numSumsRTL[j] = (i==0? 0:numSumsRTL[j+1]) + nums[j];
-        }
+    NumArray(vector<int> &nums) : _nums(nums){
+        for(int i = 1; i < (int)_nums.size(); i++) _nums[i] += _nums[i-1];
     }
 
     int sumRange(int i, int j) {
-        int result = total;
-        result -= i < 1 ? 0:numSumsLTR[i-1];
-        result -= j > numSumsLTR.size()-2 ? 0:numSumsRTL[j+1];
-        return result;
+        int sum = _nums[j];
+        if(i) sum -= _nums[i-1];
+        return sum;
     }
-private:
-    vector<int> numSumsLTR;
-    vector<int> numSumsRTL;
-    int total;
+    vector<int> _nums;
 };
 
 

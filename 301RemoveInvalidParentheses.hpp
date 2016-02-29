@@ -46,3 +46,43 @@ private:
     unordered_set<string> filter;
     int minDeleted;
 };
+
+// https://leetcode.com/discuss/81478/easy-short-concise-and-fast-java-dfs-3-ms-solution
+
+class Solution {
+public:
+    vector<string> removeInvalidParentheses(string s) {
+        vector<string> ans;
+        DFS(s, 0, 0, false, ans);
+        return ans;
+    }
+    
+    //we need to keep another information: the last removal position. 
+    // If we do not have this position, we will generate duplicate by 
+    // removing two ‘)’ in two steps only with a different order. 
+    void DFS(string s, int cur, int lastDelete, int reversed, vector<string> &ans)
+    {
+        int nOpen = 0;
+        char open = '(', close = ')';
+        if(reversed) swap(open, close);
+        for(int i = cur; i < (int)s.size(); i++){
+            if(s[i] == open) ++nOpen;
+            if(s[i] == close) --nOpen;
+            if(nOpen < 0){
+                for(int j = lastDelete; j <= i;j++){
+                    if(s[j] == close && (j == lastDelete || s[j-1] != close))
+                        DFS(s.substr(0,j) + s.substr(j+1), i, j, reversed, ans);
+                }
+                return;
+            }
+        }
+        
+        string reversedS(s.rbegin(), s.rend());
+        if(reversed){
+            ans.emplace_back(reversedS);
+        }
+        else {
+            DFS(reversedS, 0, 0, true, ans);
+        }
+    }
+};
