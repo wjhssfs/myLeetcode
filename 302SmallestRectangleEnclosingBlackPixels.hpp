@@ -56,3 +56,32 @@ public:
 private:
 	int left, right, top, bottom;
 };
+
+class Solution {
+public:
+    int minArea(vector<vector<char>>& image, int x, int y) {
+        swap(_image, image);
+        _m = (int)_image.size();
+        if(_m) _n = (int)_image[0].size();
+        int left = binaryBoundary(0, y, true, false);
+        int right = binaryBoundary(y, _n, false, false);
+        int top = binaryBoundary(0, x, true, true);
+        int bottom = binaryBoundary(x, _m, false, true);
+        return (right - left) * (bottom - top);
+    }
+    
+    int binaryBoundary(int i, int j, bool forLowBound, bool vertical){
+        while(i < j){
+            int mid = (i+j)/2, c = 0, cMax = vertical? _n : _m;
+            for(; c < cMax; c++){
+                if(vertical && _image[mid][c] == '1') break;
+                if(!vertical && _image[c][mid] == '1') break;
+            }
+            if((c<cMax) == forLowBound) j = mid;
+            else i = mid + 1;
+        }
+        return i;
+    }
+    vector<vector<char>> _image;
+    int _m, _n;
+};
