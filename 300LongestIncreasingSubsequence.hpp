@@ -44,6 +44,8 @@ public:
     }
 };
 
+// https://leetcode.com/discuss/67554/9-lines-c-code-with-o-nlogn-complexity
+
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
