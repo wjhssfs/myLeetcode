@@ -30,28 +30,16 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
 class Solution {
 public:
     int longestConsecutive(TreeNode* root) {
-        int maxLen = 0;
-        longestConsecutive(root, maxLen);
-        return maxLen;
+        return search(root, nullptr, 0);
     }
-private:
-    int longestConsecutive(TreeNode* root, int &maxLen) {
-        if(!root) return 0;
-        int curLen = 1;
-        int leftLen = longestConsecutive(root->left, maxLen);
-        int rightLen = longestConsecutive(root->right, maxLen);
-        if(leftLen && (root->val == root->left->val-1) &&
-           ((leftLen >= rightLen) ||  (root->val != root->right->val-1)))
-       {
-            curLen += leftLen;
-        }
-        else if(rightLen && (root->val == root->right->val-1)){
-            curLen += rightLen;
-        }
-        maxLen = max(maxLen, curLen);
-        return curLen;
+
+    int search(TreeNode *root, TreeNode *parent, int len) {
+        if (!root) return len;
+        len = (parent && root->val == parent->val + 1)?len+1:1;
+        return max(len, max(search(root->left, root, len), search(root->right, root, len)));
     }
 };
