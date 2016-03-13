@@ -59,3 +59,23 @@ public:
 private:
 	vector<vector<map<int, set<string>>>> m;
 };
+
+class ValidWordAbbr {
+public:
+    ValidWordAbbr(vector<string> &dictionary) {
+        for (string& d : dictionary) {
+            int n = d.length();
+            string abbr = d[0] + to_string(n) + d[n - 1]; // can just use to_string(n)
+            mp[abbr].insert(d);
+        }
+    }
+
+    bool isUnique(string word) {
+        int n = word.length();
+        string abbr = word[0] + to_string(n) + word[n - 1];
+        return mp[abbr].count(word) == mp[abbr].size(); 
+    }
+private:
+    unordered_map<string, unordered_set<string>> mp;
+};
+
