@@ -24,21 +24,18 @@ public:
 
 private:
 	void DFS(vector<string> &results, string num, int start, string cur, long long valL, long long valB, int target) {
-		if (start == num.size()) {
-			long long total = valL + valB;
-			if(total == target) results.push_back(cur);
-			return;
+		if (start == num.size() &&  valL + valB == target){
+			results.push_back(cur);
 		}
-
-		for (int i = start; i < (int)num.size(); i++) {
-			int len = (i - start) + 1;
-			int newStart = start + (i - start) + 1;
-			string n = num.substr(start, len);
-			long long nVal = stoll(n);
-			DFS(results, num, newStart, cur + "+" + n, valL + valB, nVal, target);
-			DFS(results, num, newStart, cur + "-" + n, valL + valB, -nVal, target);
-			DFS(results, num, newStart, cur + "*" + n, valL, valB * nVal, target);
-			if (num[start] == '0') break;
+		else {
+			for (int i = start; i < (int)num.size(); i++) {
+				string n = num.substr(start, i - start + 1);
+				long long nVal = stoll(n);
+				DFS(results, num, i  + 1, cur + "+" + n, valL + valB, nVal, target);
+				DFS(results, num, i  + 1, cur + "-" + n, valL + valB, -nVal, target);
+				DFS(results, num, i  + 1, cur + "*" + n, valL, valB * nVal, target);
+				if (num[start] == '0') break;
+			}
 		}
 	}
 };
