@@ -17,6 +17,6 @@ public:
                 costs[i][j] = min(costs[i-1][(j+1)%3], costs[i-1][(j+2)%3]) + costs[i][j];
             }
         }
-        return min({costs[nH-1][0], costs[nH-1][1],costs[nH-1][2]});
+        return min({costs[nH-1][0], costs[nH-1][1], costs[nH-1][2]});
     }
 };

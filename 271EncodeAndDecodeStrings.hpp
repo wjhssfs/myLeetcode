@@ -63,17 +63,15 @@ public:
 
 class Codec {
 public:
-    
     // Encodes a list of strings to a single string.
     string encode(vector<string>& strs) {
         string output;
         for(auto & str : strs){
             for(auto c : str){
                 if(c == '#') output += "##";
-                else if(c == '|') output += "#1";
                 else output += c;
             }
-            output += '|';
+            output += "#1";
         }
         return output;
     }
@@ -83,18 +81,17 @@ public:
         vector<string> result;
         string str;
         for(size_t i = 0; i < s.size(); i++){
-            if(s[i] == '|') {
-                result.push_back(str);
-                str.clear();
-            }
-            else if(s[i] == '#'){
-                ++i;
-                if(s[i] == '1') str += '|';
-                else if(s[i] == '#') str += '#';
-            }
-            else {
-                str += s[i];
-            }
+            if(s[i] == '#') {
+                if(i + 1 < s.size() && s[i+1] == '#'){
+                    str += '#';
+                    ++i;
+                }
+                else {
+                    result.emplace_back(str);
+                    str.clear();
+                    ++i;
+                }
+            } else str += s[i];
         }
         return result;
     }

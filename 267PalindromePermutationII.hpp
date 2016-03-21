@@ -41,8 +41,7 @@ public:
     
 private:
     void gen(unordered_map<char, int> &m, string &buf, int cur, int total, vector<string> &results){
-        if(((total%2) && (cur == (total-1)/2)) ||
-            (!(total%2)&& (cur == total/2))) {
+         if(cur == total/2) {
             results.push_back(buf);
             return;
         }
