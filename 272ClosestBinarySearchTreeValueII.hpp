@@ -149,7 +149,7 @@ public:
         bPath = fPath;
         TreeNode *next = getNext(fPath, false), *pre = getNext(bPath, true);
         while(--k > 0) {
-            if(!pre || (next && abs(next->val, target) <= abs(pre->val, target){
+            if(!pre || (next && fabs(next->val, target) <= fabs(pre->val, target){
                 result.push_back(next->val);
                 next = getNext(fPath, false);
             } else {
@@ -166,7 +166,7 @@ public:
         auto kid = target < a ? root->left : root->right;
         if (!kid) return a;
         int b = closestValue(kid, target);
-        if (abs(a - target) < abs(b - target))
+        if (fabs(a - target) < fabs(b - target))
         {
             while(path.top()!=root) path.pop();
             return a;
