@@ -1,6 +1,6 @@
 // 272 Closest Binary Search Tree Value II
 
-// Given a non-empty binary search tree and a target value, find k values in the BST that are closest to the target.
+ 
 
 // Note:
 // Given target value is a floating point.
@@ -27,7 +27,8 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-class Solution {
+
+ class Solution {
 public:
     vector<int> closestKValues(TreeNode* root, double target, int k) {
         vector<int> result;
@@ -138,3 +139,141 @@ private:
         return cur;
     }
 };
+
+class Solution {
+public:
+    vector<int> closestKValues(TreeNode* root, double target, int k) {
+        stack<TreeNode *> fPath, bPath;
+        vector<int> result;
+        result.push_back(closestValue(root, target, fPath));
+        bPath = fPath;
+        TreeNode *next = getNext(fPath, false), *pre = getNext(bPath, true);
+        while(--k > 0) {
+            if(!pre || (next && abs(next->val, target) <= abs(pre->val, target){
+                result.push_back(next->val);
+                next = getNext(fPath, false);
+            } else {
+                result.push_back(pre->val);
+                pre = getNext(bPath, true);
+            }
+        }
+        return result;
+    }
+    
+    int closestValue(TreeNode* root, double target, stack<TreeNode*> &path) {
+        int a = root->val;
+        path.push(root);
+        auto kid = target < a ? root->left : root->right;
+        if (!kid) return a;
+        int b = closestValue(kid, target);
+        if (abs(a - target) < abs(b - target))
+        {
+            while(path.top()!=root) path.pop();
+            return a;
+        } else return b;
+    }
+
+    TreeNode *getNext(stack<TreeNode *> &s, bool reverse){
+        if(s.empty()) return nullptr;
+        TreeNode *cur = s.top();
+        auto forward = [](TreeNode * n){ return reverse ? n->left : n->right;};
+        auto backward = [](TreeNode * n){ return reverse ? n->right : n->left;};
+        if(forward(cur)) {
+            s.push(forward(cur));
+            cur = forward(cur);
+            while(backward(cur)){
+                s.push(backward(cur));
+                cur = backward(cur);
+            }
+            return cur;
+        } else if (s.size()){
+            s.pop();
+            while(s.size() && forward(s.top()) == cur){
+                cur = s.top(); s.pop();
+            }
+            return getNext(s);
+        } else return nullptr;
+    }
+};
+
+// O(n). do a single inorder traversal, and maintain a window size K.
+
+/// https://leetcode.com/discuss/55682/o-logn-java-solution-with-two-stacks-following-hint
+public class Solution {
+    public List<Integer> closestKValues(TreeNode root, double target, int k) {
+        List<Integer> ret = new LinkedList<>();
+        Stack<TreeNode> succ = new Stack<>();
+        Stack<TreeNode> pred = new Stack<>();
+        initializePredecessorStack(root, target, pred);
+        initializeSuccessorStack(root, target, succ);
+        if(!succ.isEmpty() && !pred.isEmpty() && succ.peek().val == pred.peek().val) {
+            getNextPredecessor(pred);
+        }
+        while(k-- > 0) {
+            if(succ.isEmpty()) {
+                ret.add(getNextPredecessor(pred));
+            } else if(pred.isEmpty()) {
+                ret.add(getNextSuccessor(succ));
+            } else {
+                double succ_diff = Math.abs((double)succ.peek().val - target);
+                double pred_diff = Math.abs((double)pred.peek().val - target);
+                if(succ_diff < pred_diff) {
+                    ret.add(getNextSuccessor(succ));
+                } else {
+                    ret.add(getNextPredecessor(pred));
+                }
+            }
+        }
+        return ret;
+    }
+
+    private void initializeSuccessorStack(TreeNode root, double target, Stack<TreeNode> succ) {
+        while(root != null) {
+            if(root.val == target) {
+                succ.push(root);
+                break;
+            } else if(root.val > target) {
+                succ.push(root);
+                root = root.left;
+            } else {
+                root = root.right;
+            }
+        }
+    }
+
+    private void initializePredecessorStack(TreeNode root, double target, Stack<TreeNode> pred) {
+        while(root != null){
+            if(root.val == target){
+                pred.push(root);
+                break;
+            } else if(root.val < target){
+                pred.push(root);
+                root = root.right;
+            } else{
+                root = root.left;
+            }
+        }
+    }
+
+    private int getNextSuccessor(Stack<TreeNode> succ) {
+        TreeNode curr = succ.pop();
+        int ret = curr.val;
+        curr = curr.right;
+        while(curr != null) {
+            succ.push(curr);
+            curr = curr.left;
+        }
+        return ret;
+    }
+
+    private int getNextPredecessor(Stack<TreeNode> pred) {
+        TreeNode curr = pred.pop();
+        int ret = curr.val;
+        curr = curr.left;
+        while(curr != null) {
+            pred.push(curr);
+            curr = curr.right;
+        }
+        return ret;
+    }
+}

@@ -17,21 +17,23 @@
 class Solution {
 public:
     int closestValue(TreeNode* root, double target) {
-        if(!root) return 0;
-        if(root->val == target) return root->val;
-        else if(root->val > target) {
-            if(!root->left) return root->val;
-            int leftVal = closestValue(root->left, target);
-            double leftDiff =  leftVal - target;
-            if(leftDiff < 0) leftDiff = -leftDiff;
-            return root->val - target < leftDiff ? root->val : leftVal;
-        } 
-        else {
-            if(!root->right) return root->val;
-            int rightVal = closestValue(root->right, target);
-            double rightDiff =  rightVal - target;
-            if(rightDiff < 0) rightDiff = - rightDiff;
-            return target - root->val < rightDiff ? root->val : rightVal;
-        }
+        int a = root->val;
+        auto kid = target < a ? root->left : root->right;
+        if (!kid) return a;
+        int b = closestValue(kid, target);
+        return abs(a - target) < abs(b - target) ? a : b;
     }
 };
+
+// Iterative
+// Walk the path down the tree close to the target, return the closest value on the path
+int closestValue(TreeNode* root, double target) {
+    int closest = root->val;
+    while (root) {
+        if (abs(closest - target) >= abs(root->val - target))
+            closest = root->val;
+        root = target < root->val ? root->left : root->right;
+    }
+    return closest;
+}
+// https://leetcode.com/discuss/54438/4-7-lines-recursive-iterative-ruby-c-java-python
