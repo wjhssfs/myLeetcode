@@ -29,3 +29,5 @@ public:
         return maxRoom;
     }
 };
+
+// https://leetcode.com/discuss/50948/c-o-n-log-n-584-ms-3-solutions

@@ -4,6 +4,7 @@
 // Follow up:
 // Could you do it using only constant space complexity?
 
+// https://leetcode.com/discuss/51543/java-o-n-and-o-1-extra-space
 class Solution {
 public:
 	bool verifyPreorder(vector<int>& preorder) {
