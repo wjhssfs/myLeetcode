@@ -4,6 +4,7 @@
 class Solution {
 public:
     bool isPowerOfTwo(int n) {
+    	// INT_MIN for (100...00)2
         if(!n || n == INT_MIN) return false; 
         return !(n & (n -1));
     }
