@@ -1,7 +1,5 @@
 // 225 Implement Stack using Queues
-
 // Implement the following operations of a stack using queues.
-
 // push(x) -- Push element x onto stack.
 // pop() -- Removes the element on top of the stack.
 // top() -- Get the top element.
@@ -43,5 +41,29 @@ public:
             t.push(q.front());q.pop();
         }
         swap(q,t);
+    }
+};
+
+class Stack {
+    queue<int> q;
+public:
+    void push(int x) {
+        q.push(x);
+        for (int i=1; i<q.size(); i++) {
+            q.push(q.front());
+            q.pop();
+        }
+    }
+
+    void pop() {
+        q.pop();
+    }
+
+    int top() {
+        return q.front();
+    }
+
+    bool empty() {
+        return q.empty();
     }
 };
