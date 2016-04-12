@@ -1,10 +1,8 @@
 // 222 Count Complete Tree Nodes
 // Given a complete binary tree, count the number of nodes.
-
 // Definition of a complete binary tree from Wikipedia:
 // https://en.wikipedia.org/wiki/Binary_tree#Types_of_binary_trees
 // In a complete binary tree every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
-
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -14,6 +12,7 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+
 class Solution {
 public:
     int countNodes(TreeNode* root) {
@@ -24,7 +23,8 @@ public:
         running = root->right;
         while(running){running = running->right; ++rightHeight;}
         if(leftHeight && leftHeight == rightHeight){
-            return pow(2, leftHeight + 1) - 1;
+            //if pow(2,hl) is changed to be (1<<hl), the run time would decline from 360ms to 170 ms approximately.
+            return pow(2, leftHeight + 1) - 1; 
         }
         int leftCount = countNodes(root->left);
         int rightCount = countNodes(root->right);
@@ -54,6 +54,7 @@ int countNodes(TreeNode* root) {
 }
 
 // ==============================================
+// calculate height of right tree, if the same as height, go to right tree(append 1 to binary result), otherwise go to left tree (Append 0 to binary result)
 int countNodes(TreeNode* root)
 {
     int result,height,RTreeHeight;
@@ -68,12 +69,12 @@ int countNodes(TreeNode* root)
 
     while(--height)
     {
+        // at the end of current loop, this will become 2^heigh
         result <<= 1;
 
         RTreeHeight = 0;
         p = visit->right;
         for(;p;p = p -> left) RTreeHeight++;
-
         if (RTreeHeight < height) visit = visit->left;
         else
         {
