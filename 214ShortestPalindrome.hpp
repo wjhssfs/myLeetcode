@@ -1,18 +1,17 @@
 // 214 Shortest Palindrome 
-
-
-// Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
-
+// Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it.
+// Find and return the shortest palindrome you can find by performing this transformation.
 // For example:
-
 // Given "aacecaaa", return "aaacecaaa".
-
 // Given "abcd", return "dcbabcd".
-
 // https://leetcode.com/discuss/36807/c-8-ms-kmp-based-o-n-time-&-o-n-memory-solution
 // We can construct the following string and run KMP algorithm on it: (s) + (some symbol not present in s) + (reversed string)
-// After running KMP on that string as result we get a vector p with values of a prefix function for each character (for definition of a prefix function see KMP algorithm description). We are only interested in the last value because it shows us the largest suffix of the reversed string that matches the prefix of the original string. So basically all we left to do is to add the first k characters of the reversed string to the original string, where k is a difference between original string size and the prefix function for the last character of a constructed string.
-
+// After running KMP on that string as result we get a vector p with values of a prefix function for each
+// character (for definition of a prefix function see KMP algorithm description). We are only interested in the
+// last value because it shows us the largest suffix of the reversed string that matches the prefix of the
+// original string. So basically all we left to do is to add the first k characters of the reversed string to
+// the original string, where k is a difference between original string size and the prefix function
+// for the last character of a constructed string.
 class Solution {
 public:
     string shortestPalindrome(string s) {
@@ -33,8 +32,13 @@ public:
 };
 
 // O(n2)
-// In order to slove this problem, the key is to get the length of the longest palindromic prefix substring. if the length of s is len, and the length of the longest palindromic prefix substring is longest, the remaining substring will be s.substr(longest, len - longest), than we should reverse the remaining substring and adding it in front of s.
-// For example, if s is "abacbbcda", so the longest palindromic prefix substring is "aba"(not "cbbc" because it's not prefix string), and the remaining substring is "cbbcda", we reverse the remaining substring and get "adcbbc", so the result is "adcbbc" + "abacbbcda".
+// In order to slove this problem, the key is to get the length of the longest palindromic prefix substring. 
+// if the length of s is len, and the length of the longest palindromic prefix substring is longest,
+// the remaining substring will be s.substr(longest, len - longest),
+// than we should reverse the remaining substring and adding it in front of s.
+// For example, if s is "abacbbcda", so the longest palindromic prefix substring is
+// "aba"(not "cbbc" because it's not prefix string), and the remaining substring is "cbbcda",
+// we reverse the remaining substring and get "adcbbc", so the result is "adcbbc" + "abacbbcda".
 
 class Solution {
 public:
