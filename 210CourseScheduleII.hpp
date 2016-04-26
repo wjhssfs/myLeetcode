@@ -12,39 +12,6 @@
 // Note:
 // The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read more about how a graph is represented.
 class Solution {
-public:
-	vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {
-		vector<int> order;
-		vector<vector<int>> dependantList(numCourses);
-		vector<int> numRequired(numCourses);
-		for_each(prerequisites.begin(), prerequisites.end(), [&](const pair<int, int> & pre){
-			numRequired[pre.first]++;
-			dependantList[pre.second].push_back(pre.first);
-		});
-
-		while (1)
-		{
-			auto it = find(numRequired.begin(), numRequired.end(), 0);
-			if (it == numRequired.end())
-			{
-				if (find_if(numRequired.begin(), numRequired.end(), [](int i){ return i > 0; }) != numRequired.end()) order.clear();
-				return order;
-			}
-			else
-			{
-				*it = -1;
-				order.push_back(it - numRequired.begin());
-				auto && ref = dependantList[it - numRequired.begin()];
-				for (auto && dependant : ref)
-				{
-					numRequired[dependant]--;
-				}
-			}
-		}
-	}
-};
-
-class Solution {
     vector<bool> visited;
     vector<int> path; 
     vector<bool> rec;
@@ -101,8 +68,6 @@ public:
         return false;
     }
 };
-
-
 
 // https://leetcode.com/discuss/42548/20-lines-c-bfs-dfs-solutions
 // BFS
