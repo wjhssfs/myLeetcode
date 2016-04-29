@@ -5,43 +5,6 @@
 // Try to come up as many solutions as you can, there are at least 3 different ways to solve this problem.
 // [show hint]
 // Related problem: Reverse Words in a String II
-// Tag:{Array, Thread}
-class Solution {
-public:
-    void rotate(int nums[], int n, int k) {
-        if (n <= 0) return;
-        k %= n;
-        int curStart = -1;
-        int nMoved = 0;
-        while (nMoved < n)
-        {   
-            curStart++;
-            int curP = curStart;
-            int cur = nums[curP];
-            do{
-                int nextP = (curP + k + n) % n;
-                swap(cur, nums[nextP]);
-                nMoved++;
-                curP = nextP;
-            } while (curP != curStart);
-        }
-    }
-};
-
-// Tag:{Recursive}
-class Solution2 {
-public:
-    void rotate(int nums[], int n, int k) {
-        if (n <= 0 || !(k % n)) return;
-        int p = n - (k % n), s = 0, e = p;
-        while(s != e)
-        {
-            swap(nums[s++], nums[e++]);
-            if(e == n) e = p;
-            if(s == p) p = e; // Recurse to the case that will fall into the if above
-        }
-    }
-};
 
 https://leetcode.com/discuss/27387/summary-of-c-solutions
 1. Make an extra copy and then rotate.
@@ -152,7 +115,7 @@ public:
             // Swap the last k elements with the first k elements. 
             // The last k elements will be in the correct positions
             // but we need to rotate the remaining (n - k) elements 
-            // to the right by k steps.
+            // to the right by k steps. (k%(n-k)) steps
             for (int i = 0; i < k; i++)
             {
                 swap(nums[i], nums[n - k + i]);
@@ -160,65 +123,19 @@ public:
         }
     }
 };
+
 5. Keep swapping two subarrays.
-
 Time complexity: O(n). Space complexity: O(1).
-
-class Solution 
-{
+class Solution2 {
 public:
-    void rotate(int nums[], int n, int k) 
-    {
-        if ((n == 0) || (k <= 0) || (k%n == 0))
+    void rotate(int nums[], int n, int k) {
+        if (n <= 0 || !(k % n)) return;
+        int p = n - (k % n), s = 0, e = p;
+        while(s != e)
         {
-            return;
-        }
-
-        k = k%n;
-        // Rotation to the right by k steps is equivalent to swapping 
-        // the two subarrays nums[0,...,n - k - 1] and nums[n - k,...,n - 1].
-        int start = 0;
-        int tmp = 0;
-        while (k > 0)
-        {
-            if (n - k >= k)
-            {
-                // The left subarray with size n - k is longer than 
-                // the right subarray with size k. Exchange 
-                // nums[n - 2*k,...,n - k - 1] with nums[n - k,...,n - 1].
-                for (int i = 0; i < k; i++)
-                {
-                    tmp = nums[start + n - 2*k + i];
-                    nums[start + n - 2*k + i] = nums[start + n - k + i];
-                    nums[start + n - k + i] = tmp;
-                }
-
-                // nums[n - 2*k,...,n - k - 1] are in their correct positions now.
-                // Need to rotate the elements of nums[0,...,n - k - 1] to the right 
-                // by k%n steps.
-                n = n - k;
-                k = k%n;
-            }
-            else
-            {
-                // The left subarray with size n - k is shorter than 
-                // the right subarray with size k. Exchange 
-                // nums[0,...,n - k - 1] with nums[n - k,...,2*(n - k) - 1].
-                for (int i = 0; i < n - k; i++)
-                {
-                    tmp = nums[start + i];
-                    nums[start + i] = nums[start + n - k + i];
-                    nums[start + n - k + i] = tmp;
-                }
-
-                // nums[n - k,...,2*(n - k) - 1] are in their correct positions now.
-                // Need to rotate the elements of nums[n - k,...,n - 1] to the right 
-                // by k - (n - k) steps.
-                tmp = n - k;
-                n = k;
-                k -= tmp;
-                start += tmp;
-            }
+            swap(nums[s++], nums[e++]);
+            if(e == n) e = p; // left sub array is longer
+            if(s == p) p = e; // Recurse to the case that will fall into the if above
         }
     }
 };
