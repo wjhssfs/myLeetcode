@@ -3,8 +3,6 @@
 // Design an algorithm to find the maximum profit. You may complete at most k transactions.
 // Note:
 // You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
-
-// Use 2 DPs
 class Solution {
 public:
     int maxProfit(int k, vector<int> &prices) {
@@ -37,6 +35,11 @@ public:
 
 // Solution 2:
 // https://leetcode.com/discuss/26745/c-solution-with-o-n-klgn-time-using-max-heap-and-stack
+// The key point is when there are two v/p pairs (v1, p1) and (v2, p2), satisfying v1 <= v2 and p1 <= p2, 
+// we can either make one transaction at [v1, p2], or make two at both [v1, p1] and [v2, p2]. 
+// The trick is to treat [v1, p2] as the first transaction, and [v2, p1] as the second.
+// Then we can guarantee the right max profits in both situations,
+// p2 - v1 for one transaction and p1 - v1 + p2 - v2 for two.
 class Solution2 {
 public:
     int maxProfit(int k, vector<int> &prices) {
