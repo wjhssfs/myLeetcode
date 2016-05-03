@@ -35,7 +35,7 @@ private:
     {
         if (cur){
             s.push(cur);
-            while (s.top()->left)s.push(s.top()->left);
+            while (s.top()->left)s.push(s.top()->left); // called at most n times in total
         }
     }
     stack<TreeNode*> s;
