@@ -1,10 +1,7 @@
 // 164 Maximum Gap 
 // Given an unsorted array, find the maximum difference between the successive elements in its sorted form.
-// 
 // Try to solve it in linear time/space.
-// 
 // Return 0 if the array contains less than 2 elements.
-// 
 // You may assume all elements in the array are non-negative integers and fit in the 32-bit signed integer range.
 
 // The key is to use the fact that the lower bound of the gap is (maxV - minV )/ (sSize - 1).
@@ -13,8 +10,6 @@
 class Solution {
 public:
     int maximumGap(vector<int> &num) {
-        auto iter = unique(num.begin(), num.end());
-        num.erase(iter, num.end());
         int m = num.size();
         if (m < 2) return 0;
         auto minmax = minmax_element(num.begin(), num.end());
