@@ -1,50 +1,7 @@
 // 146 LRU Cache
-// 
 // Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.
-// 
 // get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
 // set(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
-
-class LRUCache{
-public:
-	LRUCache(int capacity) {
-		cap = capacity;
-	}
-
-	int get(int key) {
-		if (km.count(key) == 0) return -1;
-		else{
-			seq++;
-			km[key].second = seq;
-			q.push(make_pair(key, seq));
-			return km[key].first;
-		}
-	}
-
-	void set(int key, int value) {
-		seq++;
-		q.push(make_pair(key, seq));
-		if (km.count(key) == 0){
-			km[key] = make_pair(value, seq);
-			while(km.size() > cap){
-				int k = q.front().first;
-				int s = q.front().second;
-				q.pop();
-				if (km[k].second == s){
-					km.erase(k);
-				}
-			}
-		}
-		else{
-			km[key] = make_pair(value, seq);
-		}
-	}
-	unordered_map<int, pair<int, size_t>> km;
-	queue<pair<int, size_t>> q;
-	int cap;
-	size_t seq = 0;
-};
-
 
 struct CacheNode{
     int key;
