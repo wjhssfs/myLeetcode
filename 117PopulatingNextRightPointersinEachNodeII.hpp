@@ -1,10 +1,7 @@
 // 117 Populating Next Right Pointers in Each Node II
 // Follow up for problem "Populating Next Right Pointers in Each Node".
-// 
 // What if the given tree could be any binary tree? Would your previous solution still work?
-// 
 // Note:
-// 
 // You may only use constant extra space.
 // For example,
 // Given the following binary tree,
