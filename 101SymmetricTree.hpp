@@ -1,8 +1,6 @@
-// 101 Symmetric Tree Total
+// 101 Symmetric Tree
 // Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
-// 
 // For example, this binary tree is symmetric:
-// 
 //     1
 //    / \
 //   2   2
