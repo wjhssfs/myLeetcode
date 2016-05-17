@@ -1,6 +1,5 @@
 // 113 Path Sum II 
 // Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
-// 
 // For example:
 // Given the below binary tree and sum = 22,
 //               5
