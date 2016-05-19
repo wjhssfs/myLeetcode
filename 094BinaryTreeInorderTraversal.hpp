@@ -1,6 +1,5 @@
 // 94 Binary Tree Inorder Traversal
 // Given a binary tree, return the inorder traversal of its nodes' values.
-// 
 // For example:
 // Given binary tree {1,#,2,3},
 //    1
@@ -21,7 +20,6 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-
 class Solution {
 public:
 vector<int> inorderTraversal(TreeNode *root) {

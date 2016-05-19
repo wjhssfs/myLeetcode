@@ -1,6 +1,5 @@
 // 96 Unique Binary Search Trees 
 // Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
-// 
 // For example,
 // Given n = 3, there are a total of 5 unique BST's.
 // 
@@ -10,7 +9,6 @@
 //     /     /       \                 \
 //    2     1         2                 3
 // 
-
 class Solution {
 public:
     int numTrees(int n) {  
@@ -22,3 +20,19 @@ public:
 		return sum;
     }
 };
+
+// https://leetcode.com/discuss/24282/dp-solution-in-6-lines-with-explanation-f-i-n-g-i-1-g-n-i
+public int numTrees(int n) {
+    int [] G = new int[n+1];
+    G[0] = G[1] = 1;
+
+    for(int i=2; i<=n; ++i) {
+        for(int j=1; j<=i; ++j) {
+            G[i] += G[j-1] * G[i-j];
+        }
+    }
+
+    return G[n];
+}
+
+// G[n] = C(n, 2n) / (n + 1) https://en.wikipedia.org/wiki/Catalan_number

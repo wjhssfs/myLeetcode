@@ -1,11 +1,9 @@
 // 99 Recover Binary Search Tree 
 // Two elements of a binary search tree (BST) are swapped by mistake.
-
 // Recover the tree without changing its structure.
-
 // Note:
 // A solution using O(n) space is pretty straight forward. Could you devise a constant space solution?
-
+// https://leetcode.com/discuss/68639/solutions-explanation-recursive-iterative-traversal-traversal
 class Solution {
 public:
     void recoverTree(TreeNode *root) {
@@ -33,7 +31,6 @@ Solution: 1. recursive solution. O(n) space. get inorder list first.
            2. recursive solution. O(n) space. with only auxiliary two pointers.
            3. Morris inorder traversal. O(1) space. with only auxiliary two pointers.
 */
-
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -130,3 +127,5 @@ public:
         }
     }
 };
+
+// https://leetcode.com/discuss/26310/detail-explain-about-morris-traversal-finds-incorrect-pointer
