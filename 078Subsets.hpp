@@ -1,6 +1,5 @@
 // 78 Subsets 
 // Given a set of distinct integers, S, return all possible subsets.
-// 
 // Note:
 // Elements in a subset must be in non-descending order.
 // The solution set must not contain duplicate subsets.
@@ -20,25 +19,56 @@
 
 class Solution {
 public:
-    vector<vector<int> > subsets(vector<int> &S) {
-        sort(S.begin(), S.end());
-        result.clear(); candidate.clear();
-        recursiveGen(S, 0);
-        return result;
+    vector<vector<int>> subsets(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> subs;
+        vector<int> sub;  
+        genSubsets(nums, 0, sub, subs);
+        return subs; 
     }
-private:
-    void recursiveGen(vector<int> &S, int index)
-    {
-        if (index == S.size()) {
-            result.push_back(candidate);
-            return;
+    void genSubsets(vector<int>& nums, int start, vector<int>& sub, vector<vector<int>>& subs) {
+        subs.push_back(sub);
+        for (int i = start; i < nums.size(); i++) {
+            sub.push_back(nums[i]);
+            genSubsets(nums, i + 1, sub, subs);
+            sub.pop_back();
         }
-        candidate.push_back(S[index]);
-        recursiveGen(S, index+1);
-        candidate.pop_back();
-        recursiveGen(S, index + 1);
-
     }
-    vector<vector<int> > result;
-    vector<int> candidate;
 };
+
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> subs(1, vector<int>());
+        for (int i = 0; i < nums.size(); i++) {
+            int n = subs.size();
+            for (int j = 0; j < n; j++) {
+                subs.push_back(subs[j]); 
+                subs.back().push_back(nums[i]);
+            }
+        }
+        return subs;
+    }
+}; 
+
+// https://leetcode.com/discuss/46668/recursive-iterative-manipulation-solutions-explanations
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int num_subset = pow(2, nums.size()); 
+        vector<vector<int> > res(num_subset, vector<int>());
+        for (int i = 0; i < nums.size(); i++)
+            for (int j = 0; j < num_subset; j++)
+                if ((j >> i) & 1)
+                    res[j].push_back(nums[i]);
+        return res;  
+    }
+};
+
+"only iterate over the 1-bits"
+    for (int i = 0; i < nums.size(); i++)
+        for (int step = 1 << i, start = 0; start < num_subset; start += 2 * step)
+            for (int j = start; j < start + step; j++)
+                res[j].push_back(nums[i]);
