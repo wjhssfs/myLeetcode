@@ -1,11 +1,8 @@
 // 71 Simplify Path 
-// Given an absolute path for a file (Unix-style), simplify it.
-// 
+// Given an absolute path for a file (Unix-style), simplify it. 
 // For example,
 // path = "/home/", => "/home"
 // path = "/a/./b/../../c/", => "/c"
-// click to show corner cases.
-// 
 // Corner Cases:
 // Did you consider the case where path = "/../"?
 // In this case, you should return "/".
@@ -37,3 +34,16 @@ public:
         return res.empty() ? "/" : res;
     }
 };
+
+string simplifyPath(string path) {
+    string res, tmp;
+    vector<string> stk;
+    stringstream ss(path);
+    while(getline(ss,tmp,'/')) {
+        if (tmp == "" or tmp == ".") continue;
+        if (tmp == ".." && !stk.empty()) stk.pop_back();
+        else if (tmp != "..") stk.push_back(tmp);
+    }
+    for(auto str : stk) res += "/"+str;
+    return res.empty() ? "/" : res;
+}
