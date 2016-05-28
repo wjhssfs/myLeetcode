@@ -1,13 +1,8 @@
 // 61 Unique Paths 
-// A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
-// 
-// The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
-// 
+// A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below). 
+// The robot can only move either down or right at any point in time. The robot is trying to reach
+// the bottom-right corner of the grid 
 // How many possible unique paths are there?
-// 
-// 
-// Above is a 3 x 7 grid. How many possible unique paths are there?
-// 
 // Note: m and n will be at most 100.
 
 /*
@@ -15,7 +10,6 @@
  1. Use formula C(x,t) = t!/(x!*(t-x)!) (x should be large for calculation).
  2. Dynamic programming. UP(i,j) = UP(i-1,j) + UP(i,j-1).
  */
-
 class Solution {
 public:
     int uniquePaths_1(int m, int n) {
@@ -46,3 +40,15 @@ public:
         return dp[m-1][n-1];
     }
 };
+
+// https://leetcode.com/discuss/38353/0ms-5-lines-dp-solution-in-c-with-explanations
+class Solution {
+    int uniquePaths(int m, int n) {
+        if (m > n) return uniquePaths(n, m);
+        vector<int> cur(m, 1);
+        for (int j = 1; j < n; j++)
+            for (int i = 1; i < m; i++)
+                cur[i] += cur[i - 1]; 
+        return cur[m - 1];
+    }
+}; 
