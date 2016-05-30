@@ -1,6 +1,5 @@
 // 56 Merge Intervals 
 // Given a collection of intervals, merge all overlapping intervals.
-// 
 // For example,
 // Given [1,3],[2,6],[8,10],[15,18],
 // return [1,6],[8,10],[15,18].
@@ -28,5 +27,29 @@ public:
         }
         if (intervals.size()) ret.assign(intervals.begin(), intervals.begin() + i + 1);
         return ret;
+    }
+};
+
+class Solution {
+private:
+    static bool compare(Interval& i1, Interval& i2) {
+        return i1.start<i2.start;
+    }
+public:
+    vector<Interval> merge(vector<Interval>& intervals) {
+        if (intervals.size()<2) return intervals;
+
+        vector<Interval> M_I;
+        sort(intervals.begin(),intervals.end(),compare);
+
+        auto it=intervals.cbegin();
+        Interval in=*it;
+        ++it;
+        for (it;it!=intervals.cend();++it) {
+            if (it->start>in.end) {M_I.push_back(in); in=*it;}
+            else in.end=max(in.end,it->end);
+        }
+        M_I.push_back(in);
+        return M_I;
     }
 };
