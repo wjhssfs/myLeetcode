@@ -1,14 +1,10 @@
 // 44 Wildcard Matching 
 // Implement wildcard pattern matching with support for '?' and '*'.
-
 // '?' Matches any single character.
 // '*' Matches any sequence of characters (including the empty sequence).
-
 // The matching should cover the entire input string (not partial).
-
 // The function prototype should be:
 // bool isMatch(const char *s, const char *p)
-
 // Some examples:
 // isMatch("aa","a") → false
 // isMatch("aa","aa") → true
@@ -19,39 +15,6 @@
 // isMatch("aab", "c*a*b") → false
 
 class Solution {
-public:
-	bool isMatch(const char *s, const char *p) {
-		if (s == 0 || p == 0) return false;
-		if (*s == 0 && *p == 0) return true;
-		if (*s == 0) {
-			while (*p == '*') p++;
-			return *p == 0;
-		}
-		if (*p == 0) return false;
-		if (*s == *p || *p == '?') return isMatch(s + 1, p + 1);
-		if (*p == '*'){
-			while (*p == '*') p++; //eliminate duplicated *
-			if (*p == 0) return true;// tailing * match any string
-			while (*s){
-				auto st = s, pt = p;
-				while (*st && (*st == *pt || *pt == '?')) {
-					++st;
-					++pt;
-				}
-				if (!*st && !*pt) return true;
-				if (*pt == '*') {
-					return isMatch(st, pt);//second *, skip all st, pt. Note when isMatch=false, the whole match will fail 
-				}
-				if (!*st) return false;
-				++s;
-			}
-		}
-		return false;
-	}
-};
-
-
-class Solution2 {
 public:
     bool isMatch(const char *s, const char *p) {
         const char *sBackup = NULL, *pBackup = NULL;
@@ -72,5 +35,55 @@ public:
         }
         while (*p == '*') p++;
         return *s == '\0' && *p == '\0';
+    }
+};
+
+// https://leetcode.com/discuss/10133/linear-runtime-and-constant-space-solution
+ bool isMatch(const char *s, const char *p) {
+        const char* star=NULL;
+        const char* ss=s;
+        while (*s){
+            //advancing both pointers when (both characters match) or ('?' found in pattern)
+            //note that *p will not advance beyond its length 
+            if ((*p=='?')||(*p==*s)){s++;p++;continue;} 
+
+            // * found in pattern, track index of *, only advancing pattern pointer 
+            if (*p=='*'){star=p++; ss=s;continue;} 
+
+            //current characters didn't match, last pattern pointer was *, current pattern pointer is not *
+            //only advancing pattern pointer
+            if (star){ p = star+1; s=++ss;continue;} 
+
+           //current pattern pointer is not star, last patter pointer was not *
+           //characters do not match
+            return false;
+        }
+
+       //check for remaining characters in pattern
+        while (*p=='*'){p++;}
+
+        return !*p;  
+    }
+
+// https://leetcode.com/discuss/43966/accepted-c-dp-solution-with-a-trick
+    class Solution {
+public:
+    bool isMatch(string s, string p) { 
+        int m = s.length(), n = p.length();
+        if (n > 30000) return false; // the trick
+        vector<bool> cur(m + 1, false); 
+        cur[0] = true;
+        for (int j = 1; j <= n; j++) {
+            bool pre = cur[0]; // use the value before update
+            cur[0] = cur[0] && p[j - 1] == '*'; 
+            for (int i = 1; i <= m; i++) {
+                bool temp = cur[i]; // record the value before update
+                if (p[j - 1] != '*')
+                    cur[i] = pre && (s[i - 1] == p[j - 1] || p[j - 1] == '?');
+                else cur[i] = cur[i - 1] || cur[i];
+                pre = temp;
+            }
+        }
+        return cur[m]; 
     }
 };
