@@ -1,8 +1,6 @@
 // 28 Implement strStr()
 // Implement strStr().
-
 // Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
-
 class Solution {
 public:
     char *strStr(char *haystack, char *needle) {
@@ -21,6 +19,18 @@ public:
     }
 };
 
+int strStr(char *haystack, char *needle) {
+    if (!haystack || !needle) return -1;
+    for (int i = 0; ; ++i) {
+        for (int j = 0; ; ++j) {
+            if (needle[j] == 0) return i;
+            if (haystack[i + j] == 0) return -1;
+            if (haystack[i + j] != needle[j]) break;
+        }
+    }
+}
+
+// https://leetcode.com/discuss/38998/explained-4ms-easy-c-solution    
 class Solution2 {
 public:
     const char *strStr(const char *haystack, const char *needle) {

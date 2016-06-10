@@ -1,24 +1,24 @@
 // 29 Divide Two Integers 
 // Divide two integers without using multiplication, division and mod operator.
-
 // If it is overflow, return MAX_INT.
-
 class Solution {
 public:
     int divide(int dividend, int divisor) {
-    	assert(divisor != 0);
-        long long llDividend = abs((long long)dividend), llDivisor = abs((long long)divisor);
-        bool flag = dividend > 0 && divisor < 0 || dividend < 0 && divisor > 0;
+        if (!divisor || (dividend == INT_MIN && divisor == -1))
+            return INT_MAX;
+        int sign = ((dividend < 0) ^ (divisor < 0)) ? -1 : 1;
+        long long dvd = labs(dividend);
+        long long dvs = labs(divisor);
         int res = 0;
-        while(llDividend >= llDivisor){
-        	long long curDividend = llDivisor, tempRes = 1;
-        	while((curDividend << 1) <= llDividend){
-        		curDividend <<= 1;
-        		tempRes <<= 1;
-        	}
-        	llDividend -= curDividend;
-        	res += tempRes;
+        while (dvd >= dvs) { 
+            long long temp = dvs, multiple = 1;
+            while (dvd >= (temp << 1)) {
+                temp <<= 1;
+                multiple <<= 1;
+            }
+            dvd -= temp;
+            res += multiple;
         }
-        return flag? -res:res;
+        return sign == 1 ? res : -res; 
     }
 };
