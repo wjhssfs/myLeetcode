@@ -1,5 +1,6 @@
 // 4 Median of Two Sorted Arrays 
-// There are two sorted arrays A and B of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+// There are two sorted arrays A and B of size m and n respectively. Find the median of the two sorted arrays.
+// The overall run time complexity should be O(log (m+n)).
 
 // O(log(m+n))
 class Solution {
@@ -78,3 +79,58 @@ public:
         else return (Ai + max(Ai_1, Bj_1)) / 2.0;
     }
 };
+
+// https://leetcode.com/discuss/15790/share-my-o-log-min-m-n-solution-with-explanation
+class Solution {
+public:
+  double findMedianSortedArrays(int A[], int m, int B[], int n) {
+    if (m > n) return findMedianSortedArrays(B, n, A, m);
+    int minLengthL = 0, maxLengthL = m, i, j, num1, mid = (m + n + 1) >> 1,num2;
+    // i = n elements in A left
+    // j = n elements in B left
+    while (minLengthL <= maxLengthL)
+    {
+      i = (minLengthL + maxLengthL) >> 1;
+      j = mid - i;
+      if (i<m && j>0 && B[j-1] > A[i]) minLengthL = i + 1;
+      else if (i>0 && j<n && B[j] < A[i-1]) maxLengthL = i - 1;
+      else
+      {
+        if (i == 0) num1 = B[j-1];
+        else if (j == 0) num1 = A[i - 1];
+        else num1 = max(A[i-1],B[j-1]);
+        break;
+      }
+    }
+    if (((m + n) & 1)) return num1;
+    if (i == m) num2 = B[j];
+    else if (j == n) num2 = A[i];
+    else num2 = min(A[i],B[j]);
+    return (num1 + num2) / 2.;
+  }
+};
+
+// https://leetcode.com/discuss/41621/very-concise-iterative-solution-with-detailed-explanation
+ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+    int N1 = nums1.size();
+    int N2 = nums2.size();
+    if (N1 < N2) return findMedianSortedArrays(nums2, nums1);   // Make sure A2 is the shorter one.
+
+    if (N2 == 0) return ((double)nums1[(N1-1)/2] + (double)nums1[N1/2])/2;  // If A2 is empty
+
+    int lo = 0, hi = N2 * 2;
+    while (lo <= hi) {
+        int mid2 = (lo + hi) / 2;   // Try Cut 2 
+        int mid1 = N1 + N2 - mid2;  // Calculate Cut 1 accordingly
+
+        double L1 = (mid1 == 0) ? INT_MIN : nums1[(mid1-1)/2];  // Get L1, R1, L2, R2 respectively
+        double L2 = (mid2 == 0) ? INT_MIN : nums2[(mid2-1)/2];
+        double R1 = (mid1 == N1 * 2) ? INT_MAX : nums1[(mid1)/2];
+        double R2 = (mid2 == N2 * 2) ? INT_MAX : nums2[(mid2)/2];
+
+        if (L1 > R2) lo = mid2 + 1;     // A1's lower half is too big; need to move C1 left (C2 right)
+        else if (L2 > R1) hi = mid2 - 1;    // A2's lower half too big; need to move C2 left.
+        else return (max(L1,L2) + min(R1, R2)) / 2; // Otherwise, that's the right cut.
+    }
+    return -1;
+} 
