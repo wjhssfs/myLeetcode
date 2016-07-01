@@ -97,3 +97,52 @@ public:
 private:
     stack<vector<NestedInteger>::iterator> begins, ends;
 };
+
+
+class NestedInteger {
+    public:
+        // Return true if this NestedInteger holds a single integer, rather than a nested list.
+        bool isInteger() const {
+            return _isInteger;
+        }
+        
+        // Return the single integer that this NestedInteger holds, if it holds a single integer
+        // The result is undefined if this NestedInteger holds a nested list
+        int getInteger() const {
+            return _intValue;
+        }
+        
+        // Return the nested list that this NestedInteger holds, if it holds a nested list
+        // The result is undefined if this NestedInteger holds a single integer
+        const vector<NestedInteger> &getList() const {
+            return _list;
+        }
+        NestedInteger() : 
+            _isInteger(true),
+            _intValue(0) {}
+        NestedInteger(int v) :
+            _isInteger(true),
+            _intValue(v) {}
+        NestedInteger(const vector<NestedInteger> &l) :
+            _isInteger(false),
+            _intValue(0),
+            _list(l){}
+
+private:
+    bool _isInteger;
+    int _intValue;
+    vector<NestedInteger> _list;
+};
+
+int main() {
+    NestedInteger ni1(2), ni2(1), ni3(1);
+    vector<NestedInteger> niv1({ ni2, ni3 });
+    NestedInteger ni4(niv1);
+    vector<NestedInteger> niv2({ ni1, ni4 });
+    NestedIterator niter(niv2);
+    while (niter.hasNext()) {
+        cout << niter.next() << endl;
+    }
+
+    return 0;
+}
