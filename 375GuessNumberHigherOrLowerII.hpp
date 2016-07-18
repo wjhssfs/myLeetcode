@@ -25,13 +25,12 @@
 class Solution {
 public:
     int getMoneyAmount(int n) {
-        return dp(n);
+        return recursive(1, n);
     }
 private:
     int recursive(int l, int h) {
         if (l >= h) return 0;
         if (l + 1 == h) return l;
-        if (l + 2 == h) return l + 1;
         int minV = INT_MAX;
         for (int i = l + 1; i < h; ++i) {
             int maxV = max(recursive(l, i - 1), recursive(i + 1, h));
@@ -39,40 +38,22 @@ private:
         }
         return minV;
     }
-    int dp(int n) {
-        vector<vector<int>> m(n + 1, vector<int>(n + 1, 0));
-        for (int d = 1; d < n; ++ d) {
-            for (int l = 1; l + d <= n; ++l) {
-                int h = l + d;
-                if (d == 1) m[l][h] = l;
-                else if (d == 2) m[l][h] = l + 1;
-                else {
-                    int minV = INT_MAX;
-                    for (int k = l + 1; k < h; ++k) {
-                        int maxV = max(m[l][k-1], m[k+1][h]);
-                        minV = min(minV, maxV + k);
-                    }
-                    m[l][h] = minV;
+};
+
+class Solution {
+public:
+    int getMoneyAmount(int n) {
+        vector<vector<int>> m(n+1, vector<int>(n+1));
+        for (int j = 2; j <= n; ++j) {
+            m[j - 1][j] = j - 1;
+            for (int i = j - 2; i > 0; --i) {
+                m[i][j] = INT_MAX;
+                for (int k = i + 1; k < j; ++k) {
+                    int worstCostAtK = k + max(m[i][k - 1], m[k + 1][j]);
+                    m[i][j] = min(m[i][j], worstCostAtK);
                 }
             }
         }
         return m[1][n];
     }
 };
-
-public class Solution {
-    public int getMoneyAmount(int n) {
-        int[][] table = new int[n+1][n+1];
-        for(int j=2; j<=n; j++){
-            for(int i=j-1; i>0; i--){
-                int globalMin = Integer.MAX_VALUE;
-                for(int k=i+1; k<j; k++){
-                    int localMax = k + Math.max(table[i][k-1], table[k+1][j]);
-                    globalMin = Math.min(globalMin, localMax);
-                }
-                table[i][j] = i+1==j?i:globalMin;
-            }
-        }
-        return table[1][n];
-    }
-}

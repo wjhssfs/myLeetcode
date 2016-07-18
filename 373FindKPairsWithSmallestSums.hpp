@@ -142,3 +142,31 @@ def kSmallestPairs(self, nums1, nums2, k):
     streams = map(lambda u: ([u+v, u, v] for v in nums2), nums1)
     stream = heapq.merge(*streams)
     return [suv[1:] for suv in itertools.islice(stream, k)]
+
+// for 3 nums
+class Solution {
+public:
+    vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, vector<int> &nums3) {
+        vector<vector<int>> res;
+        auto cmp = [&](const vector<int> &a, const vector<int> &b){
+            int sumA = nums1[a[0]] + nums2[a[1]] + nums3[a[2]];
+            int sumB = nums1[b[0]] + nums2[b[1]] + nums3[b[2]];
+            return sumA > sumB;
+        };
+        priority_queue<vector<int>, vector<vector<int>>, decltype(cmp)> pq(cmp);
+        pq.push({0, 0, 0});
+        while (!pq.empty()) {
+            vector<int> top = pq.top(); pq.pop();
+            int i = top[0], j = top[1], k = top[2];
+            res.push_back({nums1[i], nums2[j], nums3[k]});
+            if (k + 1 < (int)nums3.size())pq.push({i, j, k+1});
+            if (j == 0 && k == 0 && i + 1 < (int)nums1.size()) {
+                pq.push({i + 1, j, k});
+            }
+            if (k == 0 && j + 1 < nums2.size()) {
+                pq.push({i, j + 1, k});
+            }
+        }
+        return res;
+    }
+};

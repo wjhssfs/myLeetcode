@@ -34,31 +34,18 @@ public:
     }
 };
 
-  def guessNumber(self, n):
-        lo, hi = 1, n
-        while lo < hi:
-            mid = (lo + hi) / 2
-            if guess(mid) == 1:
-                lo = mid + 1
-            else:
-                hi = mid
-        return lo
-
- class Solution {
+class Solution {
 public:
     int guessNumber(int n) {
-        //simple binary search : low = 1; high = n
-        int low = 1;
-        while(low <= n){
-            int mid = low + (n-low) / 2; // avoids overflow
-            int res = guess(mid);
-            if(res == 0)
-                return mid;
-            else if(res == -1)
-                n = mid - 1;
-            else
-                low = mid + 1;
+        int l = 1, h = n;
+        while (l < h) {
+            int m = l + (h - l) / 2; // avoids overflow
+            if (guess(m) == 1) {
+                l = m + 1;
+            } else {
+                h = m;
+            }
         }
-        return -1;
+        return l;
     }
 };
