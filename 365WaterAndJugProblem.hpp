@@ -53,7 +53,6 @@ template <> struct hash<std::pair<int, int>> {
     }
 };
 
-}
 class Solution {
 public:
     bool canMeasureWater(int x, int y, int z) {
@@ -80,23 +79,25 @@ public:
 };
 
 // https://discuss.leetcode.com/topic/49238/math-solution-java-solution/2
-public boolean canMeasureWater(int x, int y, int z) {
-    //limit brought by the statement that water is finallly in one or both buckets
-    if(x + y < z) return false;
-    //case x or y is zero
-    if( x == z || y == z || x + y == z ) return true;
-    
-    //get GCD, then we can use the property of Bézout's identity
-    return z%GCD(x, y) == 0;
-}
-
-public int GCD(int a, int b){
-    while(b != 0 ){
-        int temp = b;
-        b = a%b;
-        a = temp;
+class Solution {
+public:
+    bool canMeasureWater(int x, int y, int z) {
+        if (z > x + y) return false;
+        if (!x && !y) return !z;
+        return z%GCD(x, y) == 0;
     }
-    return a;
-}
+private:
+    int GCD(int x, int y) {
+        while (y) {
+            int temp = y;
+            y = x % y;
+            x = temp;
+        }
+        return x;
+    }
+};
 
 // https://discuss.leetcode.com/topic/49751/clear-explanation-of-why-using-gcd
+// Bezout's identity: We can always find a and b to satisfy ax + bx = d where d = gcd(x, y)
+// the greatest common divisor d is the smallest positive integer that can be written as ax + by
+// every integer of the form ax + by is a multiple of the greatest common divisor d.
