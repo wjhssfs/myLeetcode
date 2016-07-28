@@ -134,3 +134,33 @@ public:
     }
     return -1;
 } 
+
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int sz1 = nums1.size(), sz2 = nums2.size(), odd = (sz1 + sz2) % 2;
+        if (sz1 < sz2) return findMedianSortedArrays(nums2, nums1);
+        if (!sz2) return ((double)nums1[(sz1 - 1) / 2] + (double)nums1[sz1 / 2]) / 2.0;
+        int l = 0, h = sz2;
+        while (l <= h) {
+            int c2 = (l + h) / 2;
+            int c1 = (sz1 + sz2) / 2 - c2;
+
+            int l1 = (c1 == 0) ? INT_MIN : nums1[c1-1];
+            int r1 = (c1 == sz1) ? INT_MAX : nums1[c1];
+            int l2 = (c2 == 0) ? INT_MIN : nums2[c2-1];
+            int r2 = (c2 == sz2) ? INT_MAX : nums2[c2];
+
+            if (l1 > r2) {
+                l = c2 + 1;
+            }
+            else if (r1 < l2) {
+                h = c2 - 1;
+            }
+            else {
+                return !odd ? ((double)max(l1, l2) + min(r1, r2)) / 2.0 : min(r1, r2);
+            }
+        }
+        return -1;
+    }
+};
