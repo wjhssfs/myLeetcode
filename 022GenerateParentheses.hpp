@@ -21,6 +21,11 @@ public:
 };
 
 // https://leetcode.com/discuss/11509/an-iterative-method
+// f(0): ""
+// f(1): "("f(0)")"
+// f(2): "("f(0)")"f(1), "("f(1)")"
+// f(3): "("f(0)")"f(2), "("f(1)")"f(1), "("f(2)")"
+// So f(n) = "("f(0)")"f(n-1) , "("f(1)")"f(n-2) "("f(2)")"f(n-3) ... "("f(i)")"f(n-1-i) ... "(f(n-1)")"
 public class Solution
 {
     public List<String> generateParenthesis(int n)
