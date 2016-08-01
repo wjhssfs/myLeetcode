@@ -96,3 +96,44 @@ vector<int> findSubstring(string S, vector<string> &L) {
 
     return ans;
 }
+
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+        vector<int> result;
+        if (words.empty()) return result;
+        
+        int wordSize = words[0].size();
+        unordered_map<string, int> wordToCount;
+        for (auto && word : words) {
+            ++wordToCount[word];
+        }
+        for (int i = 0; i < wordSize; ++i) {
+            int start = i, end = i, total = 0;
+            while (start < s.size()) {
+                string endWord = s.substr(end, wordSize);
+                if (!wordToCount.count(endWord) || !wordToCount[endWord]) {
+                    if (start < end) {
+                        string startWord = s.substr(start, wordSize);
+                        ++wordToCount[startWord];
+                        --total;
+                        start += wordSize;
+                    } else start = end = end + wordSize;
+                } else {
+                    --wordToCount[endWord];
+                    ++total;
+                    end += wordSize;
+                    if (total == words.size()) {
+                        result.push_back(start);
+                        
+                        string startWord = s.substr(start, wordSize);
+                        ++wordToCount[startWord];
+                        --total;
+                        start += wordSize;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+};
