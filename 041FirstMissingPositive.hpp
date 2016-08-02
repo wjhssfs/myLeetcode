@@ -16,4 +16,4 @@ public:
         for (i = 0; i < n && nums[i] == i + 1; i++){}
         return i + 1;
     }
-};
+}; 

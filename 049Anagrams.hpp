@@ -4,20 +4,16 @@
 
 class Solution {
 public:
-    vector<string> anagrams(vector<string> &strs) {
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
         map<string, vector<string>> m;
-        vector<string> r;
+        vector<vector<string>> r;
         for (auto str : strs){
             string k = str;
             sort(k.begin(), k.end());
             m[k].push_back(str);
         }
-        for (auto group : m)
-        {
-            if (group.second.size() > 1)
-            {
-                for (auto str : group.second) r.push_back(str);
-            }
+        for (auto && e : m) {
+            r.push_back(e.second);
         }
         return r;
     }
