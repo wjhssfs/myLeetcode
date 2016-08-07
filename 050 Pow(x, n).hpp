@@ -15,4 +15,21 @@ public:
     }
 };
 
-
+class Solution {
+public:
+    double myPow(double x, int n) {
+        double p = 1;
+        bool negN = n < 0;
+        long long lln = n;
+        lln = abs(lln);
+        while (lln) {
+            if (lln & 1) {
+                p *= x;
+            }
+            lln >>= 1;
+            x *= x;
+        }
+        if (negN) p = 1/p;
+        return p;
+    }
+};
