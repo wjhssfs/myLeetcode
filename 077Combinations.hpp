@@ -13,28 +13,28 @@
 
 class Solution {
 public:
-	vector<vector<int> > combine(int n, int k) {
-		results.clear();
-		result.clear();
-		if (k > n || n < 1 || k < 1) return results;
-		dfs(n, k, 0, 0);
-		return results;
-	}
-	void dfs(int n, int k, int c, int s){
-		if (c == k){
-			results.push_back(result);
-			return;
-		}
-		for (int i = s; i < n - k + c+1; i++){
-			result.push_back(i+1);
-			dfs(n, k, c + 1, i+1);
-			result.pop_back();
-		}
-	}
-	vector<vector<int> > results;
-	vector<int> result;
+    vector<vector<int>> combine(int n, int k) {
+        res.clear(), com.clear(), N = n, K = k;
+        if (K < 1 || N < 1 || K > N) return res;
+        dfs(1);
+        return res;
+    }
+private:
+    int N, K;
+    vector<vector<int>> res;
+    vector<int> com;
+    void dfs(int s) {
+        if (com.size() == K) {
+            res.emplace_back(com);
+            return;
+        }
+        for (int i = s; i <= N; ++i) {
+            com.push_back(i);
+            dfs(i+1);
+            com.pop_back();
+        }
+    }
 };
-
 //  C(n,k)=C(n-1,k-1)+C(n-1,k).
 vector<vector<int>> combine(int n, int k) {
         vector<vector<int> > res,res1;
