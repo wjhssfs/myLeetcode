@@ -34,6 +34,7 @@ public:
 };
 
 // https://leetcode.com/discuss/15115/my-comprehension-of-o-n-solution-from-%40hongzhi
+// Only nodes whoes left side hasn't been handled will be pushed into stn.
 class Solution {
 public:
     TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder) {
