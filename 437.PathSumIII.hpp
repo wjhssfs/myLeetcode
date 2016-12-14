@@ -28,27 +28,17 @@
 class Solution {
 public:
     int pathSum(TreeNode* root, int sum) {
-        vector<int> m;
-        total = 0;
-        this->sum = sum;
-        dfs(root, m);
-        return total;
+        unordered_map<int, int> m = {{0, 1}};
+        return dfs(root, 0, sum, m);
     }
 private:
-    void dfs(TreeNode* root, vector<int> &m) {
-        if (!root) return;
-        for (auto && n : m) {
-            n += root->val;
-            if (n == sum) ++total;
-        }
-        m.push_back(root->val);
-        if (root->val == sum) ++total;
-        dfs(root->left, m);
-        dfs(root->right, m);
-        for (auto && n : m) {
-            n -= root->val;
-        }
-        m.pop_back();
+    int dfs(TreeNode* root, int curSum, int target, unordered_map<int, int> &m) {
+       if (!root) return 0;
+       curSum += root->val;
+       int res = m[curSum - target];
+       ++m[curSum];
+       res += dfs(root->left, curSum, target, m) + dfs(root->right, curSum, target, m);
+       --m[curSum];
+       return res;
     }
-    int total, sum;
 };
