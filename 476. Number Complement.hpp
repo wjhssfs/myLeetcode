@@ -60,3 +60,4 @@ int findComplement(int num) {
     mask |= mask >> 16;
     return num ^ mask;
 }
+// num 100000    11111
