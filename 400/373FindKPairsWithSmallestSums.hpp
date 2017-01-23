@@ -17,33 +17,7 @@
 // Return: [1,3],[2,3]
 // All possible pairs are returned from the sequence:
 // [1,3],[2,3]
-class Solution {
-public:
-    vector<pair<int, int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
-        vector<pair<int, int>> ret;
-        if (nums1.empty() || nums2.empty()) return ret;
-        auto cmp = [&](const pair<int, int> &a, const pair<int, int> &b) {
-        	return nums1[a.first] + nums2[a.second] > nums1[b.first] + nums2[b.second];};
-        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> q(cmp);
-        set<pair<int, int>> s;
-        q.push(make_pair(0, 0));
-        while(!q.empty() && ret.size() < k) {
-        	auto top = q.top(); q.pop();
-        	ret.push_back(make_pair(nums1[top.first], nums2[top.second]));
-        	if (top.first < nums1.size() - 1 && !s.count(make_pair(top.first+1, top.second))) {
-        		q.push(make_pair(top.first+1, top.second));
-        		s.insert(make_pair(top.first+1, top.second));
-        	}
-        	if (top.second < nums2.size() - 1 && !s.count(make_pair(top.first, top.second + 1))) {
-        		q.push(make_pair(top.first, top.second + 1));
-        		s.insert(make_pair(top.first, top.second + 1));
-        	}
-        }
-        return ret;
-    }
-};
 
-// get rid of set
 class Solution {
 public:
     vector<pair<int, int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
