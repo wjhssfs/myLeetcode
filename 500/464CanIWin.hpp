@@ -43,3 +43,24 @@ public:
 private:
 	unordered_map<unsigned, bool> m;
 };
+
+bool CanWin(const vector<int>& all_numbers, vector<bool>* used_positions, 
+int sum) {
+  if (sum <= 0) {
+    // Already lost.
+    return false;
+  }
+  for (int i = 0; i < all_numbers.size(); ++i) {
+    if ((*used_positions)[i]) {
+      continue;
+    }
+    (*used_positions)[i] = true
+    bool can_other_win = CanWin(all_numbers, used_positions, sum - all_
+numbers[i]);
+    (*used_positions)[i] = false;
+    if (!can_other_win) {
+      return true;
+    }
+  }
+  return false;
+}
