@@ -62,6 +62,7 @@ private:
     }
 };
 
+// Two pass
 class Solution {
 public:
     vector<int> findMode(TreeNode* root) {
@@ -90,5 +91,36 @@ private:
         inorder(root->right);
     }
     int maxCount, mode, preVal, count;
+    vector<int> res;
+};
+
+// OnePass
+class Solution {
+public:
+    vector<int> findMode(TreeNode* root) {
+        res.clear();
+        maxCount = -1, count = 0;
+        inorder(root);
+        return res;
+    }
+private:
+    void process(int val) {
+        if (maxCount == -1 || val != preVal) {
+            count = 0;
+        }
+        ++count;
+        preVal = val;
+        if (count > maxCount) {
+            res = {val};
+            maxCount = count;
+        } else if (count == maxCount) res.push_back(val);
+    }
+    void inorder(TreeNode* root) {
+        if (!root) return;
+        inorder(root->left);
+        process(root->val);
+        inorder(root->right);
+    }
+    int maxCount, preVal, count;
     vector<int> res;
 };
