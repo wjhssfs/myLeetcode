@@ -40,20 +40,40 @@
 class Solution {
 public:
     int findMinMoves(vector<int>& machines) {
-        int sum = accumulate(machines.begin(), machines.end(), 0);
-        if (sum % machines.size()) return -1;
-        int nPerMachine = sum / machines.size();
-        vector<int> left;
-        int curSum = machines[0], res = 0;
-        for (int i = 1; i < machines.size(); ++i) {
-            left.push_back( nPerMachine * i - curSum);
-            curSum += machines[i];
-            res = max(res, machines[i] - nPerMachine);
+        int total = accumulate(machines.begin(), machines.end(), 0);
+        if (total % machines.size()) return -1;
+        int avg = total / machines.size(), cnt = 0, res = 0;
+        for (int load : machines) {
+            cnt += load - avg; //load-avg is "gain/lose"
+            res = max(max(res, abs(cnt)), load - avg);
         }
-        for (int i = 0; i < left.size(); ++i) {
-            res = max(res, abs(left[i]));
+        return res;
+    }
+};
+
+// https://discuss.leetcode.com/topic/79923/c-16ms-o-n-solution-with-trivial-proof
+class Solution {
+public:
+    int findMinMoves(vector<int>& machines) {
+        int len = machines.size();
+        vector<int> sum(len + 1, 0);
+        for (int i = 0; i < len; ++i)
+            sum[i + 1] = sum[i] + machines[i];
+
+        if (sum[len] % len) return -1;
+
+        int avg = sum[len] / len;
+        int res = 0;
+        for (int i = 0; i < len; ++i)
+        {
+            int l = i * avg - sum[i];
+            int r = (len - i - 1) * avg - (sum[len] - sum[i] - machines[i]);
+
+            if (l > 0 && r > 0)
+                res = std::max(res, std::abs(l) + std::abs(r));
+            else
+                res = std::max(res, std::max(std::abs(l), std::abs(r)));
         }
-        
         return res;
     }
 };
