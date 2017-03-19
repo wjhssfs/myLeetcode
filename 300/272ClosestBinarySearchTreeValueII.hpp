@@ -277,3 +277,103 @@ public class Solution {
         return ret;
     }
 }
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> closestKValues(TreeNode* root, double target, int k) {
+        stack<TreeNode *> sl, sr;
+        TreeNode *closest = root;
+        while (root) {
+            sl.push(root);
+            if (abs(target - root->val) < abs(target - closest->val)) closest = root;
+            root = target < root->val ? root->left : root->right;
+        }
+        while (sl.top() != closest) sl.pop();
+        sr = sl;
+        MoveBack(sl); MoveForward(sr);
+        vector<int> res{closest->val};
+        while (--k) {
+            if (sl.empty() || (sr.size() && abs(sr.top()->val-target) < abs(sl.top()->val - target))) {
+                res.push_back(sr.top()->val);
+                MoveForward(sr);
+            } else {
+                res.push_back(sl.top()->val);
+                MoveBack(sl);
+            }
+        }
+        return res;
+    }
+private:
+    void MoveBack(stack<TreeNode *> &s) {
+        if (s.empty()) return;
+        if (s.top()->left) {
+            s.push(s.top()->left);
+            while (s.top()->right) s.push(s.top()->right);
+        } else {
+            TreeNode *t = s.top(); s.pop();
+            while (s.size() && t->val < s.top()->val) s.pop();
+        }
+    }
+    void MoveForward(stack<TreeNode *> &s) {
+        if (s.empty()) return;
+        if (s.top()->right) {
+            s.push(s.top()->right);
+            while (s.top()->left) s.push(s.top()->left);
+        } else {
+            TreeNode *t = s.top(); s.pop();
+            while (s.size() && t->val > s.top()->val) s.pop();
+        }
+    }
+};
+
+class Solution {
+    typedef TreeNode *(MemFun)(TreeNode *);
+    static TreeNode *LeftChild(TreeNode* node) { return node->left; }
+    static TreeNode *RightChild(TreeNode* node) { return node->right; }
+public:
+    vector<int> closestKValues(TreeNode* root, double target, int k) {
+        stack<TreeNode *> sl, sr;
+        TreeNode *closest = root;
+        while (root) {
+            sl.push(root);
+            if (abs(target - root->val) < abs(target - closest->val)) closest = root;
+            root = target < root->val ? root->left : root->right;
+        }
+        while (sl.top() != closest) sl.pop();
+        sr = sl;
+        Move(sl, LeftChild, RightChild); Move(sr, RightChild, LeftChild);
+        vector<int> res{ closest->val };
+        while (--k) {
+            if (sl.empty() || (sr.size() && abs(sr.top()->val - target) < abs(sl.top()->val - target))) {
+                res.push_back(sr.top()->val);
+                Move(sr, &RightChild, &LeftChild);
+            }
+            else {
+                res.push_back(sl.top()->val);
+                Move(sl, LeftChild, RightChild);
+            }
+        }
+        return res;
+    }
+private:
+    void Move(stack<TreeNode *> &s, MemFun fl, MemFun fr) {
+        if (s.empty()) return;
+        if (fl(s.top())) {
+            s.push(fl(s.top()));
+            while (fr(s.top())) s.push(fr(s.top()));
+        }
+        else {
+            TreeNode *t = s.top(); s.pop();
+            while (s.size() && t->val < s.top()->val) s.pop();
+        }
+    }
+};

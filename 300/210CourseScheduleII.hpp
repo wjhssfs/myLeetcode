@@ -138,3 +138,28 @@ private:
         return onpath[node] = false;
     }
 };
+
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {
+        map<int, set<int>> in, out;
+        set<int> starts;
+        for (int i = 0; i < numCourses; ++i) starts.insert(i);
+        for (auto && p : prerequisites) {
+            in[p.first].insert(p.second);
+            out[p.second].insert(p.first);
+            starts.erase(p.first);
+        }
+        vector<int> res;
+        while (starts.size()) {
+            int cur = *starts.begin();
+            starts.erase(starts.begin());
+            res.push_back(cur);
+            for (auto ic : out[cur]) {
+                in[ic].erase(cur);
+                if (in[ic].empty()) starts.insert(ic);
+            }
+        }
+        return res.size() == numCourses ? res : vector<int>();
+    }
+};
