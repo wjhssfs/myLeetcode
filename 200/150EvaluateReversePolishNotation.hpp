@@ -7,71 +7,28 @@
 
 class Solution {
 public:
-	int evalRPN(vector<string> &tokens) {
-		if (tokens.size() == 0) return 0;
-		stack<int> operands;
-		for (int i = 0; i < tokens.size(); i++){
-			char firstChar = *(tokens[i].c_str());
-			if (!isdigit(firstChar) && tokens[i].size()==1){
-				int result;
-				int rightOperand = operands.top();
-				operands.pop();
-				int leftOperand = operands.top();
-				operands.pop();
-				switch (firstChar){
-				case '+':
-					result = leftOperand + rightOperand;
-					break;
-				case '-':
-					result = leftOperand - rightOperand;
-					break;
-				case '*':
-					result = leftOperand * rightOperand;
-					break;
-				case '/':
-					result = leftOperand / rightOperand;
-					break;
-				}
-				operands.push(result);
-			}
-			else{
-				operands.push(atoi(tokens[i].c_str()));
-			}
-		}
-		return operands.top();
-	}
-};
-
-import java.util.Stack;
-
-public class Solution {
-    public int evalRPN(String[] tokens) {
-        int a,b;
-        Stack<Integer> S = new Stack<Integer>();
-        for (String s : tokens) {
-            if(s.equals("+")) {
-                S.add(S.pop()+S.pop());
+    int evalRPN(vector<string>& tokens) {
+        stack<int> s;
+        for (auto && token : tokens) {
+            if (token == "+") {
+                int op1 = s.top(); s.pop();
+                s.top() += op1;
+            } else if (token == "-") {
+                int op1 = s.top(); s.pop();
+                s.top() -= op1;
+            } else if (token == "*") {
+                int op1 = s.top(); s.pop();
+                s.top() *= op1;
+            } else if (token == "/") {
+                int op1 = s.top(); s.pop();
+                s.top() /= op1;
+            } else {
+                s.push(stoi(token));
             }
-            else if(s.equals("/")) {
-                b = S.pop();
-                a = S.pop();
-                S.add(a / b);
-            }
-            else if(s.equals("*")) {
-                S.add(S.pop() * S.pop());
-            }
-            else if(s.equals("-")) {
-                b = S.pop();
-                a = S.pop();
-                S.add(a - b);
-            }
-            else {
-                S.add(Integer.parseInt(s));
-            }
-        }   
-        return S.pop();
+        }
+        return s.size() ? s.top() : 0;
     }
-}
+};
 
 int evalRPN(vector<string> &n) {
     string s = n.back(); n.pop_back();

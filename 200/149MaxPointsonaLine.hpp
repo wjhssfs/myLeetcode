@@ -33,11 +33,10 @@ public:
 	}
 };
 
-
 class Solution {
 public:
     int maxPoints(vector<Point> &points) {
-        if(points.size()<2) return points.size();
+        if(points.size() < 3) return points.size();
         int result=0;
         for(int i=0; i<points.size(); i++) {
             map<pair<int, int>, int> lines;
