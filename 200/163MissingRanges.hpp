@@ -4,31 +4,19 @@
 class Solution {
 public:
     vector<string> findMissingRanges(vector<int>& nums, int lower, int upper) {
-        vector<string> r;
-        if(nums.empty()) {
-            addToResult(r, lower, upper);
-            return r;
+        vector<string> res;
+        int nextExp = lower;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (nums[i] > nextExp) res.emplace_back(GetRange(nextExp, nums[i] - 1));
+            if (nums[i] == INT_MAX) return res;
+            nextExp = nums[i] + 1;
         }
-        
-        if(lower < nums[0]) {
-            addToResult(r, lower, nums[0]-1);
-        }
-        for(int i = 1; i < (int)nums.size(); i++){
-            if(nums[i] > nums[i-1]+1) addToResult(r, nums[i-1] + 1, nums[i]-1);
-        }
-        if(upper > nums.back()){
-            addToResult(r, nums.back()+1, upper);
-        }
-        return r;
+        if (nextExp <= upper) res.emplace_back(GetRange(nextExp, upper));
+        return res;
     }
 private:
-    void addToResult(vector<string> &r, int start, int end){
-        string s;
-        if(start == end){
-            s = to_string(start);   
-        } else {
-            s = to_string(start) + "->" + to_string(end);
-        }
-        r.push_back(s);
+    string GetRange(int start, int end) {
+        if (start == end) return to_string(start);
+        else return to_string(start) + "->" + to_string(end);
     }
 };

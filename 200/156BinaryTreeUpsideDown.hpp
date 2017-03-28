@@ -33,7 +33,7 @@ public:
         while(cur->left){
             s.push(cur);
             cur = cur->left;
-        }
+        } 
         newRoot = cur;
         while(!s.empty()) {
             cur->right = s.top();
@@ -44,5 +44,18 @@ public:
             s.pop();
         }
         return newRoot;
+    }
+};
+
+class Solution {
+public:
+    TreeNode* upsideDownBinaryTree(TreeNode* root) {
+        if (!root || !root->left) return root;
+        auto left = root->left, right = root->right;
+        root->left = nullptr; root->right = nullptr;
+        auto subRoot = upsideDownBinaryTree(left);
+        left->left = right;
+        left->right = root;
+        return subRoot;
     }
 };

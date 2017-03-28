@@ -7,6 +7,37 @@
 // The key is to use the fact that the lower bound of the gap is (maxV - minV )/ (sSize - 1).
 // Put all numbers in buckets with size (maxV - minV )/ (sSize - 1)
 // Apply pigeonhole principle, the max gap cannot be inside a bucket.
+
+class Solution {
+public:
+    int maximumGap(vector<int>& nums) {
+        if (nums.size() < 2) return 0;
+        auto minMax = minmax_element(nums.begin(), nums.end());
+        int minV = *minMax.first, maxV = *minMax.second;
+        if (nums.size() == 2 || maxV == minV) return maxV - minV;
+        int bucketSize = max(1, (int)((maxV - minV) / (nums.size() - 1)));
+        vector<pair<int, int>> buckets((maxV - minV)/bucketSize + 1, pair<int, int>(INT_MAX, INT_MIN));
+        for_each(nums.begin(), nums.end(), [&](int n) {
+           int p = (n - minV) / bucketSize;
+           buckets[p].first = min(buckets[p].first, n); 
+           buckets[p].second = max(buckets[p].second, n);
+        });
+        
+        auto it = find_if(buckets.begin(), buckets.end(), [](pair<int, int> &b){
+            return b.first <= b.second;
+        });
+        auto p = *it;
+        int maxGap = 0;
+        for_each(it + 1, buckets.end(), [&](pair<int, int> &b) {
+           if (b.first <= b.second) {
+               maxGap = max(maxGap, b.first - p.second);
+               p = b;
+           }
+        });
+        return maxGap;
+    }
+};
+
 class Solution {
 public:
     int maximumGap(vector<int> &num) {
