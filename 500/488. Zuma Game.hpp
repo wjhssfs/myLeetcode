@@ -168,3 +168,36 @@ public class Solution {
         return true;
     }
 }
+
+    int findMinStep(string b, string h) {
+      // pre-process
+      string a; int L, r = 0;
+      for (char c:b) // shrink b to remove consecutive identical letters
+        if (c-r) if ((L=a.size()) < 2 || c-a[L-1] || c-a[L-2]) a += c, r = 0;
+                 else r = c, a.pop_back(), a.pop_back();
+      sort(h.begin(), h.end()); // sort hand for memorization
+      
+      // memorization
+      if (m.count(b=a) && m[b].count(h)) return m[b][h];
+        
+      // base cases
+      if (b.empty()) return 0; else if (h.empty()) return -1;
+    
+      // edge cases
+      for (char c:b) if (count(a.begin(),(a=b+h).end(),c) < 3) return m[b][h] = -1; 
+      
+      // recursion
+      for (int i = 0, res = INT_MAX; i <= h.size(); ++i) {
+        if (i==h.size()) return m[b][h] = res<INT_MAX? res : -1;
+        if (i && h[i]==h[i-1] || b.find(h[i])==string::npos) continue;
+        for (int j = 0, step; j < b.size(); ++j) {
+          if (b[j]-h[i] || (j && b[j]==b[j-1])) continue;
+          string bb(b); bb.insert(bb.begin() + j, h[i]); // insert h[i] to board
+          string hh(h); hh.erase(hh.begin() + hh.find(h[i])); // remove h[i] from hand
+          if (step = findMinStep(bb, hh)+1) res = min(res, step);
+        }
+      }
+    }
+    
+    // m[b][h] = min steps for borad=b & hand=h
+    unordered_map<string, unordered_map<string, int>> m;
