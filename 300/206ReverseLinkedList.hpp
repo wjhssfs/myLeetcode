@@ -38,3 +38,16 @@ public:
         return cur;
     }
 };
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (!head) return nullptr;
+        if (!head->next) return head;
+        auto next = head->next;
+        head->next = nullptr;
+        auto newHead = reverseList(next);
+        next->next = head;
+        return newHead;
+    }
+};
