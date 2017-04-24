@@ -9,26 +9,31 @@
 
 class TwoSum {
 public:
-    
-    // Add the number to an internal data structure.
-    void add(int number) {
-        ++nums[number];
+    /** Initialize your data structure here. */
+    TwoSum() {
+        
     }
     
-    // Find if there exists any pair of numbers which sum is equal to the value.
+    /** Add the number to an internal data structure.. */
+    void add(int number) {
+        ++m[number];
+    }
+    
+    /** Find if there exists any pair of numbers which sum is equal to the value. */
     bool find(int value) {
-        for(auto & nValue : nums){
-            int i = value - nValue.first;
-            int c = nums.count(i)?nums[i]:0;
-            if (c &&(i != nValue.first || c > 2) return true;
+        for (auto && e : m) {
+            if (m.count(value - e.first)) {
+                if (e.second > 1 || value != 2 * e.first) return true;
+            }
         }
         return false;
     }
-private:
-    unordered_map<int, int> nums;
+    unordered_map<int, int> m;
 };
 
-// Your TwoSum object will be instantiated and called as such:
-// TwoSum twoSum;
-// twoSum.add(number);
-// twoSum.find(value);
+/**
+ * Your TwoSum object will be instantiated and called as such:
+ * TwoSum obj = new TwoSum();
+ * obj.add(number);
+ * bool param_2 = obj.find(value);
+ */
