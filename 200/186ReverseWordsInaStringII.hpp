@@ -22,3 +22,18 @@ public:
         }
     }
 };
+
+class Solution {
+public:
+    void reverseWords(string &s) {
+        reverse(s.begin(), s.end());
+        auto i = s.begin();
+        while (i != s.end()) {
+            while (*i == ' ' && i != s.end()) ++i;
+            auto j = i;
+            while (*j != ' ' && j != s.end()) ++j;
+            reverse(i, j);
+            i = j;
+        }
+    }
+};

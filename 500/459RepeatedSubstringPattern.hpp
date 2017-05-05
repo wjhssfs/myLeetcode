@@ -30,3 +30,12 @@ public:
         return false;
     }
 };
+
+// https://discuss.leetcode.com/topic/68206/easy-python-solution-with-explaination/4
+class Solution {
+public:
+    bool repeatedSubstringPattern(string str) {
+        if (str.empty()) return false;
+        return (str + str).substr(1, str.size() * 2 - 2).find(str) != string::npos;
+    }
+};

@@ -31,7 +31,7 @@ public:
         return cur->val;        
     }
 private:
-    int addToStack(TreeNode *cur)
+    void addToStack(TreeNode *cur)
     {
         if (cur){
             s.push(cur);

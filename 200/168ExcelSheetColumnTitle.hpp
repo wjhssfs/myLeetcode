@@ -24,3 +24,18 @@ public:
         return string(r.rbegin(), r.rend());
     }
 };
+
+class Solution {
+public:
+    string convertToTitle(int n) {
+        string s;
+        while (n) {
+            int c = n % 26;
+            if (!c) c = 26;
+            s += 'A' + c - 1;
+            n -= c;
+            n /= 26;
+        }
+        return string(s.rbegin(), s.rend());
+    }
+};
