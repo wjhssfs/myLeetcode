@@ -11,6 +11,7 @@
 // as 2*(f-2) = 2f-4 >= f. So you never need a factor greater than or equal to 4, meaning you only need factors 1, 2 and 3
 // (and 1 is of course wasteful and you'd only use it for n=2 and n=3, where it's needed).
 
+// https://discuss.leetcode.com/topic/45341/a-simple-explanation-of-the-math-part-and-a-o-n-solution
 public class Solution {
     public int integerBreak(int n) {
         if(n==2) return 1;
