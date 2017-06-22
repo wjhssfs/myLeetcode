@@ -74,3 +74,30 @@ private:
         p[find(a)] = find(b);
     }
 };
+
+int countComponents(int n, vector<pair<int, int>>& edges) {
+    vector<int> p(n);
+    iota(begin(p), end(p), 0);
+    for (auto& edge : edges) {
+        int v = edge.first, w = edge.second;
+        while (p[v] != v) v = p[v] = p[p[v]];
+        while (p[w] != w) w = p[w] = p[p[w]];
+        p[v] = w;
+        n -= v != w;
+    }
+    return n;
+}
+
+int countComponents(int n, vector<pair<int, int>>& edges) {
+    vector<int> p(n);
+    iota(begin(p), end(p), 0);
+    function<int (int)> find = [&](int v) {
+        return p[v] == v ? v : p[v] = find(p[v]);
+    };
+    for (auto& edge : edges) {
+        int v = find(edge.first), w = find(edge.second);
+        p[v] = w;
+        n -= v != w;
+    }
+    return n;
+}

@@ -18,54 +18,6 @@ public:
 		for (size_t i = 0; i < words.size(); ++i) {
 			m[words[i]] = i;
 		}
-		for (int i = 0; i < words.size(); ++i) {
-			string &word = words[i];
-			string rWord(word.rbegin(), word.rend());
-			if (m.count(rWord) && m[rWord] != i) {
-				res.push_back({ m[rWord], i });
-			}
-			if (isPalindrome(word) && word != "" && m.count("")) {
-				res.push_back({ m[""], i });
-				res.push_back({ i, m[""]});
-			}
-			for (int j = 1; j < word.size(); ++j)
-			{
-				if (isPalindrome(word.substr(0, j))) {
-					string sub = rWord.substr(0, rWord.size() - j);
-					if (m.count(sub)) {
-						res.push_back({ m[sub], i });
-					}
-				}
-				if (isPalindrome(rWord.substr(0, j))) {
-					string sub = rWord.substr(j);
-					if (m.count(sub)) {
-						res.push_back({ i, m[sub] });
-					}
-				}
-			}
-		}
-		return res;
-	}
-private:
-	bool isPalindrome(const string &str)
-	{
-		int i = 0, j = str.size() - 1;
-		while (i < j) {
-			if (str[i++] != str[j--]) 
-				return false;
-		}
-		return true;
-	}
-};
-
-class Solution {
-public:
-	vector<vector<int>> palindromePairs(vector<string>& words) {
-		unordered_map<string, int> m;
-		vector<vector<int>> res;
-		for (size_t i = 0; i < words.size(); ++i) {
-			m[words[i]] = i;
-		}
 
 		for (int i = 0; i < words.size(); ++i) {
 			string &word = words[i];
