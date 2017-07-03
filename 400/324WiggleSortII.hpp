@@ -13,6 +13,18 @@
 // Can you do it in O(n) time and/or in-place with O(1) extra space?
 
 //https://leetcode.com/discuss/76965/3-lines-python-with-explanation-proof
+// Make M apart most, at most can have n/2 M
+// Example nums = [1,2,...,7]      Example nums = [1,2,...,8] 
+
+// Small half:  4 . 3 . 2 . 1      Small half:  4 . 3 . 2 . 1 .
+// Large half:  . 7 . 6 . 5 .      Large half:  . 8 . 7 . 6 . 5
+// --------------------------      --------------------------
+// Together:    4 7 3 6 2 5 1      Together:    4 8 3 7 2 6 1 5
+// Small half:  M . M . S . S      Small half:  M . S . S . S .
+// Large half:  . L . L . M .      Large half:  . L . M . M . M
+// --------------------------      --------------------------
+// Together:    M L M L S M S      Together:    M L S M S M S M
+
 class Solution {
 public:
 	void wiggleSort(vector<int>& nums) {

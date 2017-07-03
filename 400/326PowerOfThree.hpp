@@ -21,4 +21,9 @@ public:
 
 // public boolean isPowerOfThree(int n) {
 //     return n==0 ? false : n==Math.pow(3, Math.round(Math.log(n) / Math.log(3)));
-// }
+// }class Solution {
+
+    bool isPowerOfThree(int n) {
+        int maxPoT = pow(3, (int)(log(INT_MAX) / log(3)));
+        return n > 0 && !(maxPoT % n);
+    }

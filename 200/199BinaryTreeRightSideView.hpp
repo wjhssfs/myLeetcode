@@ -32,6 +32,7 @@ public:
         vector<int> res;
         queue<TreeNode*> q;
         if(!root) return res;
+        // level order traversal
         q.push(root);q.push(nullptr);
         TreeNode *pre = nullptr;
         while(true){
