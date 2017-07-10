@@ -7,11 +7,11 @@ public:
         set<long long> s;
         if(nums.empty() || k <= 0 || t < 0) return false;
         for(int i = 0; i < nums.size(); i++){
-        	if(i>k) s.erase(nums[i-k-1]);
-        	auto itLow = s.lower_bound(nums[i]-t);
-        	if(itLow != s.end() && *itLow <= (long long)nums[i]+t)
+            if(i>k) s.erase(nums[i-k-1]);
+            auto itLow = s.lower_bound((long long)nums[i]-t);
+            if(itLow != s.end() && *itLow <= (long long)nums[i]+t)
               return true;
-        	s.insert(nums[i]);
+            s.insert(nums[i]);
         }
         return false;
     }
