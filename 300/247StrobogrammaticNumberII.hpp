@@ -38,3 +38,27 @@ private:
     
     vector<string> result;
 };
+
+class Solution {
+public:
+    vector<string> findStrobogrammatic(int n) {
+        if (n <= 0) return {};
+       return helper(n, n);
+    }
+private:
+    vector<string> helper(int left, int total) {
+        if (left == 0) return {""};
+        if (left == 1) return {"0", "1", "8"};
+        
+        auto subRes = helper(left - 2, total);
+        vector<string> res;
+        for (auto r : subRes) {
+            if (left != total) res.emplace_back("0" + r + "0");
+            res.emplace_back("1" + r + "1");
+            res.emplace_back("6" + r + "9");
+            res.emplace_back("8" + r + "8");
+            res.emplace_back("9" + r + "6");
+        }
+        return res;
+    }
+};

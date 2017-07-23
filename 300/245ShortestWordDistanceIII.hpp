@@ -37,3 +37,37 @@ public:
         return minDist;
     }
 };
+
+int shortestWordDistance(vector<string>& words, string word1, string word2) {
+    long long dist = INT_MAX, i1 = dist, i2 = -dist;
+    for (int i=0; i<words.size(); i++) {
+        if (words[i] == word1)
+            i1 = i;
+        if (words[i] == word2) {
+            if (word1 == word2)
+                i1 = i2;
+            i2 = i;
+        }
+        dist = min(dist, abs(i1 - i2));
+    }
+    return dist;
+}
+
+class Solution {
+public:
+    int shortestWordDistance(vector<string>& words, string word1, string word2) {
+        int diff = INT_MAX, p1 = -1, p2 = -1;
+        bool sameWords = word1 == word2;
+        for (int i = 0; i < words.size(); ++i) {
+            if (words[i] == word1) {
+                p1 = i;
+                if (p2 >= 0) diff = min(diff, p1 - p2);
+                if (sameWords) p2 = i;
+            } else if (words[i] == word2) {
+                p2 = i;
+                if (p1 >= 0) diff = min(diff, p2 - p1);
+            }
+        }
+        return diff;
+    }
+};

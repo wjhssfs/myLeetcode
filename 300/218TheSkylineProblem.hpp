@@ -15,7 +15,7 @@ struct Solution {
     vector<pair<int, int>> getSkyline(vector<vector<int>>& buildings) {
         vector<pair<int, int>> res;
         int cur=0, cur_X, cur_H, len = buildings.size();
-        priority_queue<pair<int, int>> liveBlg;
+        priority_queue<pair<int, int>> liveBlg; // Hi, Ri
         while(cur<len || !liveBlg.empty()) {
             if (liveBlg.empty() || cur<len && buildings[cur][0] <= liveBlg.top().second) {
                 cur_X = buildings[cur][0];
