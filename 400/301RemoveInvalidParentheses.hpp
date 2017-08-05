@@ -86,3 +86,71 @@ public:
         }
     }
 };
+
+class Solution {
+public:
+    vector<string> removeInvalidParentheses(string s) {
+      queue<tuple<string,int,int,char>> q;
+        q.push(make_tuple(s,0,0,'('));
+        vector<string> res;
+        while(!q.empty()) {
+            auto t=q.front();
+            q.pop();
+            string str=get<0>(t);
+            int start =get<1>(t), lastRm=get<2>(t), count = 0;
+            char l = get<3>(t), r = l=='('?')':'(';
+            for(int i=start; i<str.size();i++) {
+                if(str[i] == l) count++;
+                else if(str[i]==r) count--;
+                if(count>=0) continue;
+                for(int j=lastRm;j<=i;j++)
+                    if(str[j]==r && (j==lastRm || str[j-1]!=r))
+                        q.push(make_tuple(str.substr(0,j)+str.substr(j+1),i,j,l));
+                break;
+            }
+            if(count < 0) continue;
+            reverse(str.begin(),str.end());
+            if(l=='(') q.push(make_tuple(str,0,0,')'));
+            else res.push_back(str);
+        }
+        return res;
+    }
+};
+
+class Solution {
+    bool isValid(const string & s) {
+        int open = 0;
+        for (auto c : s) {
+            if (c == '(') ++open;
+            else if (c == ')') --open;
+            if (open < 0) return false;
+        }
+        return open == 0;
+    }
+public:
+    vector<string> removeInvalidParentheses(string s) {
+        vector<string> res;
+        unordered_set<string> visited;
+        queue<string> q;
+        q.emplace(s);
+        bool found = false;
+        while (!q.empty()) {
+            for (int sz = 0; sz < q.size(); ++sz) {
+                auto front = q.front(); q.pop();
+                if (isValid(front)) {
+                    res.emplace_back(front);
+                    found = true;
+                }
+                if (found) continue;
+                for (int i = 0; i < front.size(); ++i) {
+                    if (front[i] != '(' && front[i] != ')') continue;
+                    auto t = front.substr(0, i) + front.substr(i + 1);
+                    if (visited.count(t))continue;
+                    visited.emplace(t);
+                    q.emplace(t);
+                }
+            }
+        }
+        return res;
+    }
+};

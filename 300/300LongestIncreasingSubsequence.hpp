@@ -67,3 +67,20 @@ public:
         return LIS.size();
     }
 };
+
+// n2
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> m;
+        for (auto num : nums) {
+            if (m.empty() || num > m.back()) m.push_back(num);
+            else {
+                int i = m.size() - 1;
+                while (i > 0 && m[i-1] >= num) --i;
+                m[i] = num;
+            }
+        }
+        return m.size();
+    }
+};
