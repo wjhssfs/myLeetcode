@@ -74,12 +74,41 @@ public:
 class Solution {
 public:
     vector<vector<int>> multiply(vector<vector<int>>& A, vector<vector<int>>& B) {
+        int m = A.size(), l = B.size();
+        if (m + l == 0) return {};
+        int n = B[0].size();
+        auto res = vector<vector<int>>(m, vector<int>(n));
+        unordered_map<int, vector<int>> Ah, Bh;
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < l; ++j) {
+                if (A[i][j]) Ah[i].push_back(j);
+            }
+        }
+        for (int i = 0; i < l; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (B[i][j]) Bh[i].push_back(j);
+            }
+        }
+        for (auto && a : Ah) {
+            for (auto c : a.second) {
+                for (auto && d : Bh[c]) {
+                    res[a.first][d] += A[a.first][c] * B[c][d];
+                }
+            }
+        }
+        return res;
+    }
+};
+
+class Solution {
+public:
+    vector<vector<int>> multiply(vector<vector<int>>& A, vector<vector<int>>& B) {
         int m = A.size(), n = A[0].size();
         vector<vector<int>> res(m, vector<int>(B[0].size(),0));
 
         // for(int i = 0; i < m; i++){
-        //     for(int k = 0; k < n; k++){
-        //          for(int j = 0; j < n; j++){
+        //     for(int j = 0; j < n; j++){
+        //          for(int k = 0; k < n; k++){
         //              res[i][j] += A[i][k] * B[k][j];
         //          }
         //     }
