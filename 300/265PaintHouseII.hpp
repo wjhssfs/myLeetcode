@@ -79,3 +79,28 @@ public int minCostII(int[][] costs) {
 
     return costs[n - 1][min1];
 }
+
+class Solution {
+public:
+    int minCostII(vector<vector<int>>& costs) {
+        if (costs.empty()) return 0;
+        int n = costs.size(), k = costs[0].size();
+        auto dp = costs[0];
+        int min1 = INT_MAX, min2 = INT_MAX;
+        for (int i = 0; i < n; i++) {
+            int last1 = min1, last2 = min2;
+            min1 = INT_MAX, min2 = INT_MAX;
+            for (int j = 0; j < k; j++) {
+                int validMin = dp[j] == last1 ? last2 : last1;
+                if (validMin == INT_MAX) validMin = 0;
+                dp[j] = validMin + costs[i][j];
+                if (dp[j] <= min1) {
+                    min2 = min1; min1 = dp[j];
+                } else if (dp[j] < min2) {
+                    min2 = dp[j];
+                }
+            }
+        }
+        return min1;
+    }
+};

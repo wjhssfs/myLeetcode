@@ -107,3 +107,39 @@ public void dfs(String low, String high, char[] c, int left, int right) {
         if(left < right || left == right && p[0] == p[1]) dfs(low, high, c, left + 1, right - 1);
     }
 }
+
+
+class Solution {
+public:
+    int strobogrammaticInRange(const string& low, const string& high) {
+        vector<string> mp = {"00", "11", "69", "88", "96"};
+        int count = 0;
+        for(int len = low.length(); len <= high.length(); len++) {
+            if (len > low.length() && len < high.length()) { // Pruning, handles length of bounds diff a lot
+                int subTotal = (int)pow(5, len/2) * ((len % 2) ? 3 : 1);
+                subTotal -= (int)pow(5, (len-2)/2) * ((len % 2) ? 3 : 1);
+                count += subTotal;
+            }
+            else
+            {
+                string temp(len, '0');
+                dfs(low, high, temp, 0, len - 1, count, mp);
+            }
+        }
+        return count;
+    }
+    void dfs(const string& low, const string& high, string& str, int left, int right, int &count, vector<string> &mp) {
+        if(left > right) {
+            if((str.length() == low.length() && str.compare(low) < 0) || 
+               (str.length() == high.length() && str.compare(high) > 0)) return;
+            count++; 
+            return;
+        }
+        for(auto p : mp) {
+            str[left] = p[0]; 
+            str[right] = p[1];
+            if(str.size() != 1 && str[0] == '0') continue;
+            if(left < right || (left == right && p[0] == p[1])) dfs(low, high, str, left + 1, right - 1, count, mp);
+        }
+    }
+};
