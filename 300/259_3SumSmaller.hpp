@@ -33,3 +33,18 @@ public:
     }
 };
 
+class Solution {
+public:
+    int minMeetingRooms(vector<Interval>& intervals) {
+        sort(intervals.begin(), intervals.end(), [](const Interval& a, const Interval&b) { return a.start < b.start;});
+        priority_queue<int, deque<int>, greater<int>> q;
+        size_t res = 0;
+        for (auto && interval : intervals) {
+            while (q.size() && interval.start >= q.top()) q.pop();
+            q.push(interval.end);
+            res = max(res, q.size());
+        }
+        return static_cast<int>(res);
+    }
+};
+
