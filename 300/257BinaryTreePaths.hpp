@@ -44,25 +44,21 @@ public:
     vector<string> result;
 };
 
-public List<String> binaryTreePaths(TreeNode root) {
-
-        List<String> paths = new LinkedList<>();
-
-        if(root == null) return paths;
-
-        if(root.left == null && root.right == null){
-            paths.add(root.val+"");
-            return paths;
+class Solution {
+public:
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string> res;
+        if (!root) return res;
+        string rootVStr = to_string(root->val);
+        if (!root->left && !root->right) {
+            return {rootVStr};
         }
-
-         for (String path : binaryTreePaths(root.left)) {
-             paths.add(root.val + "->" + path);
-         }
-
-         for (String path : binaryTreePaths(root.right)) {
-             paths.add(root.val + "->" + path);
-         }
-
-         return paths;
-
+        for (auto &&result : binaryTreePaths(root->left)) {
+            res.push_back(rootVStr + "->" + result);
+        }
+        for (auto &&result : binaryTreePaths(root->right)) {
+            res.push_back(rootVStr + "->" + result);
+        }
+        return res;
     }
+};
