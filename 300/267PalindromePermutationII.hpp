@@ -55,3 +55,32 @@ private:
         }
     }
 };
+
+class Solution {
+public:
+    vector<string> generatePalindromes(string s) {
+        unordered_map<char, int> m;
+        unordered_set<char> odd;
+        for (auto c : s) {
+            ++m[c] % 2 ? (void)odd.insert(c) : (void)odd.erase(c);
+        }
+        if (odd.size() > 1) return{};
+        vector<string> res;
+        string mid = odd.size() ? string(1, *odd.begin()) : "";
+        dfs(res, m, "", s.size(), mid);
+        return res;
+    }
+    void dfs(vector<string> &res, unordered_map<char, int> &m, const string &cur, int sz, const string &mid) {
+        if (cur.size() * 2 + mid.size() == sz) {
+            res.push_back(cur + mid + string(cur.rbegin(), cur.rend()));
+            return;
+        }
+        for (auto && r : m) {
+            if (r.second > 1) {
+                r.second -= 2;
+                dfs(res, m, cur + r.first, sz, mid);
+                r.second += 2;
+            }
+        }
+    }
+};
