@@ -30,7 +30,7 @@ public:
     }
 
     int next() {
-        hasNext())
+        hasNext();
         return *colIt++;
     }
 
