@@ -18,6 +18,24 @@
 class Solution {
 public:
     vector<int> constructArray(int n, int k) {
+        vector<int> res;
+        int cur = n;
+        for (int i = k; i < n; ++i) {
+            res.push_back(cur--);
+        }
+        int f = -1;
+        while (res.size() < n) {
+            res.push_back(res.back() + f * k);
+            f = -f;
+            --k;
+        }
+        return res;
+    }
+};
+
+class Solution {
+public:
+    vector<int> constructArray(int n, int k) {
         vector<int> res{1};
         int f = 1;
         while (res.size() < n) {
@@ -33,6 +51,10 @@ public:
     }
 };
 
+//   i++ j-- i++ j--  i++ i++ i++ ...
+// out: 1   9   2   8    3   4   5   6   7
+// dif:   8   7   6   5    1   1   1   1 
+
 class Solution {
 public:
     vector<int> constructArray(int n, int k) {
@@ -47,5 +69,4 @@ public:
         }
         return res;
     }
-    
 };
