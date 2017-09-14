@@ -32,10 +32,7 @@ class MagicDictionary {
         cur->isWord = true;
     }
     bool search(TrieNode* cur, const string &word, int start) {
-        if (cur == nullptr) return false;
-        for (int i = start; i < word.size() && cur != nullptr; ++i) {
-            cur = cur->children[word[i] - 'a'];
-        }
+        for (int i = start; i < word.size() && cur != nullptr; ++i) cur = cur->children[word[i] - 'a'];
         return cur != nullptr && cur->isWord;
     }
     

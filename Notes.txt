@@ -1,8 +1,4 @@
-
-
-Pass index:221
-
-
+Pass index:r670
 
 239 Sliding Window Maximum
 227 Basic caculator ii
