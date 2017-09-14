@@ -35,8 +35,8 @@ public:
         int w[5][9] = {};
         for (auto it = nums.rbegin(); it != nums.rend(); ++it) {
             int l = *it / 100, p = *it % 100 / 10, v = *it % 10;
-            if (w[l][p] == 0)
-                for (int k = l, n = p; k > 0; --k, n = (n + 1) / 2) ++w[k][n];
+            if (w[l][p] == 0) // leaf node
+                for (int k = l, n = p; k > 0; --k, n = (n + 1) / 2 /* parent */) ++w[k][n];
             sum += w[l][p] * v;
         }
         return sum;
