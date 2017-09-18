@@ -18,6 +18,10 @@
 // Explanation: You can't get a non-decreasing array by modify at most one element.
 // Note: The n belongs to [1, 10,000].
 
+// When you find nums[i-1] > nums[i] for some i, you will prefer to change nums[i-1]'s value, since a larger
+// nums[i] will give you more risks that you get inversion errors after position i. But, if you also find
+// nums[i-2] > nums[i], then you have to change nums[i]'s value instead, or else you need to change both
+// of nums[i-2]'s and nums[i-1]'s values.
 class Solution {
 public:
     bool checkPossibility(vector<int>& nums) {
