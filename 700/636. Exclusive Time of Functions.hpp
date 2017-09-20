@@ -32,7 +32,7 @@ class Solution {
 public:
     vector<int> exclusiveTime(int n, vector<string>& logs) {
         vector<int> result(n);
-        stack<pair<int, int>> s;
+        stack<pair<int, int>> s; // start time/time in sub function
         for (auto && log : logs) {
             bool isStart = log.find("start") != string::npos;
             int time = stoi(log.substr(log.rfind(":") + 1));

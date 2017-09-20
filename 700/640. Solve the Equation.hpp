@@ -27,7 +27,8 @@
 class Solution {
 public:
     string solveEquation(string equation) {
-        int n = equation.size(), sign = 1, coeff = 0, tot = 0, i = 0;
+        int n = equation.size(), sign = 1, coeff = 0, tot = 0;
+        int i = 0; // start of a number with sign
         for (int j = 0; j < n; j++) {
             if (equation[j] == '+' || equation[j] == '-') {
                 if (j > i) tot += sign*stoi(equation.substr(i, j-i));

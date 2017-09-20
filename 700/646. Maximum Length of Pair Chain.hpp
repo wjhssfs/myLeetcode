@@ -12,12 +12,6 @@
 // Note:
 // The number of given pairs will be in the range [1, 1000].
 
-def findLongestChain(self, pairs):
-    cur, res = float('-inf'), 0
-    for p in sorted(pairs, key=lambda x: x[1]):
-        if cur < p[0]: cur, res = p[1], res + 1
-    return res
-
 class Solution {
 public:
     int findLongestChain(vector<vector<int>>& pairs) {
@@ -43,16 +37,3 @@ def findLongestChain(self, pairs):
     for p in sorted(pairs, key=lambda x: x[1]):
         if cur < p[0]: cur, res = p[1], res + 1
     return res
-
-   public int findLongestChain(int[][] pairs) {
-        if (pairs == null || pairs.length == 0) return 0;
-        Arrays.sort(pairs, (a, b) -> (a[0] - b[0]));
-        int[] dp = new int[pairs.length];
-        Arrays.fill(dp, 1);
-        for (int i = 0; i < dp.length; i++) {
-            for (int j = 0; j < i; j++) {
-                dp[i] = Math.max(dp[i], pairs[i][0] > pairs[j][1]? dp[j] + 1 : dp[j]);
-            }
-        }
-        return dp[pairs.length - 1];
-    }
