@@ -48,6 +48,22 @@ public:
     }
 };
 
+class Solution {
+public:
+    double findMaxAverage(vector<int>& nums, int k) {
+        int n = nums.size();
+        double ss[n + 1], mx = -1e4;
+        ss[0] = 0.;
+        for (int i = 0; i < n; ++i)
+            ss[i + 1] = ss[i] + nums[i];
+        for (int i = 0; i <= n - k; ++i) {
+            for (int j = k; i + j <= n; ++j)
+                if (j * mx < (ss[i + j] - ss[i]))
+                    mx = (ss[i + j] - ss[i]) / j;
+        }
+        return mx;
+    }
+};
 
 // https://discuss.leetcode.com/topic/96131/python-advanced-o-n-solution-convex-hull-window
 // we have a set of points {P_x} = {(x, P[x]) | x = 0...n} (abusing notation P[x] for the array, P_x for the point),
