@@ -38,3 +38,13 @@ public:
         return max(m[0] * m[1], m[2] * m[3]) * m[4];
     }
 };
+
+
+class Solution {
+public:
+    int maximumProduct(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        return max(nums[0] * nums[1] * nums[nums.size() - 1],
+                  nums[nums.size() - 1] * nums[nums.size() - 2] * nums[nums.size() - 3]);
+    }
+};

@@ -19,6 +19,8 @@
 // Note:
 // The integer n is in the range [1, 1000] and k is in the range [0, 1000].
 
+// dp[n][k] = dp[n-1][k]+dp[n-1][k-1]+dp[n-1][k-2]+...+dp[n-1][k+1-n+1]+dp[n-1][k-n+1]
+// dp[n][k+1] = dp[n-1][k+1]+dp[n-1][k]+dp[n-1][k-1]+dp[n-1][k-2]+...+dp[n-1][k+1-n+1]
 class Solution {
 public:
     int kInversePairs(int n, int k) {
@@ -39,3 +41,47 @@ public:
         return m[n][k];
     }
 };
+
+int dp[1005][2005];
+
+class Solution {
+public:
+    int MOD = 1e9+7;
+    int kInversePairs(int n, int k) {
+        memset(dp, 0, sizeof(dp));
+        dp[1][0] = 1;
+        for(int i=2;i<=n;i++) {
+            int v = 0;
+            for(int u=0;u<=k;u++) {
+                v += dp[i-1][u];
+                if(v>=MOD) v -= MOD;
+                
+                if(u>=i) { v = v + (MOD - dp[i-1][u-i]); v %= MOD; }    
+                dp[i][u] = v;
+                
+            }
+        }
+        return dp[n][k];
+    }
+};
+
+public class Solution {
+    public int kInversePairs(int n, int k) {
+        long[] dp = new long[k+n+2];
+        int mod = 1000000007;
+        dp[0] = 1;
+        for(int i = 1;i <= n;i++){
+            for(int j = dp.length-1-i;j >= 0;j--){
+                dp[j+i] -= dp[j];
+                if(dp[j+i] < 0)dp[j+i] += mod;
+            }
+        }
+        for(int i = 1;i <= n;i++){
+            for(int j = 0;j < dp.length-1;j++){
+                dp[j+1] += dp[j];
+                dp[j+1] %= mod;
+            }
+        }
+        return (int)dp[k];
+    }
+}
