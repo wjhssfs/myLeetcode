@@ -13,27 +13,7 @@
 // The length of the given array won't exceed 1000.
 // The integers in the given array are in the range of [0, 1000].
 
-class Solution {
-public:
-    int triangleNumber(vector<int>& nums) {
-        int res = 0;
-        sort(nums.begin(), nums.end());
-        size_t i = 0;
-        while (i < nums.size() && nums[i] == 0) ++i;
-        if (nums.size() - i < 3) return 0;
-        for (; i < nums.size(); ++i) {
-            size_t r = nums.size() - 1, l = r;
-            while (r > i + 1) {
-                while (l > i + 1 && nums[l-1] > nums[r] - nums[i]) --l;
-                //if (nums[l] <= nums[r] - nums[i]) break;
-                res += r - l;
-                --r;
-            }
-        }
-        return res;
-    }
-};
-
+// sum of any two sides must be greater than the 3rd side. 
 public static int triangleNumber(int[] A) {
     Arrays.sort(A);
     int count = 0, n = A.length;
