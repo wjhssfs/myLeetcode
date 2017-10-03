@@ -1,4 +1,4 @@
-Pass index:rr680-611
+Pass index:rr680-604
 
 239 Sliding Window Maximum
 227 Basic caculator ii

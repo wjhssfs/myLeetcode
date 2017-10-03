@@ -49,3 +49,21 @@ public:
         else return to_string(t->val);
     }
 };
+
+class Solution {
+public:
+    string tree2str(TreeNode* t) {
+        if (!t) return "";
+        if (t->right) return to_string(t->val) + "(" + tree2str(t->left) + ")(" + tree2str(t->right) + ")";
+        else if (t->left && !t->right) return to_string(t->val) + "(" + tree2str(t->left) + ")";
+        else return to_string(t->val);
+    }
+};
+
+class Solution {
+public:
+    string tree2str(TreeNode* t) {
+        return !t ? "" : to_string(t->val) + (t->left ? "(" + tree2str(t->left) + ")" : t->right ? "()" : "")
+                                           + (t->right ? "(" + tree2str(t->right) + ")" : "");
+    }
+};
