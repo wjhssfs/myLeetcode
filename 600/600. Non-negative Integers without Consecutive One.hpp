@@ -32,7 +32,8 @@ public:
             }
             mask >>= 1;
         }
-        // only reach here when num is power of 2
+
+        // +1 for 0
         return res + 1;
     }
 };

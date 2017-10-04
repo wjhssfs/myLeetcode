@@ -29,9 +29,13 @@ public:
     }
 };
 
+
 int d(vector<int>& p1, vector<int>& p2) {
     return (p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]);
 }
+// correct based on not possible to have lattice (interger) points forming a equilateral triangle.
+// https://math.stackexchange.com/questions/105330/equilateral-triangle-whose-vertices-are-lattice-points
+// otherwise would need to check 4 equal distances should be smaller than 2 equal distances.
 bool validSquare(vector<int>& p1, vector<int>& p2, vector<int>& p3, vector<int>& p4) {
     unordered_set<int> s({ d(p1, p2), d(p1, p3), d(p1, p4), d(p2, p3), d(p2, p4), d(p3, p4) });
     return !s.count(0) && s.size() == 2;
