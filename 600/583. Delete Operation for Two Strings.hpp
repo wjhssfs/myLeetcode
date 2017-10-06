@@ -28,6 +28,7 @@ public:
     }
 };
 
+// find the longest common subsequence and delete the rest characters.
 class Solution {
 public:
     int minDistance(string word1, string word2) {
