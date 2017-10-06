@@ -44,7 +44,8 @@ public:
 			for (int i = 1; i < points.size(); i++) {
 				if (i == curIndex) continue;
 				int cross = crossProductLength(points[curIndex], points[i], next);
-				if (nextIndex == curIndex || cross > 0 ||
+				if (nextIndex == curIndex || cross > 0 || 
+				// when use cross > 0, search next point in clockwise, if cross < 0 used, search is conter clockwise
 					// Handle collinear points
 					(cross == 0 && distance(points[i], points[curIndex]) > distance(next, points[curIndex]))) {
 					next = points[i];
@@ -67,6 +68,7 @@ public:
 		return result;
 	}
 
+	// returns > 0 if BA to BC is conter clockwise
 	int crossProductLength(Point A, Point B, Point C) {
 		// Get the vectors' coordinates.
 		int BAx = A.x - B.x;
