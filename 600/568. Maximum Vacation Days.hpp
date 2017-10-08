@@ -56,7 +56,7 @@ public:
             vector<int> mN(m);
             for (int i = 0; i < N; ++i) {
                 for (int j = 0; j < N; ++j) {
-                    if (flights[j][i])
+                    if (就== i || flights[j][i])
                         mN[i] = max(mN[i], m[j]);
                 }
                 if (mN[i] != -1) mN[i] += days[i][k];
