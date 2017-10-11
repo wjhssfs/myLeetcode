@@ -47,5 +47,40 @@ private:
         }
         return m[l][r][k];
     }
-    
 };
+
+// https://discuss.leetcode.com/topic/84687/java-top-down-and-bottom-up-dp-solutions/2
+// modify the definition of the problem to absorb the external information so that the new one is self-contained.
+// Bottom-up DP
+public int removeBoxes(int[] boxes) {
+    int n = boxes.length;
+    int[][][] dp = new int[n][n][n];
+        
+    for (int j = 0; j < n; j++) {
+        for (int k = 0; k <= j; k++) {
+            dp[j][j][k] = (k + 1) * (k + 1);
+        }
+    }
+        
+    for (int l = 1; l < n; l++) {
+        for (int j = l; j < n; j++) {
+            int i = j - l;
+                
+            for (int k = 0; k <= i; k++) {
+                int res = (k + 1) * (k + 1) + dp[i + 1][j][0];
+                    
+                for (int m = i + 1; m <= j; m++) {
+                    if (boxes[m] == boxes[i]) {
+                        res = Math.max(res, dp[i + 1][m - 1][0] + dp[m][j][k + 1]);
+                    }
+                }
+                    
+                dp[i][j][k] = res;
+            }
+        }
+    }
+    
+    return (n == 0 ? 0 : dp[0][n - 1][0]);
+}
+
+// "leetcode 312. Burst Balloons", the external information to subarray nums[i, j] is the two numbers (denoted as left and right) adjacent to nums[i] and nums[j], respectively. 

@@ -59,6 +59,7 @@ public:
         vector<int> res;
         res.push_back(root->val);
         if (root->left) addLeftBound(root->left, res);
+        // instead of addLeaves(root, res), do below two to handle single level tree
         addLeaves(root->left, res);
         addLeaves(root->right, res);
         if (root->right) addRightBound(root->right, res);
@@ -66,7 +67,7 @@ public:
     }
 private:
     void addLeftBound(TreeNode *root, vector<int> &res) {
-        if (!root->left && !root->right) return;
+        if (!root->left && !root->right) return; // not adding leave
         res.push_back(root->val);
         root->left ? addLeftBound(root->left, res) :  addLeftBound(root->right, res);
     }
@@ -82,5 +83,30 @@ private:
             addLeaves(root->left, res);
             addLeaves(root->right, res);
         }
+    }
+};
+
+
+// One pass
+class Solution {
+public:
+    vector<int> boundaryOfBinaryTree(TreeNode* root) {
+        vector<int> bounds;
+        if (root) {
+            bounds.push_back(root->val);
+            getBounds(root->left, bounds, true, false);
+            getBounds(root->right, bounds, false, true);
+        }
+        return bounds;
+    }
+
+private:
+    void getBounds(TreeNode* node, vector<int>& res, bool lb, bool rb) {
+        if (!node)  return;
+        if (lb) res.push_back(node->val);
+        if (!lb && !rb && !node->left && !node->right)  res.push_back(node->val);
+        getBounds(node->left, res, lb, rb && !node->right);
+        getBounds(node->right, res, lb && !node->left, rb);
+        if (rb) res.push_back(node->val);
     }
 };
