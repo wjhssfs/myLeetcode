@@ -26,8 +26,8 @@
 // Third round: (((1,8),(4,5)),((2,7),(3,6)))
 // Since the third round will generate the final winner, you need to output the answer (((1,8),(4,5)),((2,7),(3,6))).
 // Note:
-// The n is in range [2, 212].
-// We ensure that the input n can be converted into the form 2k, where k is a positive integer.
+// The n is in range [2, 2^12].
+// We ensure that the input n can be converted into the form 2^k, where k is a positive integer.
 
 class Solution {
 public:

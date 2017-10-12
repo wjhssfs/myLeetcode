@@ -43,7 +43,7 @@ public:
                 else st.top()->right = cur;
                 st.push(cur);
             } else {
-                assert(s[p] == '(');
+                assert(s[p] == ')');
                 ++p;
                 st.pop();
             }
@@ -65,37 +65,26 @@ private:
     }
 };
 
-
 class Solution {
 public:
     TreeNode* str2tree(string s) {
         if (s.empty()) return nullptr;
+        s = "(" + s + ")";
         int p = 0;
-        auto root = new TreeNode(parseV(s, p));
-        root->left = parseSubTree(s, p);
-        root->right = parseSubTree(s, p);
-        return root;
+        return parseSubTree(s, p);
     }
     
 private:
     TreeNode* parseSubTree(string &s, int &p) {
         if (s[p] != '(') return nullptr;
         ++p;
-        auto root = new TreeNode(parseV(s, p));
+        size_t n = 0;
+        auto root = new TreeNode(stoi(s.substr(p), &n));
+        p += n;
         root->left = parseSubTree(s, p);
         root->right = parseSubTree(s, p);
-        ++p; // assert(s[p] == ')');
+        ++p;
         return root;
-    }
-    int parseV(const string &s, int &p) {
-        int sign = 1, v = 0;
-        if (s[p] == '-') {sign = -1; ++p;}
-        while (p < s.size() && isdigit(s[p])) {
-            v *= 10;
-            v += s[p] - '0';
-            ++p;
-        }
-        return v * sign;
     }
 };
 
