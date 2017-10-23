@@ -52,6 +52,7 @@ class Solution {
 public:
  int findRotateSteps(string ring, string key) {
         int n = ring.size(), m = key.size();
+        // dp[i][j] means cost (without pressing center button) for spelling the key starting at i-th character when j-th character of ring is at 12 o' clock"
         vector<vector<int>> dp(m+1, vector<int>(n,0));
         for(int i = m-1; i >= 0; --i){  // dp[m][j] are all 0
             for(int j = 0; j < n; ++j){
@@ -82,7 +83,7 @@ public:
         vector<vector<int>> dp(ksize+1,vector<int> (size,INT_MAX));// initializing dp vector 
         fill(dp[0].begin(),dp[0].end(),0);
         
-        vector<int> tmp(1,0);// starting index
+        vector<int> tmp(1,0); // starting index {0}
         
         int res = INT_MAX;
         for(int i=1;i<=ksize;++i){
