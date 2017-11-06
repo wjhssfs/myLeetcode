@@ -37,3 +37,7 @@ public:
       while(x/=7);
       return num>=0? res : "-"+res;
     }
+
+     string convertToBase7(int n) {
+      return n>=0? n>=7? convertToBase7(n/7)+to_string(n%7) : to_string(n) : '-'+convertToBase7(-n);
+    }

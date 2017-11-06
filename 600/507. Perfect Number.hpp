@@ -20,7 +20,8 @@ public:
                 t += num / i;
             }
         }
-        if (sr * sr == num) t -= sr; //sr was double counted
+        if (sr * sr == num) t -= sr; //sr was double counted. This was not actually needed
         return num == t;
     }
 };
+

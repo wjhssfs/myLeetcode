@@ -30,69 +30,7 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-class Solution {
-public:
-    vector<int> findMode(TreeNode* root) {
-        vector<int> res;
-        int maxCount = 0;
-        dfs(root, maxCount, res);
-        return res;
-    }
-private:
-    int countRoot(TreeNode* root, int val) {
-           if (!root) return 0;
-           int t = 0;
-           if (root->val == val) ++t;
-           if (root->val >= val) t += countRoot(root->left, val);
-           if (root->val <= val) t += countRoot(root->right, val);
-           return t;
-    }
-    void dfs(TreeNode* root, int& maxCount, vector<int> &res) {
-        if (!root) return;
-        int rootCount = countRoot(root, root->val);
-        if (rootCount > maxCount) {
-            maxCount = rootCount;
-            res.clear();
-            res.push_back(root->val);
-        } else if (rootCount == maxCount) {
-            res.push_back(root->val);
-        }
-        dfs(root->left, maxCount, res);
-        dfs(root->right, maxCount, res);
-    }
-};
 
-// Two pass
-class Solution {
-public:
-    vector<int> findMode(TreeNode* root) {
-        res.clear();
-        maxCount = -1, mode = 0, count = 0;
-        inorder(root);
-        mode = 1, count = 0;
-        inorder(root);
-        return res;
-    }
-private:
-    void process(int val) {
-        if (maxCount == -1 || val != preVal) {
-            count = 0;
-        }
-        ++count;
-        preVal = val;
-        if (mode == 0) {
-            maxCount = max(maxCount, count);
-        } else if (count == maxCount) res.push_back(val);
-    }
-    void inorder(TreeNode* root) {
-        if (!root) return;
-        inorder(root->left);
-        process(root->val);
-        inorder(root->right);
-    }
-    int maxCount, mode, preVal, count;
-    vector<int> res;
-};
 
 // OnePass
 class Solution {
@@ -123,4 +61,36 @@ private:
     }
     int maxCount, preVal, count;
     vector<int> res;
+};
+
+class Solution {
+public:
+    vector<int> findMode(TreeNode* root) {
+        vector<int> res;
+        int maxCount = 0;
+        dfs(root, maxCount, res);
+        return res;
+    }
+private:
+    int countRoot(TreeNode* root, int val) {
+           if (!root) return 0;
+           int t = 0;
+           if (root->val == val) ++t;
+           if (root->val >= val) t += countRoot(root->left, val);
+           if (root->val <= val) t += countRoot(root->right, val);
+           return t;
+    }
+    void dfs(TreeNode* root, int& maxCount, vector<int> &res) {
+        if (!root) return;
+        int rootCount = countRoot(root, root->val);
+        if (rootCount > maxCount) {
+            maxCount = rootCount;
+            res.clear();
+            res.push_back(root->val);
+        } else if (rootCount == maxCount) {
+            res.push_back(root->val);
+        }
+        dfs(root->left, maxCount, res);
+        dfs(root->right, maxCount, res);
+    }
 };

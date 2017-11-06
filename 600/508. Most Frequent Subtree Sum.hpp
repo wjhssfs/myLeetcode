@@ -49,3 +49,5 @@ private:
         return sum;
     }
 };
+
+// you can actually form the result array as you go

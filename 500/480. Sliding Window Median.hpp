@@ -41,6 +41,13 @@ public:
 	        if (i == nums.size())
 	            return medians;
 	            
+             // // if inserted or removed item equals to the current median, we need to retrace.
+             //    // we do not know which exact element will be removed/inserted, and we cannot compare multiset iterators.
+             //    // otherwise, we can keep or increment/decrement the current median iterator.
+             //    if ((nums[i - k] < *it && nums[i] < *it) || (nums[i - k] > *it && nums[i] > *it)) repos_it = 0;
+             //    else if (nums[i - k] < *it && nums[i] > *it) repos_it = 1; // advance forward.
+             //    else if (nums[i - k] > *it && nums[i] < *it) repos_it = -1; // advance backward.
+
 	        // Insert nums[i].
 	        window.insert(nums[i]);
 	        if (nums[i] < *mid)

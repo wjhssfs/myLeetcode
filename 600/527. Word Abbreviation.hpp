@@ -18,9 +18,9 @@ class Solution {
 public:
     vector<string> wordsAbbreviation(vector<string>& dict) {
         vector<string> res(dict.size());
-        vector<int> pre(dict.size());
+        vector<int> pre(dict.size(), 1);
         for (int i=0;i<dict.size();i++)
-            res[i]=abbreviate(dict[i], pre[i]=1); // make abbreviation for each string
+            res[i]=abbreviate(dict[i], 1); // make abbreviation for each string
         for (int i=0;i<dict.size();i++) // check conflicts for every string
             while (true) {
                 set<int> dup;
