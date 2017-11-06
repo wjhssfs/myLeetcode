@@ -37,3 +37,20 @@ public:
         return minR;
     }
 };
+
+class Solution {
+public:
+    int findRadius(vector<int>& houses, vector<int>& heaters) {
+        if (heaters.empty()) return -1;
+        int minR = 0;
+        sort(heaters.begin(), heaters.end());
+        for (auto house : houses) {
+            auto it = upper_bound(heaters.begin(), heaters.end(), house);
+            if (it == heaters.end()) minR = max(minR, house - heaters.back());
+            else if (it == heaters.begin()) minR = max(minR, *it - house);
+            else minR = max(minR, min(*it - house, house - *next(it, -1)));
+        }
+        
+        return minR;
+    }
+};

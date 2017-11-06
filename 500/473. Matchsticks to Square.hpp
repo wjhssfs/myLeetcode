@@ -52,16 +52,15 @@ public:
 	}
 };
 
-// https://leetcode.com/problems/matchsticks-to-square/ 
 class Solution {
     bool dfs(vector<int> &sidesLength,const vector<int> &matches, int index, const int target) {
         if (index == matches.size())
             return sidesLength[0] == sidesLength[1] && sidesLength[1] == sidesLength[2] && sidesLength[2] == sidesLength[3];
         for (int i = 0; i < 4; ++i) {
-            if (sidesLength[i] + matches[index] > target) // first
+            if (sidesLength[i] + matches[index] > target) // too long
                 continue;
             int j = i;
-            while (--j >= 0) // third
+            while (--j >= 0) // skip same length tried
                 if (sidesLength[i] == sidesLength[j]) 
                     break;
             if (j != -1) continue;
@@ -80,7 +79,7 @@ public:
             sum += val;
         }
         if (sum % 4 != 0) return false;
-        sort(nums.begin(), nums.end(), [](const int &l, const int &r){return l > r;}); // second
+        sort(nums.begin(), nums.end(), greater<int>()); // longer first, return false early
         vector<int> sidesLength(4, 0);
         return dfs(sidesLength, nums, 0, sum / 4);
     }
