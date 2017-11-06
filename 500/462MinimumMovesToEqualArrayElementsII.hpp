@@ -22,3 +22,27 @@ public:
         return total;
     }
 };
+
+public class Solution {
+    public int minMoves2(int[] nums) {
+        Arrays.sort(nums);
+        int i = 0, j = nums.length-1;
+        int count = 0;
+        while(i < j){
+            count += nums[j]-nums[i];
+            i++;
+            j--;
+        }
+        return count;
+    }
+}
+
+def minMoves2(self, nums):
+    median = sorted(nums)[len(nums) / 2]
+    return sum(abs(num - median) for num in nums)
+
+def minMoves2(self, nums):
+    nums.sort()
+    return sum(nums[~i] - nums[i] for i in range(len(nums) / 2))
+//  The ~ operator is the same as in C++, so 0, 1, 2, ... get turned into -1, -2, -3, .... But C++ doesn't support negative indexing.
+// In Python, index -1 means the last element, index -2 means the next-to-last element, etc.    
