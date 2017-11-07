@@ -20,7 +20,7 @@ public:
         vector<int> res;
         int cur = 0;
         while (cur < nums.size()) {
-            if (nums[cur] != cur + 1 && nums[nums[cur]-1] != nums[cur]) swap(nums[cur], nums[nums[cur] - 1]);
+            if (/*nums[cur] != cur + 1 && */nums[nums[cur]-1] != nums[cur]) swap(nums[cur], nums[nums[cur] - 1]);
             else ++cur;
         }
         for (int i = 0; i < nums.size(); ++i) {
@@ -29,3 +29,25 @@ public:
         return res;
     }
 };
+
+
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        List<Integer> ret = new ArrayList<Integer>();
+        
+        for(int i = 0; i < nums.length; i++) {
+            int val = Math.abs(nums[i]) - 1;
+            if(nums[val] > 0) {
+                nums[val] = -nums[val];
+            }
+        }
+        
+        for(int i = 0; i < nums.length; i++) {
+            if(nums[i] > 0) {
+                ret.add(i+1);
+            }
+            else {
+                nums[i] = -nums[i];
+            }
+        }
+        return ret;
+    }

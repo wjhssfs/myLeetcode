@@ -15,3 +15,139 @@ kmp:
 	        }
 
 300 nlog(n)
+
+
+
+131 	Palindrome Partitioning	Backtracking			
+132 	Palindrome Partitioning II	DP			
+138 	Single Number II	Bit			
+140 	LRU Cache II	DP, Backtracking			
+142 	Linked List Cycle II	TopologicalSort			
+146 	LRU Cache	DP			
+148 	Sort List	Recursion, TwoPointers.			
+150 	Evaluate Reverse Polish Notation	Recursion, Stack			
+152 	Maximum Product Subarray	DP			
+153 	Find Minimum in Rotated Sorted Array	BinarySearch			
+155 	Min Stack	Stack			
+156 	Binary Tree Upside Down	Recursion, Iterative			
+158 	Read N Characters Given Read4 II - Call multiple times				
+160 	Intersecion of Two Linked Lists				
+161 	One Edit Distance				
+162 	Find Peak Element	BinarySearch			
+163 	Missing Ranges				
+164 	Maximum Gap	BucketSort			
+166 	Fraction to Recurring Decimal	Math			
+168 	Excel Sheet Column Title				
+171 	Excel Sheet Column Number				
+174 	Dungeon Game	DP			
+179 	Largest Number	Sort			
+188 	Best Time To Buy And Sell Stock IV	DP		 p[i][j] = max(p[i][j - 1], prices[j] + maxProfitHolding);	
+190 	Reverse Bits				
+203 	Remove Linked List Elements	Recursion			
+210 	Course Schedule II	TopologicalSort			
+212 	Word Search II	Backtracking, Trie			
+214 	Shortest Palindrome	KMP			
+215 	Kth Largest Element in an Array	Heap			
+216 	Combination Sum III	Backtracking			
+218 	The Skyline Problem	Heap			
+220 	Contains Duplicate III	BinarySearch, Bucket		lower_bound, first number not less than target	
+221 	Maximal Square	DP		last_topleft	
+222 	Count Complete Tree Nodes	BinarySearch			
+224 	Basic Caculator	Stack			
+233 	Number of Digit One	Recursion			
+236 	Lowest Common Ancestor of a Binary Tree	Recursion, Iterative			
+240 	Search a 2D Matrix II	Binary Search		O(m+n)	
+241 	Different Ways to Add Parentheses	Divide and Conquer			
+255 	Verify Preorder Sequence In Binary Search Tree			Stack	
+268 	Missing Number	Bit, Math, Swap, BinarySearch			
+269 	Alien Dictionary	TopologicalSort			
+270 	Closest Binary Search Tree Value	BinarySearch			
+273 	Integer to English Words				
+274 	H-Index	Counting sort			
+279 	Perfect Squares	DP/BFS			
+284 	Peeking Iterator				
+285 	Inorder Successor in BST				
+287 	Find the Duplicate Number	Two Pointers			
+289 	Game of Life				
+291 	Word Pattern II	Backtracking			
+295 	Find Median from Data Stream	Heap			
+296 	Best Meeting Point				
+298 	Binary Tree Longest Consecutive Sequence				
+299 	Bulls and Cows			One Pass:    if (numbers[s] < 0) cows++;if (numbers[g] > 0) cows++;numbers[s] ++;numbers[g] --;	
+301 	Remove Invalid Parentheses	DFS/BFS			
+310 	Minimum Height Trees	BFS		Reverse thinking, eliminate all not possibles	
+311 	Sparse Matrix Multiplication			switch to I, k, j to skip a[I,k] == 0. beats hash table based solution	
+312 	Burst Balloons			Reverse thinking	
+313 	Super Ugly Number	Heap		generating sequential number from elements	
+315 	Count of Smaller Numbers After Self			BIT, Segment Tree	
+316 	Remove Duplicate Letters	Greedy, Stack			
+317 	Shortest Distance from All Buildings	BFS		walk--	
+318 	Maximum Product of Word Lengths			for.. mask[i] |= 1 << (c - 'a');	
+321 	Create Maximum Number	Greedy			
+322 	Coin Change	DP		Backpack	
+324 	Wiggle Sort II			nums[(1+2*(i)) % (n|1)]	
+327 	Count of Range Sum				
+330 	Patching Array	DP			
+331 	Verify Preorder Serialization of a Binary Tree			nLeave = nNode + 1	
+332 	Reconstruct Itinerary			hierholzer's algorithm, Eulerian Path	
+341 	Flatten Nested List Iterator			pushed iterator to local copy instead of ref. when copy out of scope caused hard to find bug.	
+342 	Power of Four				
+343 	Interger Break		2	factors greater than 4 can be divide again, can't have more than two 2s, 3 is preffered.	
+449 	Serialize and Deserialize BST	lower/upper Bound + preorder		pass inorder	
+452 	Minimum Number of Arrows to Burst Balloons	Greedy			
+459 	Repeated Substring Pattern	S+S			
+460 	LFU cache				
+462 	Minimum Moves to Equal Array Elements II			Meeting point in 1d	1
+464 	Can I win	DP			
+466 	Count The Repetitions	DP		PigeonHole principle	
+467 	Unique Substrings in Wraparound String	DP		sum of max number of unique substrings in p ends with 'a', 'b', ..., 'z'	
+471 	Encode String with Shortest Length	DP			
+472 	Concatenated Words	Trie+DFS, DP			
+474 	Ones and Zeroes	DP			
+476 	Number Complement			mask |= mask >> 1;     mask |= mask >> 2;     mask |= mask >> 4;    mask |= mask >> 8;    mask |= mask >> 16;	
+477 	Total Hamming Distance			total += bitCount*(n - bitCount);	
+480 	Sliding Window Median	Two heaps/multiSet			
+486 	Predict the Winner	DP			
+487 	Max Consecutive Ones II	Two pointers			
+488 	Zuma Game	DFS			
+491 	Increasing subsequences	DFS			
+493 	Reverse Pairs	Merge Sort		Bit  i&-i (last 1 bit)	
+494 	Target Sum	DP			
+503 	Next Greater Element II	Stack		O(n)	
+505 	The Maze II	BFS, Priority queue			
+513 	Find Bottom Left Tree Value	BFS, right ot left			
+514 	Freedom Trail	DP			
+516 	Longest Palindromic Subsequence	DP			
+517 	Super Washing Machines	DP			
+523 	Continuous subarray sum			module	
+526 	Beautiful Arrange	BT			
+540 	Single Element in a Sorted Array	Binary Search		need not to worry about out of bound for last element.	
+542 	01 Matrix	BFS			
+546 	Remove Boxes	DP, DFS			
+546 	Remove Boxes	DP		convert not self-contained subproblem definition	
+548 	Split Array with Equal Sum			split in the middle then two halves.  DFS	
+552 	Student Attendance Record II   	DP		f[i][j][k] , at most j consecutive A, at most k consecutive L	
+555 	Split Concatenated Strings	string			*
+555 	Split Concatenated Strings			center part doesn't change and always need bigger string	
+560 	Subarray Sum Equals K				*
+564 	Find the Closest Palindrome		1		
+564 	Find the Closest Palindrome			one more/less digit or middle digit +1, -1, 0, then flip left to right	
+566 	Reshape the Matrix				
+567 	Permutation in String			Sliding window	
+576 	Out of Boundary Paths.hpp			 If an adjacent cell is out of the border, the number of paths is 1	
+581 	Shortest Unsorted Continuous Subarray				
+587 	Erect the Fence	Geometry		Cross product	
+604 	 Design Compressed String Iterator				
+611 	Valid Triangle Number				
+616 	Add Bold Tag in String				
+629 	K Inverse Pairs Array	DP			
+633 	Sum of Square Numbers			Two Pointers	
+634 	Find th Derangement of An Array	Recursion		Inclusion-exclusion principle	
+639 	Decode ways	DP			
+644 	Maximum Average Subarray II	Binary search, Convex Hull			
+645 	Set Mismatch			Sort, tagging, hash	
+654 	Maximum Binary Tree	Stack, Tree			
+656 	Coin Path	DP		Contradition: same cost paths, the longer one is lexicographically smaller.	
+658 	Find K Closest Elements	Binary Search		the first index i so that arr[i] is better than arr[i+k]	
+694 	Number of Distinct Islands				
+698 	Partition to K Equal Sum Subsets 				
