@@ -88,6 +88,7 @@ def sequenceReconstruction(self, org, seqs):
     return need <= set(have) and all(index[a] < index.get(b, 0) for a, b in have)
 
 // https://discuss.leetcode.com/topic/65961/simple-solution-one-pass-using-only-array-c-92ms-java-16ms/2
+// t is sufficient to just check if every two adjacent elements also appears adjacently in the sub-sequences
 class Solution {
 public:
 	bool sequenceReconstruction(vector<int>& org, vector<vector<int>>& seqs) {

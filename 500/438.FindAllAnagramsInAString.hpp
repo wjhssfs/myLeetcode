@@ -42,7 +42,7 @@ public:
 	}
 };
 
-https://discuss.leetcode.com/topic/64434/shortest-concise-java-o-n-sliding-window-solution
+// https://discuss.leetcode.com/topic/64434/shortest-concise-java-o-n-sliding-window-solution
 class Solution {
 public:
 	vector<int> findAnagrams(string s, string p) {
