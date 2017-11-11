@@ -74,3 +74,21 @@ public:
             return a.end - b.end;
         }
     }
+
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<Interval>& intervals) {
+        sort(intervals.begin(), intervals.end(), [](Interval &a, Interval &b){ return a.start < b.start;});
+        int nNoOverlap = 0;
+        int end = INT_MIN;
+        for (int i = 0; i < (int)intervals.size(); ++i) {
+            if (intervals[i].start >= end) {
+                ++nNoOverlap;
+                end = intervals[i].end;
+            } else if (intervals[i].end < end) {
+                end = intervals[i].end;
+            }
+        }
+        return intervals.size() - nNoOverlap;
+    }
+};
