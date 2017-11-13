@@ -35,3 +35,28 @@ public:
         return answer;
     }
 };
+
+// Build the answer bit by bit from left to right. Let's say we already know the largest first seven bits we can create.
+// How to find the largest first eight bits we can create? Well it's that maximal seven-bits prefix followed by 0 or 1.
+// Append 0 and then try to create the 1 one (i.e., answer ^ 1) from two eight-bits prefixes from nums. If we can, then change that 0 to 1.
+
+public class Solution {
+    public int findMaximumXOR(int[] nums) {
+        int max = 0, mask = 0;
+        for(int i = 31; i >= 0; i--){
+            mask = mask | (1 << i);
+            Set<Integer> set = new HashSet<>();
+            for(int num : nums){
+                set.add(num & mask);
+            }
+            int tmp = max | (1 << i);
+            for(int prefix : set){
+                if(set.contains(tmp ^ prefix)) {
+                    max = tmp;
+                    break;
+                }
+            }
+        }
+        return max;
+    }
+}
