@@ -27,13 +27,16 @@
 // The substring "BBBB" has the longest repeating letters, which is 4.
 
 // https://discuss.leetcode.com/topic/63494/java-12-lines-o-n-sliding-window-solution-with-explanation/2
+// move or extend the sliding window
 class Solution {
 public:
     int characterReplacement(string s, int k) {
-        vector<int> count(128);
+        vector<int> count(128); // number of each charater in the sliding window
         int maxCount = 0, start = 0;
         for (int end = 0; end < static_cast<int>(s.size()); ++end) {
             maxCount = max(maxCount, ++count[s[end]]);
+            // we do not need the accurate max count of the current window; we only care if the max count
+            // exceeds the historical max count; and that can only happen because of the new char.
             while(end - start + 1 - maxCount > k) --count[s[start++]];
         }
         return s.size() - start;
