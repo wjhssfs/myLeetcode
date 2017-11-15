@@ -66,7 +66,7 @@ public:
         string s;
         for (auto && word : sentence) s += word + " ";
         int len = s.size(), count = 0;
-        vector<int> m(len);
+        vector<int> m(len); // adjustment to matched s if first letter in next row is s[i]
         for (int i = 1; i < len; ++i) {
             m[i] = s[i] == ' ' ? 1 : m[i-1] - 1;
         }
