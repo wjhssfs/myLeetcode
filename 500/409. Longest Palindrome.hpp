@@ -24,13 +24,16 @@ public:
         bool odd[128] = {};
         int nEven = 0;
         for (auto c : s) {
-            if (odd[c]) {
-                ++nEven;
-                odd[c] = false;
-            } else {
-                odd[c] = true;
-            }
+            if (odd[c]) ++nEven;
+            odd[c] = !odd[c];
         }
         return nEven * 2 == s.size() ? nEven * 2 : nEven * 2 + 1;
     }
 };
+
+int longestPalindrome(string s) {
+    int odds = 0;
+    for (char c='A'; c<='z'; c++)
+        odds += count(s.begin(), s.end(), c) & 1;
+    return s.size() - odds + (odds > 0);
+}

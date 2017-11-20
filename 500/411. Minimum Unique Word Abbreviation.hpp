@@ -28,6 +28,7 @@ def minAbbreviation(self, target, dictionary):
     return re.sub('#+', lambda m: str(len(m.group())), s)
 
 // https://discuss.leetcode.com/topic/61457/c-bit-manipulation-dfs-solution
+// find a bit mask that can represent the shortest abbreviation, so that for all the bit sequences in dictionary, mask & bit sequence > 0
 class Solution {
     int n, cand, bn, minlen, minab;
     vector<int> dict;
