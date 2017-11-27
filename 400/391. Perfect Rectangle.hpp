@@ -63,7 +63,7 @@ inline void hash_combine(std::size_t & seed, const T & v)
 namespace std {
     template<typename T>
     struct hash<vector<T>> {
-        inline size_t operator () z`(const vector<T> &v) const{
+        inline size_t operator () (const vector<T> &v) const{
             size_t seed = 0;
             for (auto && n : v) ::hash_combine(seed, n);
             return seed;

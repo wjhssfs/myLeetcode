@@ -24,8 +24,10 @@
 class Solution {
 public:
     int lastRemaining(int n) {
-       return n == 1 ? 1 : 2 * (1 + n / 2 - lastRemaining(n / 2));
-    }
+       return n == 1 ? 1 :
+       // oiginal result should be two times the mirroring result of lastRemaining(n / 2).
+       // ML(1...n) + MR(1...n) = 1 + n, true for (1, N), (2, N - 1), ...
+        2 * (1 + n / 2 - lastRemaining(n / 2)); 
 };
 
 class Solution {

@@ -30,3 +30,20 @@ public:
         return '0';
     }
 };
+
+class Solution {
+public:
+    char findTheDifference(string s, string t) {
+        return accumulate(t.begin(), t.end(), 0) - accumulate(s.begin(), s.end(), 0);
+    }
+};
+
+class Solution {
+public:
+    char findTheDifference(string s, string t) {
+        char r = 0;
+        for (auto c : s) r ^= c;
+        for (auto c : t) r ^= c;
+        return r;
+    }
+};

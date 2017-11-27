@@ -38,3 +38,8 @@ public:
         return idx == s.size() ? -1 : idx;
     }
 };
+
+class Solution(object):
+    def firstUniqChar(self, s):
+        index=[s.index(l) for l in string.ascii_lowercase if s.count(l) == 1]
+        return min(index) if len(index) > 0 else -1

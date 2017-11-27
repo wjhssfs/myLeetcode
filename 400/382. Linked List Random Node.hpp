@@ -15,6 +15,9 @@
 // // getRandom() should return either 1, 2, or 3 randomly. Each element should have equal probability of returning.
 // solution.getRandom();
 
+
+// Reservoir Sampling
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -50,3 +53,5 @@ public:
  * Solution obj = new Solution(head);
  * int param_1 = obj.getRandom();
  */
+
+// https://discuss.leetcode.com/topic/53753/brief-explanation-for-reservoir-sampling

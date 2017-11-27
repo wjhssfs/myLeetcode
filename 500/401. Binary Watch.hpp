@@ -27,6 +27,11 @@ vector<string> readBinaryWatch(int num) {
     return rs;
 }
 
+def readBinaryWatch(self, num):
+    return ['%d:%02d' % (h, m)
+            for h in range(12) for m in range(60)
+            if (bin(h) + bin(m)).count('1') == num]
+
 class Solution {
 public:
     vector<string> readBinaryWatch(int num) {

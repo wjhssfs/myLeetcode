@@ -32,6 +32,32 @@
 
 // Notice that a/aa/aaa/file1.txt is not the longest file path, if there is another path aaaaaaaaaaaaaaaaaaaaa/sth.png.
 
+
+def lengthLongestPath(self, input):
+    maxlen = 0
+    pathlen = {0: 0}
+    for line in input.splitlines():
+        name = line.lstrip('\t')
+        depth = len(line) - len(name)
+        if '.' in name:
+            maxlen = max(maxlen, pathlen[depth] + len(name))
+        else:
+            pathlen[depth + 1] = pathlen[depth] + len(name) + 1
+    return maxlen
+
+public int lengthLongestPath(String input) {
+    String[] paths = input.split("\n");
+    int[] stack = new int[paths.length+1];
+    int maxLen = 0;
+    for(String s:paths){
+        int lev = s.lastIndexOf("\t")+1;
+        int curLen = stack[lev+1] = stack[lev]+s.length()-lev+1;
+        if(s.contains(".")) maxLen = Math.max(maxLen, curLen-1);
+    }
+    return maxLen;
+}
+
+
 class Solution {
 public:
     int lengthLongestPath(string input) {

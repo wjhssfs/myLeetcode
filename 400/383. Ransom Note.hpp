@@ -24,3 +24,8 @@ public:
         return true;
     }
 };
+
+// the dictionary subtraction operator keeps only positive values, so not here essentially means
+// “return False if there are any positive values”. 
+def canConstruct(self, ransomNote, magazine):
+    return not collections.Counter(ransomNote) - collections.Counter(magazine)

@@ -53,6 +53,9 @@ public:
    unordered_map<int, bool> dp;
 
     bool canCross(vector<int>& stones, int pos = 0, int k = 0) {
+        // pos will always be less than 2^11 (2048).
+        // k must start from 0 and 1 and at the 1100th step the greatest valid k would be 1100.
+        // combining pos and k is safe here.
         int key = pos | k << 11;
 
         if (dp.count(key) > 0)
