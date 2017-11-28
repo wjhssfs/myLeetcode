@@ -23,6 +23,23 @@ class Solution {
 public:
     int wiggleMaxLength(vector<int>& nums) {
         if (nums.empty()) return 0;
+        int d = 0;
+        int total = 1;
+        for (size_t i = 1; i < nums.size(); ++i) {
+            if (nums[i] == nums[i - 1]) continue;
+            if (d == 0 || (d * (nums[i] - nums[i -1]) < 0)) {
+                ++total;
+            }
+            d = nums[i] - nums[i -1];
+        }
+        return total;
+    }
+};
+
+class Solution {
+public:
+    int wiggleMaxLength(vector<int>& nums) {
+        if (nums.empty()) return 0;
         int i = 1, total = 1;
         while (i < nums.size()) {
             bool hasDown = false, hasUp = false;

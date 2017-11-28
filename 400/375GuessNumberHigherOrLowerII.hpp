@@ -57,3 +57,21 @@ public:
         return m[1][n];
     }
 };
+
+for worst case:
+
+dp(i,j) denotes for the minimum loss to guarantee a win
+
+dp(i,j) = min_k { k + max( dp(i,k-1), dp(k+1,j) ) };
+
+return for dp(1,n);
+
+for expected case:
+
+dp(i,j) denotes for the minimum sum of loss to guarantee a win for every pick.
+
+dp(i,j) = min_k { (j-i) * k + dp(i,k-1) + dp(k+1,j ) };
+
+return for dp(1,n)/n;
+
+In fact, we should design a guessing strategy to minimize the loss of worst case/ expected case.

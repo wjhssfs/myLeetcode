@@ -33,6 +33,7 @@ public:
         	if (top.second < nums2.size() - 1) {
         		q.push(make_pair(top.first, top.second + 1));
         	}
+            // top.second == 0 handles duplicates
         	if (top.second == 0 && top.first < nums1.size() - 1) {
         		q.push(make_pair(top.first + 1, top.second));
         	}
@@ -106,7 +107,10 @@ def kSmallestPairs(self, nums1, nums2, k):
         _, i, j = heapq.heappop(queue)
         pairs.append([nums1[i], nums2[j]])
         push(i, j + 1)
-        if j == 0: // If we don't do anything against duplicates, then for example cell (5, 5) could get reached from (4, 5) or from (5, 4), right? I just made a decision. Only (5, 4) leads to (5, 5). I only expand in rows and in the first column (where j=0).
+        // If we don't do anything against duplicates, then for example cell (5, 5) could get
+        // reached from (4, 5) or from (5, 4), right? I just made a decision. Only (5, 4)
+        // leads to (5, 5). I only expand in rows and in the first column (where j=0).
+        if j == 0: 
             push(i + 1, 0)
     return pairs
 
