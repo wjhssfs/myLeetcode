@@ -24,6 +24,21 @@ public:
     }
 };
 
+class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        long long l = 0, r = num;
+        while (l < r) {
+            long long m = l + (r - l) / 2;
+            long long msq = m * m;
+            if (msq < num) {
+                l++;
+            } else r = m;
+        }
+        return l * l == num;
+    }
+};
+
 // A square number is 1+3+5+7+...,
 public boolean isPerfectSquare(int num) {
     int i = 1;

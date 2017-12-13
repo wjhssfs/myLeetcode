@@ -18,6 +18,36 @@
  *     Interval(int s, int e) : start(s), end(e) {}
  * };
  */
+
+public class SummaryRanges {
+    TreeMap<Integer, Interval> tree;
+
+    public SummaryRanges() {
+        tree = new TreeMap<>();
+    }
+
+    public void addNum(int val) {
+        if(tree.containsKey(val)) return;
+        Integer l = tree.lowerKey(val);
+        Integer h = tree.higherKey(val);
+        if(l != null && h != null && tree.get(l).end + 1 == val && h == val + 1) {
+            tree.get(l).end = tree.get(h).end;
+            tree.remove(h);
+        } else if(l != null && tree.get(l).end + 1 >= val) {
+            tree.get(l).end = Math.max(tree.get(l).end, val);
+        } else if(h != null && h == val + 1) {
+            tree.put(val, new Interval(val, tree.get(h).end));
+            tree.remove(h);
+        } else {
+            tree.put(val, new Interval(val, val));
+        }
+    }
+
+    public List<Interval> getIntervals() {
+        return new ArrayList<>(tree.values());
+    }
+}
+
 class SummaryRanges {
 public:
     /** Initialize your data structure here. */
@@ -66,13 +96,16 @@ public:
     void addNum(int val) {
         auto it = st.lower_bound(Interval(val, val));
         int start = val, end = val;
-        if(it != st.begin() && (--it)->end+1 < val) it++;
+        // set it to previous node if previous node's end + 1 is >= val
+        if(it != st.begin() && (--it)->end+1 < val) it++; // it++ to reset to current node
         while(it != st.end() && val+1 >= it->start && val-1 <= it->end)
         {
             start = min(start, it->start);
             end = max(end, it->end);
+            // move to next 
             it = st.erase(it);
         }
+        // insert before
         st.insert(it,Interval(start, end));
     }
     
@@ -86,6 +119,30 @@ private:
         bool operator()(Interval a, Interval b){ return a.start < b.start; }
     };
     set<Interval, Cmp> st;
+};
+
+
+class SummaryRanges {
+public:
+    void addNum(int val) {
+        auto Cmp = [](Interval a, Interval b) { return a.start < b.start; };
+        auto it = lower_bound(vec.begin(), vec.end(), Interval(val, val), Cmp);
+        int start = val, end = val;
+        if(it != vec.begin() && (it-1)->end+1 >= val) it--;
+        while(it != vec.end() && val+1 >= it->start && val-1 <= it->end)
+        {
+            start = min(start, it->start);
+            end = max(end, it->end);
+            it = vec.erase(it);
+        }
+        vec.insert(it,Interval(start, end));
+    }
+    
+    vector<Interval> getIntervals() {
+        return vec;
+    }
+private:
+    vector<Interval> vec;
 };
 
  bool operator < (const Interval &i1, const Interval &i2) {
@@ -330,27 +387,4 @@ public:
     vector<Interval> getIntervals() {
         return this->intervals;
     }
-};
-
-class SummaryRanges {
-public:
-    void addNum(int val) {
-        auto Cmp = [](Interval a, Interval b) { return a.start < b.start; };
-        auto it = lower_bound(vec.begin(), vec.end(), Interval(val, val), Cmp);
-        int start = val, end = val;
-        if(it != vec.begin() && (it-1)->end+1 >= val) it--;
-        while(it != vec.end() && val+1 >= it->start && val-1 <= it->end)
-        {
-            start = min(start, it->start);
-            end = max(end, it->end);
-            it = vec.erase(it);
-        }
-        vec.insert(it,Interval(start, end));
-    }
-    
-    vector<Interval> getIntervals() {
-        return vec;
-    }
-private:
-    vector<Interval> vec;
 };

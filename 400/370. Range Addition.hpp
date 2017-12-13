@@ -45,7 +45,7 @@ public:
         vector<int> result(length + 1);
         for (auto && update : updates) {
             result[update[0]] += update[2];
-            result[update[1] + 1] -= update[2];
+            result[update[1] + 1] -= update[2];  //   if(end < length - 1) res[end + 1] -= value;
         }
         result.pop_back();
         for (int i = 1; i < length; ++i) {

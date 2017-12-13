@@ -23,6 +23,11 @@ public:
     }
 };
 
+// https://discuss.leetcode.com/topic/47469/java-nlogn-solution-with-explanation
+// Find the longest increasing subsequence based on height.
+// Since the width is increasing, we only need to consider height.
+// [3, 4] cannot contains [3, 3], so we need to put [3, 4] before [3, 3] when sorting otherwise 
+// it will be counted as an increasing number if the order is [3, 3], [3, 4]
 // Sort the array. Ascend on width and descend on height if width are same.
 // Find the longest increasing subsequence based on height.
 // Since the width is increasing, we only need to consider height.
