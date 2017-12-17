@@ -26,28 +26,23 @@ public:
     }
 };
 
+// An easy recurrence for this problem is f[i] = f[i / 2] + i % 2.
+public int[] countBits(int num) {
+    int[] f = new int[num + 1];
+    for (int i=1; i<=num; i++) f[i] = f[i >> 1] + (i & 1);
+    return f;
+}
+
 class Solution {
 public:
     vector<int> countBits(int num) {
         map<unsigned, unsigned> m;
-        m[0] = 0;
-        for (int i = 1; i < sizeof(int) * 8; ++i) {
-            m[1U << i] = i;
-        }
-
+        for (int i = 0; i < sizeof(int) * 8; ++i) m[1U << i] = i;
         vector<int> ret;
         ret.push_back(0);
-        if (num > 0) {
-            ret.push_back(1);
-        }
-        for (int i = 2; i <= num; ++i) {
-            int preLastOneBit = (i - 1) & -(i - 1), curLastOneBit = i & -i;
-            int key = curLastOneBit / preLastOneBit;
-            int value = m[key];
-            int oneBits = ret.back() - value + 1;
-            ret.push_back(oneBits);
-        }
+        for (int i = 1; i <= num; ++i) ret.push_back(ret.back() - m[i & -i] + 1);
         return ret;
     }
 };
+
 
