@@ -3,6 +3,8 @@
 // Design an algorithm to find the maximum profit. You may complete at most k transactions.
 // Note:
 // You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+
 class Solution {
 public:
     int maxProfit(int k, vector<int> &prices) {
@@ -30,6 +32,32 @@ public:
             if (prices[i] < prices[i + 1]) totalProfit += prices[i + 1] - prices[i];
         }
         return totalProfit;
+    }
+};
+
+class Solution {
+public:
+    int maxProfit(int k, vector<int> &prices) {
+        int sz = prices.size(), maxProfit = 0;
+        vector<bool> hold(sz);//whether you hold stock at prices i
+
+        for (int t = 0; t < k; t++){
+            int c = 0, start = 0, newStart = 0, end = 0, cmax = 0;
+            for (int i = 0; i < sz-1; i++){
+                if (i>0 && hold[i] != hold[i - 1]) { c = 0; newStart = i; }
+                c += prices[i+1] - prices[i];
+                if (!hold[i] && c <= 0 || hold[i] && c >= 0){
+                    c = 0; newStart = i + 1;
+                }
+                else if (cmax < abs(c)){
+                    cmax = abs(c); start = newStart; end = i;
+                }
+            }
+            if (cmax == 0) break;
+            maxProfit += cmax;
+            for (int i = start; i <= end; i++) hold[i] = !hold[i];
+        }
+        return maxProfit;
     }
 };
 
