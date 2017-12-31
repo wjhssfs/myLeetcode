@@ -74,7 +74,7 @@ class RangeModule {
 public:
     void addRange(int left, int right) {
         auto l = invals.upper_bound(left), r = invals.upper_bound(right); 
-        if (l != invals.begin()) {
+        if (l != invals.begin()) { // find first impacted range.
             l--;
             if (l->second < left) l++;
         }
