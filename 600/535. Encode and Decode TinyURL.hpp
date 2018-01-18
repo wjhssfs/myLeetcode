@@ -26,10 +26,10 @@ private:
 // Solution solution;
 // solution.decode(solution.encode(url));
 
-
+import string
 // https://discuss.leetcode.com/topic/81637/two-solutions-and-thoughts
 class Codec:
-    alphabet = string.ascii_letters + '0123456789'
+    alphabet = string.ascii_letters + string.digits
 
     def __init__(self):
         self.url2code = {}
@@ -45,3 +45,5 @@ class Codec:
 
     def decode(self, shortUrl):
         return self.code2url[shortUrl[-6:]]
+
+https://discuss.leetcode.com/topic/95853/a-complete-solution-for-tinyurl-leetcode-system-design
