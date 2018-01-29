@@ -1,4 +1,4 @@
-// 714. Best Time to Buy and Sell Stock with Transaction Fee.hpp
+// 714. Best Time to Buy and Sell Stock with Transaction Fee
 // Your are given an array of integers prices, for which the i-th element is the price of a given stock on day i; and a non-negative integer fee representing a transaction fee.
 
 // You may complete as many transactions as you like, but you need to pay the transaction fee for each transaction. You may not buy more than 1 share of a stock at a time (ie. you must sell the stock share before you buy again.)
@@ -20,6 +20,20 @@
 // 0 < prices[i] < 50000.
 // 0 <= fee < 50000.
 
+// https://discuss.leetcode.com/topic/107998/most-consistent-ways-of-dealing-with-the-series-of-stock-problems/2
+// pay the fee when buying the stock
+public int maxProfit(int[] prices, int fee) {
+    int T_ik0 = 0, T_ik1 = Integer.MIN_VALUE;
+    
+    for (int price : prices) {
+        int T_ik0_old = T_ik0;
+        T_ik0 = Math.max(T_ik0, T_ik1 + price);
+        T_ik1 = Math.max(T_ik1, T_ik0_old - price - fee);
+    }
+        
+    return T_ik0;
+}
+
 class Solution {
 public:
     int maxProfit(vector<int>& prices, int fee) {
@@ -34,3 +48,32 @@ public:
         return notHold;
     }
 };
+
+// k transaction
+public int maxProfit(int k, int[] prices) {
+    if (k >= prices.length >>> 1) {
+        int T_ik0 = 0, T_ik1 = Integer.MIN_VALUE;
+    
+        for (int price : prices) {
+            int T_ik0_old = T_ik0;
+            T_ik0 = Math.max(T_ik0, T_ik1 + price);
+            T_ik1 = Math.max(T_ik1, T_ik0_old - price);
+        }
+        
+        return T_ik0;
+    }
+        
+    int[] T_ik0 = new int[k + 1];
+    int[] T_ik1 = new int[k + 1];
+    Arrays.fill(T_ik1, Integer.MIN_VALUE);
+        
+    for (int price : prices) {
+        // used backward looping for the T array to avoid using temporary variables
+        for (int j = k; j > 0; j--) {
+            T_ik0[j] = Math.max(T_ik0[j], T_ik1[j] + price);
+            T_ik1[j] = Math.max(T_ik1[j], T_ik0[j - 1] - price);
+        }
+    }
+        
+    return T_ik0[k];
+}

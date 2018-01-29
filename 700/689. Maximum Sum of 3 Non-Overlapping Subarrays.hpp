@@ -40,34 +40,40 @@ public:
 
 class Solution {
 public:
-	vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k) {
-		vector<int> r;
-		vector<int> sum(nums.size() - k + 1);
-		int maxSum = 0;
-		for (int i = 0; i < k; ++i) sum[0] += nums[i];
-		for (int i = 1; i < sum.size(); ++i) {
-			sum[i] = sum[i - 1] + nums[k + i - 1] - nums[i - 1];
-		}
-
-		vector<int> maxSumAfter(sum.size(), sum.size() - 1);
-		for (int i = maxSumAfter.size() - 2; i >= 0; --i) {
-			if (sum[i] < sum[maxSumAfter[i + 1]]) {
-				maxSumAfter[i] = maxSumAfter[i + 1];
-			}
-			else {
-				maxSumAfter[i] = i;
-			}
-		}
-
-		for (int i = 0; i < sum.size(); ++i) {
-			for (int j = i + k; j + k < sum.size(); ++j) {
-				int curSum = sum[i] + sum[j] + sum[maxSumAfter[j + k]];
-				if (curSum > maxSum) {
-					maxSum = curSum;
-					r = { i, j, maxSumAfter[j + k] };
-				}
-			}
-		}
-		return r;
-	}
+    vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k) {
+        int n = nums.size(), maxsum = 0;
+        vector<int> sum = {0}, posLeft(n, 0), posRight(n, n-k), ans(3, 0);
+        for (int i:nums) sum.push_back(sum.back()+i);
+       // DP for starting index of the left max sum interval
+        for (int i = k, tot = sum[k]-sum[0]; i < n; i++) {
+            if (sum[i+1]-sum[i+1-k] > tot) {
+                posLeft[i] = i+1-k;
+                tot = sum[i+1]-sum[i+1-k];
+            }
+            else 
+                posLeft[i] = posLeft[i-1];
+        }
+        // DP for starting index of the right max sum interval
+        // caution: the condition is ">= tot" for right interval, and "> tot" for left interval
+        for (int i = n-k-1, tot = sum[n]-sum[n-k]; i >= 0; i--) {
+            if (sum[i+k]-sum[i] >= tot) {
+                posRight[i] = i;
+                tot = sum[i+k]-sum[i];
+            }
+            else
+                posRight[i] = posRight[i+1];
+        }
+        // test all possible middle interval
+        for (int i = k; i <= n-2*k; i++) {
+            int l = posLeft[i-1], r = posRight[i+k];
+            int tot = (sum[i+k]-sum[i]) + (sum[l+k]-sum[l]) + (sum[r+k]-sum[r]);
+            if (tot > maxsum) {
+                maxsum = tot;
+                ans = {l, i, r};
+            }
+        }
+        return ans;
+    }
 };
+
+
