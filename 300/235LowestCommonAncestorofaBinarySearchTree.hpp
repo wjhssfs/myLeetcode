@@ -20,42 +20,6 @@
  * };
  */
 
- class Solution {
-public:
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if (!root || !p || !q) return nullptr;
-        vector<TreeNode *> pPath, tempp, qPath, tempq;
-        if (findNode(root, p, tempp, pPath) && findNode(root, q, tempq, qPath)){
-            TreeNode* result = pPath[0];
-            for (int i = 0; i < pPath.size() && i < qPath.size() && pPath[i] == qPath[i]; i++){
-                result = pPath[i];
-            }
-            return result;
-        }
-        else
-        {
-            return nullptr;
-        }
-    }
-
-    bool findNode(TreeNode *root, TreeNode *p, vector<TreeNode*> &temp, vector<TreeNode*> &path){
-        if (!root) return false;
-        bool result = false;
-        temp.push_back(root);
-        if (root == p) {
-            path = temp;
-            result = true;
-        }
-        else
-        {
-           result = findNode(root->left, p, temp, path) ||
-                findNode(root->right, p, temp, path);
-        }
-        temp.pop_back();
-        return result;
-    }
-};
-
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {

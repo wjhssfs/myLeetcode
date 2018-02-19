@@ -14,8 +14,6 @@ public:
     }
 };
 
-// use k size heap
-
 // use randomized quick select
 class Solution {
 public:
@@ -59,6 +57,7 @@ public:
     }
 };
 
+// use k size heap
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {

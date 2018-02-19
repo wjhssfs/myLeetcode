@@ -60,7 +60,7 @@ public:
     //we need to keep another information: the last removal position. 
     // If we do not have this position, we will generate duplicate by 
     // removing two ‘)’ in two steps only with a different order. 
-    void DFS(string s, int cur, int lastDelete, int reversed, vector<string> &ans)
+    void DFS(string s, int cur, int lastDelete, bool reversed, vector<string> &ans)
     {
         int nOpen = 0;
         char open = '(', close = ')';

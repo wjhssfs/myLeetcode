@@ -67,7 +67,8 @@ public:
 // e0 = current number of ways we could decode, ending on any number;
 // e1 = current number of ways we could decode, ending on an open 1;
 // e2 = current number of ways we could decode, ending on an open 2;
-// (Here, an "open 1" means a 1 that may later be used as the first digit of a 2 digit number, because it has not been used in a previous 2 digit number.)
+// (Here, an "open 1" means a 1 that may later be used as the first digit of a 2 digit number, 
+// because it has not been used in a previous 2 digit number.)
 class Solution {
 public:
     int numDecodings(string s) {

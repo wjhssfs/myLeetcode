@@ -36,12 +36,15 @@ public:
         for(int i = 0; i < words.size()-1; i++){
             int jCeil = (int)min(words[i].size(), words[i+1].size());
             for(int j = 0; j < jCeil; j++){
-                if(words[i][j] == words[i+1][j] || m[words[i][j]-'a'][words[i+1][j]-'a']) continue;
-                m[words[i][j]-'a'][words[i+1][j]-'a'] = true;
-                ++ind[words[i+1][j] - 'a'];
+                if(words[i][j] == words[i+1][j]) continue;
+                if(!m[words[i][j]-'a'][words[i+1][j]-'a']) {
+                    m[words[i][j]-'a'][words[i+1][j]-'a'] = true;
+                    ++ind[words[i+1][j] - 'a'];
+                }
                 break;
             }
         }
+        
         string r;
         bool changed = true;
         while(changed){

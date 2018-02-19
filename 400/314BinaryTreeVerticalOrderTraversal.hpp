@@ -67,45 +67,6 @@
 class Solution {
 public:
     vector<vector<int>> verticalOrder(TreeNode* root) {
-        vector<map<int,vector<int>>>left, right;
-        voHelper(root, left, right, 0, 0);
-        vector<vector<int>> combined;
-        for(int i = (int)left.size() - 1; i >=0; i--){
-            combined.push_back({});
-            for(auto &&heightArray :left[i]){
-                for(auto &&val : heightArray.second){
-                    combined.back().push_back(val);
-                }
-            }
-        }
-        for(int i = 0; i < right.size(); i++){
-            combined.push_back({});
-            for(auto &&heightArray :right[i]){
-                for(auto &&val : heightArray.second){
-                    combined.back().push_back(val);
-                }
-            }
-        }
-        return combined;
-    }
-    void voHelper(TreeNode*root, vector<map<int,vector<int>>> &left, vector<map<int,vector<int>>> &right, int index, int height){
-        if(!root) return;
-        if(index >= 0){
-            if(index+1 > right.size()) right.push_back({});
-            right[index][height].push_back(root->val);
-        }else {
-            if(-index > left.size()) left.push_back({});
-            left[-index-1][height].push_back(root->val);
-        }
-        voHelper(root->left, left, right, index-1, height+1);
-        voHelper(root->right, left, right, index+1, height+1);
-    }
-};
-
-
-class Solution {
-public:
-    vector<vector<int>> verticalOrder(TreeNode* root) {
         unordered_map<TreeNode*, int> m;
         int minIndex = 0, maxIndex = 0;
         voHelper(root, m, 0, minIndex, maxIndex);

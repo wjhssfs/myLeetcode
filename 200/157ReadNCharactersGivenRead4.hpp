@@ -27,7 +27,7 @@ public:
 
         char remain[4] = {};
         m = min(read4(remain),n-len);
-        for(int i=0; i<m; i++) buf[len++] = remain[i];
+        for(int i = 0; i<m; i++) buf[len++] = remain[i];
         return len;
     }
 };

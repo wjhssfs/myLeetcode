@@ -24,21 +24,6 @@ public:
     }
 };
 
-class Solution2 {
-public:
-    ListNode* reverseList(ListNode* head) {
-        if(!head) return nullptr;
-        ListNode *newHead = head;
-        reReverseList(head, &newHead)->next = nullptr;
-        return newHead;
-    }
-    ListNode *reReverseList(ListNode *cur, ListNode **newHead){
-        if(!cur->next) *newHead = cur;
-        else reReverseList(cur->next, newHead)->next = cur;
-        return cur;
-    }
-};
-
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {

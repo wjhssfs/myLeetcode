@@ -64,3 +64,37 @@ private:
                 l = mid + 1;
             }
         }
+
+
+// DP : handles any number: https://leetcode.com/problems/split-array-largest-sum/discuss/89816/DP-Java
+// dp[s,j] is the solution for splitting subarray n[j]...n[ArrLen-1] into s + 1 parts.
+public int splitArray(int[] nums, int m)
+{
+    int L = nums.length;
+    int[] S = new int[L+1];
+    S[0]=0;
+    for(int i=0; i<L; i++)
+        S[i+1] = S[i]+nums[i];
+
+    int[] dp = new int[L];
+    for(int i=0; i<L; i++)
+        dp[i] = S[L]-S[i];  // s = 0
+
+    for(int s=1; s<m; s++)
+    {
+        for(int i=0; i<L-s; i++)
+        {
+            dp[i]=Integer.MAX_VALUE;
+            for(int j=i+1; j<=L-s; j++)
+            {
+                int t = Math.max(dp[j], S[j]-S[i]);
+                if(t<=dp[i])
+                    dp[i]=t;
+                else
+                    break;
+            }
+        }
+    }
+
+    return dp[0];
+}
