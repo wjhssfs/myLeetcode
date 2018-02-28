@@ -27,6 +27,20 @@ public:
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
+        ListNode* cur = nullptr;
+        while (head) {
+            auto temp = head->next;
+            head->next = cur;
+            cur = head;
+            head = temp;
+        }
+        return cur;
+    }
+};
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
         if (!head) return nullptr;
         if (!head->next) return head;
         auto next = head->next;

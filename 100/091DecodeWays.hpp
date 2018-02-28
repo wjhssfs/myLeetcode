@@ -49,10 +49,11 @@ int numDecodings(string s) {
         // possible two-digit letter, so new r1 is sum of both while new r2 is the old r1
         if (s[i - 1] == '1' || s[i - 1] == '2' && s[i] <= '6') {
             r1 = r2 + r1;
-            r2 = r1 - r2;
+            r2 = r1 - r2;  // old r1
         }
         // one-digit letter, no new way added
         else {
+            // r1 = r1;
             r2 = r1;
         }
     }

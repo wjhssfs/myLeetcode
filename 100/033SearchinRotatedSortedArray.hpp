@@ -30,7 +30,7 @@ public:
         return -1;
     }
 };
-
+ 
 class Solution {
 public:
     int search(int A[], int n, int target) {
