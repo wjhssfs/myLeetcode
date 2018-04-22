@@ -39,3 +39,26 @@ public:
         return false;
     }
 };
+
+class Solution {
+    bool dfs(vector<int>& A, int nLeft, int target, int cur, int start) {
+        if (nLeft == 0) return cur == target;
+        for (size_t i = start; i < A.size() && A[i] + cur <= target; ++i) {
+            if (i > start && A[i] == A[i-1]) continue;
+            if (dfs(A, nLeft - 1, target, cur + A[i], i + 1)) return true;
+        }
+        return false;
+    }
+public:
+    bool splitArraySameAverage(vector<int>& A) {
+        auto sz = A.size();
+        sort(A.begin(), A.end());
+        auto total = accumulate(A.begin(), A.end(), 0);
+        for (size_t i = 1; i <= sz / 2; ++i) {
+            if (total * i % sz != 0) continue;
+            int sumA = total * i / sz;
+            if (dfs(A, i, sumA, 0, 0)) return true;
+        }
+        return false;
+    }
+};
