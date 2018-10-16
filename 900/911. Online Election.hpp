@@ -32,24 +32,26 @@ class TopVotedCandidate {
 public:
     TopVotedCandidate(vector<int> persons, vector<int> times) {
         unordered_map<int, int> count;
-        int maxCount = 0, maxCandidate = -1;
-        for (int i = 0; i < persons.size(); ++i) {
-            if (++count[persons[i]] >= maxCount) {
-                maxCount = count[persons[i]];
-                if (maxCandidate != persons[i]) {
-                    m[times[i]] = persons[i];
-                    maxCandidate = persons[i];
-                }
-            }
+        for (int i = 0, lead = -1; i < persons.size(); ++i) {
+            if (++count[persons[i]] >= count[lead]) lead = m[times[i]] = persons[i];
         }
     }
     
     int q(int t) {
-        auto it = m.upper_bound(t);
-        return (--it)->second;
+        return (--m.upper_bound(t))->second;
     }
 };
 
+TopVotedCandidate(vector<int> persons, vector<int> times) {
+        int n = persons.size(), lead = -1;
+        unordered_map<int, int> count;
+        for (int i = 0; i < n; ++i) m[times[i]] = persons[i];
+        for (auto it : m) {
+            if (++count[it.second] >= count[lead])lead = it.second;
+            m[it.first] = lead;
+        }
+    }
+    
 /**
  * Your TopVotedCandidate object will be instantiated and called as such:
  * TopVotedCandidate obj = new TopVotedCandidate(persons, times);
