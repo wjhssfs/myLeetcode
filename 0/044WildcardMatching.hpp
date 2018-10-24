@@ -16,25 +16,17 @@
 
 class Solution {
 public:
-    bool isMatch(const char *s, const char *p) {
-        const char *sBackup = NULL, *pBackup = NULL;
-        while (*s != '\0') {
-            if (*p == '?' || *s == *p) {
-                s++;
-                p++;
-            } else if (*p == '*') {
-                while (*p == '*') p++;
-                if (*p == '\0') return true;
-                sBackup = s;
-                pBackup = p;
-            } else {
-                if (!sBackup) return false;
-                s = ++sBackup;
-                p = pBackup;
-            }
+    bool isMatch(string s, string p) {
+        int i = 0, j = 0;
+        int jBase = -1, iBase = -1;
+        while (i < s.size()) {
+            if (j < p.size() && (s[i] == p[j] || p[j] == '?')) { ++i; ++j; continue;}
+            if (j < p.size() && p[j] == '*') {jBase = j++; iBase = i; continue;}
+            if (jBase != -1) { j = jBase + 1; i = ++iBase; continue;}
+            return false;
         }
-        while (*p == '*') p++;
-        return *s == '\0' && *p == '\0';
+        while (j < p.size() && p[j] == '*') ++j;
+        return j == p.size();
     }
 };
 
@@ -64,6 +56,25 @@ public:
 
         return !*p;  
     }
+
+// http://yucoding.blogspot.com/2013/02/leetcode-question-123-wildcard-matching.html
+// if *p == '*'
+// isMatch(s, p) = isMatch(s, p + 1) || isMatch(s + 1, p + 1) || ... || isMatch(s + n, p+1)
+// = isMatch(s, p + 1) || isMatch(s + 1, p)
+// else
+// 只有一个分叉 = isMatch(s+1, p+1)
+
+// 这个算法的关键是当左子树再遇到＊的时候，上次遇到＊分裂出来的右子树就不用搜索了。
+// 例如：s = aab... p = *a*b...
+// aab..., *a*b...
+// aab..., a*b... ab..., *a*b...
+// ab..., *b...
+
+// 第二次遇到＊的时候 s = ab... p = *b...
+// 如果s和p不匹配，那么上次遇到＊的右子树ab..., *a*b...也肯定不匹配（可以用反证法来证明）。
+// 如果匹配，搜索左子树就能找到结果。 
+
+// 假设ab...和*a*b...匹配，那么ab...和*b...肯定匹配，和条件相反。
 
 // https://leetcode.com/discuss/43966/accepted-c-dp-solution-with-a-trick
 class Solution {
@@ -99,5 +110,28 @@ public:
             }
         }
         return dp[s.size()][p.size()];
+    }
+};
+
+// times out because it has un neccessary backtrack. if p has x*xx*x, no need to backtrack to first *.
+class Solution {
+    bool isMatch(const char* s, const char* p) {
+        while (*s != 0 && *p != 0 && (*s == *p || *p == '?')) {
+            ++s; ++p;
+        }
+        if (*s == 0 && *p == 0) return true;
+        if (*p == 0 && *s != 0) return false;
+        if (*s == 0 && *p != 0) {
+            while (*p == '*') ++p;
+            return *p == 0;
+        }
+        if (*p == '*') while (*(p + 1) == '*') ++p;
+        else return false;
+        return isMatch(s, p + 1) || isMatch(s + 1, p);
+        
+    }
+public:
+    bool isMatch(string s, string p) {
+        return isMatch(s.c_str(), p.c_str());
     }
 };
