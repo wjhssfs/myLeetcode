@@ -41,8 +41,8 @@ public:
 };
 
 
-https://leetcode.com/discuss/58056/summary-of-different-solutions-bfs-static-and-mathematics
-2.Static Dynamic Programming: 12ms
+// https://leetcode.com/discuss/58056/summary-of-different-solutions-bfs-static-and-mathematics
+// 2.Static Dynamic Programming: 12ms
 class Solution 
 {
 public:
