@@ -17,14 +17,12 @@ public:
     int get(int key){
         if (cachemap.find(key) == cachemap.end()) return -1;
         cachelist.splice(cachelist.begin(), cachelist, cachemap[key]);
-        cachemap[key] = cachelist.begin();
         return cachemap[key]->value;
     }
     
     void set(int key, int value) {
         if (cachemap.find(key) != cachemap.end()) {
             cachelist.splice(cachelist.begin(), cachelist, cachemap[key]);
-            cachemap[key] = cachelist.begin();
             cachemap[key]->value = value;
         }
         else {

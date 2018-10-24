@@ -11,17 +11,12 @@
 class Solution {
 public:
     int searchInsert(int A[], int n, int target) {
-        int i = 0, j = n - 1;
-        while (i <= j)
-        {
-            int mid = (i + j) / 2;
-            if (A[mid] == target)
-                return mid;
-            if (A[mid] < target)
-                i = mid + 1;
-            else
-                j = mid - 1;
+        int l = 0, r = nums.size();
+        while (l < r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] < target) l = mid + 1;
+            else r = mid;
         }
-        return i;
+        return l;
     }
 };

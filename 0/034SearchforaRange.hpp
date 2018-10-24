@@ -46,7 +46,7 @@ vector<int> searchRange(int A[], int n, int target) {
     j = n-1;  // We don't have to set i to 0 the second time.
     while (i < j)
     {
-        int mid = (i + j) /2 + 1;   // Make mid biased to the right
+        int mid = (i + j + 1) /2;   // Make mid biased to the right
         if (A[mid] > target) j = mid - 1;  
         else i = mid;               // So that this won't make the search range stuck.
     }
