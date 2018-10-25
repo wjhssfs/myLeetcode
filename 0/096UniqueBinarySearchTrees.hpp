@@ -21,7 +21,7 @@ public:
     }
 };
 
-// https://leetcode.com/discuss/24282/dp-solution-in-6-lines-with-explanation-f-i-n-g-i-1-g-n-i
+// https://leetcode.com/problems/unique-binary-search-trees/discuss/31666/DP-Solution-in-6-lines-with-explanation.-F(i-n)-G(i-1)-*-G(n-i)
 public int numTrees(int n) {
     int [] G = new int[n+1];
     G[0] = G[1] = 1;

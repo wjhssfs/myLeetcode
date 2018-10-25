@@ -48,7 +48,7 @@ public:
     }
 };
 
-// https://leetcode.com/discuss/72701/here-10-line-template-that-can-solve-most-substring-problems
+// https://leetcode.com/problems/minimum-window-substring/discuss/26808/Here-is-a-10-line-template-that-can-solve-most-'substring'-problems
 string minWindow(string s, string t) {
         vector<int> map(128,0);
         for(auto c: t) map[c]++;
@@ -63,6 +63,7 @@ string minWindow(string s, string t) {
         return d==INT_MAX? "":s.substr(head, d);
     }
 
+// Longest Substring Without Repeating Characters
 int lengthOfLongestSubstring(string s) {
         vector<int> map(128,0);
         int counter=0, begin=0, end=0, d=0; 
@@ -74,6 +75,7 @@ int lengthOfLongestSubstring(string s) {
         return d;
     }
 
+// Longest Substring with At Most Two Distinct Characters
 int lengthOfLongestSubstringTwoDistinct(string s) {
         vector<int> map(128, 0);
         int counter=0, begin=0, end=0, d=0; 
