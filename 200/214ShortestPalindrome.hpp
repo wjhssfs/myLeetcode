@@ -4,7 +4,9 @@
 // For example:
 // Given "aacecaaa", return "aaacecaaa".
 // Given "abcd", return "dcbabcd".
-// https://leetcode.com/discuss/36807/c-8-ms-kmp-based-o-n-time-&-o-n-memory-solution
+// https://leetcode.com/problems/shortest-palindrome/discuss/60113/Clean-KMP-solution-with-super-detailed-explanation
+// The key of KMP is to build a look up table that records the match result of prefix and postfix.
+// Value in the table means the max len of matching substring that exists in both prefix and postfix.
 // We can construct the following string and run KMP algorithm on it: (s) + (some symbol not present in s) + (reversed string)
 // After running KMP on that string as result we get a vector p with values of a prefix function for each
 // character (for definition of a prefix function see KMP algorithm description). We are only interested in the
@@ -67,3 +69,16 @@ public:
         return remaining + s;
     }
 };
+
+
+// https://leetcode.com/problems/shortest-palindrome/discuss/60098/My-7-lines-recursive-Java-solution
+// O(n2)
+    int j = 0;
+    for (int i = s.length() - 1; i >= 0; i--) {
+        if (s.charAt(i) == s.charAt(j)) { j += 1; }
+    }
+    if (j == s.length()) { return s; }
+    String suffix = s.substring(j);
+    return new StringBuffer(suffix).reverse().toString() + shortestPalindrome(s.substring(0, j)) + suffix;
+
+    // if s is palindrome, after the loop, j will be j == s.length(), then, we just need to return this palindrome string. 2. if s overall is not padindrom, first, j will definitely be smaller than s.length() - this is very import to ensure the recursion will terminate at the base case - palindrome found or empty string found, we will definitely cut the string “s” into two parts. if s has some precedine substring to be palindrome, like “abbacdefg”, j will definitely ended with somewhere after the “sub”palindrome - “abba”. Thus, it is still safe for us to cut into two parts. Thus, this method works.

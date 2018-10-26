@@ -17,6 +17,7 @@ public:
     }
 };
 
+// bucket O(n)
 // https://leetcode.com/discuss/38206/ac-o-n-solution-in-java-using-buckets-with-explanation
  public class Solution {
     public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
