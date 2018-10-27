@@ -42,7 +42,7 @@ public:
 	}
 };
 
-//https://leetcode.com/discuss/77133/o-n-o-1-after-median-virtual-indexing
+// https://leetcode.com/problems/wiggle-sort-ii/discuss/77677/O(n)+O(1)-after-median-Virtual-Indexing
 void wiggleSort(vector<int>& nums) {
     int n = nums.size();
 

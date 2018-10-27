@@ -147,4 +147,4 @@ public:
 };
 
 // time should be O(log(m) * log(n))
-Explanation of Binary Indexed Tree : https://www.topcoder.com/community/data-science/data-science-tutorials/binary-indexed-trees/
+// Explanation of Binary Indexed Tree : https://www.topcoder.com/community/data-science/data-science-tutorials/binary-indexed-trees/
