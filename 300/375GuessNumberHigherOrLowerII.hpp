@@ -75,3 +75,29 @@ dp(i,j) = min_k { (j-i) * k + dp(i,k-1) + dp(k+1,j ) };
 return for dp(1,n)/n;
 
 In fact, we should design a guessing strategy to minimize the loss of worst case/ expected case.
+
+// https://leetcode.com/problems/guess-number-higher-or-lower-ii/discuss/84817/Minimizing-the-expected-loss-instead-of-worst-case-loss
+class Solution2
+{
+public:
+    int getMoneyAmount(int n)
+    {
+        vector< vector<int> > dp(n+1, vector<int>(n+1, 0));
+        record.resize(n+1, vector<int>(n+1, 0));
+        for(int interval = 1; interval < n; interval ++)
+        {
+            for(int i = 1; i< n && i+interval <=n; i++)
+            {
+                int j = i+interval;
+                dp[i][j] = INT_MAX;
+                for(int k = i; k<=j; k++)
+                {
+                    int tmp =(j-i)*k+ (i<k-1?dp[i][k-1]:0) +  (k+1<j? dp[k+1][j]: 0);
+                    dp[i][j] = dp[i][j] < tmp? dp[i][j]: (record[i][j] = k,tmp);
+                }
+            }
+        }
+        return dp[1][n] / n;
+    }
+    vector< vector<int> > record;
+};

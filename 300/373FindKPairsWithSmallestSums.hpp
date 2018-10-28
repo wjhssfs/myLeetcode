@@ -18,6 +18,22 @@
 // All possible pairs are returned from the sequence:
 // [1,3],[2,3]
 
+public class Solution {
+    public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+        PriorityQueue<int[]> que = new PriorityQueue<>((a,b)->a[0]+a[1]-b[0]-b[1]);
+        List<int[]> res = new ArrayList<>();
+        if(nums1.length==0 || nums2.length==0 || k==0) return res;
+        for(int i=0; i<nums1.length && i<k; i++) que.offer(new int[]{nums1[i], nums2[0], 0});
+        while(k-- > 0 && !que.isEmpty()){
+            int[] cur = que.poll();
+            res.add(new int[]{cur[0], cur[1]});
+            if(cur[2] == nums2.length-1) continue;
+            que.offer(new int[]{cur[0],nums2[cur[2]+1], cur[2]+1});
+        }
+        return res;
+    }
+}
+
 class Solution {
 public:
     vector<pair<int, int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
@@ -95,7 +111,7 @@ vector<pair<int, int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, in
     }
 };
 
-// https://discuss.leetcode.com/topic/50450/slow-1-liner-to-fast-solutions/2
+// https://leetcode.com/problems/find-k-pairs-with-smallest-sums/discuss/84550/Slow-1-liner-to-Fast-solutions
 def kSmallestPairs(self, nums1, nums2, k):
     queue = []
     def push(i, j):
