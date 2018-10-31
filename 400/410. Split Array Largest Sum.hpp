@@ -91,7 +91,7 @@ public int splitArray(int[] nums, int m)
                 if(t<=dp[i])
                     dp[i]=t;
                 else
-                    break;
+                    break;  // s[j] - s[i] mono increase
             }
         }
     }
