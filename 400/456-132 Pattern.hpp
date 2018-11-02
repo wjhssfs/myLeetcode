@@ -14,12 +14,13 @@
 // Output: True
 // Explanation: There are three 132 patterns in the sequence: [-1, 3, 2], [-1, 3, 0] and [-1, 2, 0].
 
-// https://discuss.leetcode.com/topic/67881/single-pass-c-o-n-space-and-time-solution-8-lines-with-detailed-explanation
+// https://leetcode.com/problems/132-pattern/discuss/94071/Single-pass-C++-O(n)-space-and-time-solution-(8-lines)-with-detailed-explanation.
+// s1 < s3 < s2
 class Solution {
 public:
     bool find132pattern(vector<int>& nums) {
-        int s3 = INT_MIN;
-        stack<int> rs;
+        int s3 = INT_MIN;  // ak
+        stack<int> rs; // elements are decreasing, when going from right to left, rs.top has the aj
         for (int i = (int)nums.size() - 1; i >= 0; --i) {
             if (nums[i] < s3) return true;
             while (rs.size() && nums[i] > rs.top()) { // A number becomes a candidate for s3 if there is any number on the left bigger than it.

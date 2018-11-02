@@ -89,6 +89,11 @@ def sequenceReconstruction(self, org, seqs):
 
 // https://discuss.leetcode.com/topic/65961/simple-solution-one-pass-using-only-array-c-92ms-java-16ms/2
 // t is sufficient to just check if every two adjacent elements also appears adjacently in the sub-sequences
+
+//     Why is that? Well, suppose condition 1 is satisfied. Then for 2 any consecutive elements x and y in org we have 2 options.
+// We have both xand y in some sequence from seqs. Then (as condition 1 is satisfied) they must be consequtive elements in this sequence.
+// There is no sequence in seqs that contains both x and y. In this case we cannot uniquely reconstruct org from seqs as sequence with x and y switched would also be a valid original sequence for seqs.
+
 class Solution {
 public:
 	bool sequenceReconstruction(vector<int>& org, vector<vector<int>>& seqs) {

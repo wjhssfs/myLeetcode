@@ -34,7 +34,7 @@
 // Output: "2[2[abbb]c]"
 // Explanation: "abbbabbbc" occurs twice, but "abbbabbbc" can also be encoded to "2[abbb]c", so one answer can be "2[2[abbb]c]".
 
-// https://discuss.leetcode.com/topic/71413/acc-o-n-3-dynamic-programming-solution/2
+// https://leetcode.com/problems/encode-string-with-shortest-length/discuss/95605/Easy-to-understand-C++-O(n3)-solution
 class Solution {
 
     void mDP(vector<vector<string> >& DP,string s,int i, int j){
@@ -90,7 +90,7 @@ public:
 //https://discuss.leetcode.com/topic/68206/easy-python-solution-with-explaination/6
 
 
-// https://discuss.leetcode.com/topic/71963/accepted-solution-in-java
+// https://leetcode.com/problems/encode-string-with-shortest-length/discuss/95599/Accepted-Solution-in-Java
 public class Solution {
     public String encode(String s) {
         String[][] dp = new String[s.length()][s.length()];
