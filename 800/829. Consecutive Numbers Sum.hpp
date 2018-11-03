@@ -33,7 +33,7 @@ public:
     }
 };
 
-
+// https://leetcode.com/problems/consecutive-numbers-sum/discuss/129015/5-lines-C++-solution-with-detailed-mathematical-explanation.
 // x + (x+1) + (x+2)+...+ k terms = N
 // kx + k*(k-1)/2 = N implies
 // kx = N - k*(k-1)/2
