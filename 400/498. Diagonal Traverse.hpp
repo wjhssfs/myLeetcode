@@ -15,33 +15,24 @@
 // Note:
 // The total number of elements of the given matrix will not exceed 10,000.
 
-class Solution {
-public:
-    vector<int> findDiagonalOrder(vector<vector<int>>& matrix) {
-        vector<int> res;
-        int m = matrix.size();
-        if (!m) return res;
-        int n = matrix[0].size();
-        int di = -1, dj = 1;
-        int i = 0, j = 0;
-        while (1) {
-            res.push_back(matrix[i][j]);
-            if (res.size() == m * n) break;
-            i += di, j += dj;
-            if (i < 0 || j == n || i == m || j < 0) {
-                di = -di;
-                dj = -dj;
-            }
-            if (i < 0 && j < n) ++i;
-            else if (i < 0 && j == n) {i += 2; --j;}
-            else if (j < 0 && i < m) ++j;
-            else if (j < 0 && i == m) {j += 2; --i;}
-            else if (i == m) {--i; j += 2;}
-            else if (j == n) {--j; i += 2;}
-        }
-        return res;
+// https://leetcode.com/problems/diagonal-traverse/discuss/97711/Java-15-lines-without-using-boolean
+ public int[] findDiagonalOrder(int[][] matrix) {
+        if (matrix.length == 0) return new int[0];
+        int r = 0, c = 0, m = matrix.length, n = matrix[0].length, arr[] = new int[m * n];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = matrix[r][c];
+            if ((r + c) % 2 == 0) { // moving up
+                if      (c == n - 1) { r++; }
+                else if (r == 0)     { c++; }
+                else            { r--; c++; }
+            } else {                // moving down
+                if      (r == m - 1) { c++; }
+                else if (c == 0)     { r++; }
+                else            { r++; c--; }
+            }   
+        }   
+        return arr;
     }
-};
 
 class Solution {
 public:

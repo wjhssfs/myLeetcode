@@ -32,26 +32,59 @@
 // k is in the range of [0, n - 1].
 // There will not be any duplicated flights or self cycles.
 
+def findCheapestPrice(self, n, flights, src, dst, k):
+        f = collections.defaultdict(dict)
+        for a, b, p in flights:
+            f[a][b] = p
+        heap = [(0, src, k + 1)]
+        while heap:
+            p, i, k = heapq.heappop(heap)
+            if i == dst:
+                return p
+            if k > 0:
+                for j in f[i]:
+                    heapq.heappush(heap, (p + f[i][j], j, k - 1))
+        return -1
 
-// https://leetcode.com/problems/cheapest-flights-within-k-stops/discuss/115596/c++-8-line-bellman-ford
+
 class Solution {
 public:
-    //bellman ford.
-    //just run it k+1 iterations.
-    int findCheapestPrice(int n, vector<vector<int>>& a, int src, int sink, int k) {
-        
-        vector<int> c(n, 1e8);
-        c[src] = 0;
-        
-        for(int z=0; z<=k; z++){
-            vector<int> C(c);
-            for(auto e: a)
-                C[e[1]] = min(C[e[1]], c[e[0]] + e[2]);
-            c = C;
-        }
-        return c[sink] == 1e8 ? -1 : c[sink];
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K) {
+        unordered_map<int,unordered_map<int,int>> mp;
+        for(const vector<int>& flight : flights)   mp[flight[0]][flight[1]] = flight[2];
+        priority_queue<vector<int>,vector<vector<int>>,greater<vector<int>>> minheap;
+        minheap.push({0,src,K+1});
+        while(!minheap.empty()){
+            vector<int> top = minheap.top();
+            minheap.pop();
+            int price = top[0];
+            int city = top[1];
+            int stops = top[2];
+            if (city == dst) return price;
+            if(stops>0) for(auto &t: mp[city] ) minheap.push({price+t.second, t.first, stops-1});
+            }
+        return -1;   
     }
 };
+
+class Solution {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
+        int[] dis = new int[n];
+        int[] pre = new int[n];
+        Arrays.fill(dis, Integer.MAX_VALUE / 2);
+        Arrays.fill(pre, Integer.MAX_VALUE / 2);
+        dis[src] = pre[src] = 0;
+
+        for (int i = 0; i <= K; ++i) {
+            for (int[] edge: flights)
+                dis[edge[1]] = Math.min(dis[edge[1]], pre[edge[0]] + edge[2]);
+
+            pre = dis;
+        }
+
+        return dis[dst] < Integer.MAX_VALUE / 2 ? dis[dst] : -1;
+    }
+}
 
 class Solution {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {

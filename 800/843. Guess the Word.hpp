@@ -48,6 +48,7 @@ public:
             for (string w1 : wordlist) for (string w2 : wordlist) if (match(w1, w2) == 0) count[w1]++;
             pair<string, int> minimax = make_pair(wordlist[0], 1000);
             for (string w : wordlist) if (count[w] <= minimax.second) minimax = make_pair(w, count[w]);
+            // guess the word with minimum 0 matches.
             x = master.guess(minimax.first);
             vector<string> wordlist2;
             for (string w : wordlist) if (match(minimax.first, w) == x) wordlist2.push_back(w);
