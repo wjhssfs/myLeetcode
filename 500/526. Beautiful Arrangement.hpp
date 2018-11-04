@@ -65,7 +65,7 @@ public:
         if (n <= 0) return 1;
         int ans = 0;
         for (int i=0; i<n; ++i) {
-            if (vs[i]%n==0 || n%vs[i]==0) {
+            if (vs[i]%n==0 || n%vs[i]==0) { // find position for number n
                 swap(vs[i], vs[n-1]);
                 ans += counts(n-1, vs);
                 swap(vs[i], vs[n-1]);

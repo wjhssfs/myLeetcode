@@ -16,24 +16,6 @@ class Solution {
 public:
     bool checkInclusion(string s1, string s2) {
         if (s2.size() < s1.size()) return false;
-        vector<int> m(26);
-        int need = 0;
-        for (auto c : s1) { 
-            if (m[c - 'a'] == 0) ++need;
-            ++m[c - 'a']; 
-        }
-        for (int start = 0, end = 0; end < s2.size();) {
-            if (end >= s1.size() && m[s2[start++] - 'a']++ == 0) ++need;
-            if (m[s2[end++] - 'a']-- == 1 && --need == 0) return true;
-        }
-        return false;
-    }
-};
-
-class Solution {
-public:
-    bool checkInclusion(string s1, string s2) {
-        if (s2.size() < s1.size()) return false;
         unordered_map<int, int> m;
         for (auto c : s1)  ++m[c];
         int need = m.size();

@@ -63,34 +63,68 @@ private:
     vector<int> res;
 };
 
-class Solution {
-public:
-    vector<int> findMode(TreeNode* root) {
-        vector<int> res;
-        int maxCount = 0;
-        dfs(root, maxCount, res);
-        return res;
+// https://leetcode.com/problems/find-mode-in-binary-search-tree/discuss/98101/Proper-O(1)-space
+public class Solution {
+    
+    public int[] findMode(TreeNode root) {
+        inorder(root);
+        modes = new int[modeCount];
+        modeCount = 0;
+        currCount = 0;
+        inorder(root);
+        return modes;
     }
-private:
-    int countRoot(TreeNode* root, int val) {
-           if (!root) return 0;
-           int t = 0;
-           if (root->val == val) ++t;
-           if (root->val >= val) t += countRoot(root->left, val);
-           if (root->val <= val) t += countRoot(root->right, val);
-           return t;
-    }
-    void dfs(TreeNode* root, int& maxCount, vector<int> &res) {
-        if (!root) return;
-        int rootCount = countRoot(root, root->val);
-        if (rootCount > maxCount) {
-            maxCount = rootCount;
-            res.clear();
-            res.push_back(root->val);
-        } else if (rootCount == maxCount) {
-            res.push_back(root->val);
+
+    private int currVal;
+    private int currCount = 0;
+    private int maxCount = 0;
+    private int modeCount = 0;
+    
+    private int[] modes;
+
+    private void handleValue(int val) {
+        if (val != currVal) {
+            currVal = val;
+            currCount = 0;
         }
-        dfs(root->left, maxCount, res);
-        dfs(root->right, maxCount, res);
+        currCount++;
+        if (currCount > maxCount) {
+            maxCount = currCount;
+            modeCount = 1;
+        } else if (currCount == maxCount) {
+            if (modes != null)
+                modes[modeCount] = currVal;
+            modeCount++;
+        }
     }
-};
+    
+    private void inorder(TreeNode root) {
+        if (root == null) return;
+        inorder(root.left);
+        handleValue(root.val);
+        inorder(root.right);
+    }
+}
+
+//  Morris traversal 
+    private void inorder(TreeNode root) {
+        TreeNode node = root;
+        while (node != null) {
+            if (node.left == null) {
+                handleValue(node.val);
+                node = node.right;
+            } else {
+                TreeNode prev = node.left;
+                while (prev.right != null && prev.right != node)
+                    prev = prev.right;
+                if (prev.right == null) {
+                    prev.right = node;
+                    node = node.left;
+                } else {
+                    prev.right = null;
+                    handleValue(node.val);
+                    node = node.right;
+                }
+            }
+        }
+    }

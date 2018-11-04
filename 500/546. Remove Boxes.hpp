@@ -49,7 +49,7 @@ private:
     }
 };
 
-// https://discuss.leetcode.com/topic/84687/java-top-down-and-bottom-up-dp-solutions/2
+// https://leetcode.com/problems/remove-boxes/discuss/101310/Java-top-down-and-bottom-up-DP-solutions
 // modify the definition of the problem to absorb the external information so that the new one is self-contained.
 // Bottom-up DP
 public int removeBoxes(int[] boxes) {
