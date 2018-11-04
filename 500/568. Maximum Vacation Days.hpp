@@ -46,6 +46,8 @@
 // If you fly from the city A to the city B and take the vacation on that day, the deduction towards vacation days will count towards the vacation days of city B in that week.
 // We don't consider the impact of flight hours towards the calculation of vacation days.
 
+// https://leetcode.com/problems/maximum-vacation-days/discuss/102655/Java-DFS(TLE)-and-DP-Solutions
+// dp[i][j] = max(dp[i - 1][k] + days[j][i]) (k = 0...N - 1, if we can go from city k to city j)
 class Solution {
 public:
     int maxVacationDays(vector<vector<int>>& flights, vector<vector<int>>& days) {
@@ -56,7 +58,7 @@ public:
             vector<int> mN(m);
             for (int i = 0; i < N; ++i) {
                 for (int j = 0; j < N; ++j) {
-                    if (就== i || flights[j][i])
+                    if (j == i || flights[j][i])
                         mN[i] = max(mN[i], m[j]);
                 }
                 if (mN[i] != -1) mN[i] += days[i][k];
