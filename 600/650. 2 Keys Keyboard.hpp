@@ -32,6 +32,23 @@ public:
     }
 };
 
+// https://leetcode.com/problems/2-keys-keyboard/discuss/105899/Java-DP-Solution
+ public int minSteps(int n) {
+        int[] dp = new int[n+1];
+
+        for (int i = 2; i <= n; i++) {
+            dp[i] = i;
+            for (int j = i-1; j > 1; j--) {
+                if (i % j == 0) {
+                    dp[i] = dp[j] + (i/j);
+                    break;
+                }
+                
+            }
+        }
+        return dp[n];
+    }
+
 // https://discuss.leetcode.com/topic/97623/loop-best-case-log-n-no-dp-no-extra-space-no-recursion-with-explanation
 // We look for a divisor d so that we can make d copies of (n / d) to get n
 // The process of making d copies takes d steps (1 step of Copy All and d - 1 steps of Paste)

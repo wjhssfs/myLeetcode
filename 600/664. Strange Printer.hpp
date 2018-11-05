@@ -16,6 +16,7 @@
 // Explanation: Print "aaa" first and then print "b" from the second place of the string, which will cover the existing character 'a'.
 // Hint: Length of the given string will not exceed 100.
 
+// https://leetcode.com/problems/strange-printer/discuss/106810/Java-O(n3)-DP-Solution-with-Explanation-and-Simple-Optimization
 class Solution {
 public:
     int strangePrinter(string s) {
@@ -28,6 +29,7 @@ public:
                 dp[j][j + i] = i + 1;
                 for (int k = j; k < i + j; ++k) {
                     int c = dp[j][k] + dp[k+1][i + j];
+                    // The core argument here is that you can save one step every time you concatenate two strings together that have the same ending character.
                     if (s[j] == s[i + j]) --c;
                     dp[j][j + i] = min(dp[j][j + i], c);
                 }
