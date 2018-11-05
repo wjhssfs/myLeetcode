@@ -16,24 +16,18 @@
 class Solution {
 public:
     int maximumSwap(int num) {
-        auto s = to_string(num);
-        auto m = s;
-        for (int i = (int)s.size() - 2; i >= 0; --i) {
-            if (m[i] < m[i + 1]) m[i] = m[i + 1];
+        auto n = to_string(num);
+        vector<int> dp(n.size());
+        dp.back() = n.size() - 1;
+        for (int i = (int)n.size() - 2; i >= 0; --i) {
+            if (n[i] <= n[dp[i + 1]]) dp[i] = dp[i + 1];
+            else dp[i] = i;
         }
-        for (int i = 0; i < (int)s.size() - 1; ++i) {
-            if (s[i] < m[i + 1]) {
-                char c = s[i];
-                s[i] = m[i + 1];
-                for (int k = s.size() - 1; k >= 0; --k) {
-                    if (s[k] == s[i]) {
-                        s[k] = c;
-                        return stoi(s);
-                    }
-                }
-            }
+        for (int i = 0; i < n.size(); ++i) if (n[i] < n[dp[i]]) {
+            swap(n[i], n[dp[i]]);
+            break;
         }
-        return num;
+        return stoi(n);
     }
 };
 

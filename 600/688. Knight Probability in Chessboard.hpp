@@ -65,11 +65,13 @@ private:
     }
 };
 
+
 int[][] moves = {{1, 2}, {1, -2}, {2, 1}, {2, -1}, {-1, 2}, {-1, -2}, {-2, 1}, {-2, -1}};
 public double knightProbability(int N, int K, int r, int c) {
     int len = N;
     double dp0[][] = new double[len][len];
-    for(double[] row : dp0) Arrays.fill(row, 1);
+    // dp[i][j] valid ways with k steps starting from i, j. 
+    for(double[] row : dp0) Arrays.fill(row, 1); // 0 step, 1 way
     for(int l = 0; l < K; l++) {
         double[][] dp1 = new double[len][len];
         for(int i = 0; i < len; i++) {

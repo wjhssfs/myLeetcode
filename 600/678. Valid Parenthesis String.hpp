@@ -45,7 +45,9 @@ class Solution {
     }
 }
 
-// https://discuss.leetcode.com/topic/103936/short-java-o-n-time-o-1-space-one-pass/2
+// https://leetcode.com/problems/valid-parenthesis-string/discuss/107577/Short-Java-O(n)-time-O(1)-space-one-pass
+// (**())
+//  counts of unpaired ‘(’ for all valid routes are consecutive integers
 public boolean checkValidString(String s) {
         int low = 0; // min counts of unpaired ‘(’ for all possible cases
         int high = 0; // max counts of unpaired ‘(’ for all possible cases

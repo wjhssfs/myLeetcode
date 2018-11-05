@@ -26,7 +26,7 @@
 
 // O(n)
 int kEmptySlots(vector<int>& flowers, int k) {
-        vector<int> days(flowers.size());
+        vector<int> days(flowers.size()); // blooming day
         for(int i=0; i<flowers.size();i++)days[flowers[i] - 1] = i + 1;
         int left = 0, right = k + 1, res = INT_MAX;
         for(int i = 0; right < days.size(); i++){
