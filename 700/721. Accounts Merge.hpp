@@ -22,34 +22,6 @@
 
 class Solution {
 public:
-    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
-        map<string, int> m; // email to index in accounts
-        vector<int> p(accounts.size(), -1);
-        for (int i = 0; i < accounts.size(); ++i) {
-            for (int j = 1; j < accounts[i].size(); ++j) {
-                if (m.count(accounts[i][j])) {
-                    int s = m[accounts[i][j]];
-                    while (p[s] != -1 && p[s] != s) s = p[s];  // p[s] != s to avoid self parent
-                    p[s] = i;
-                } else {
-                    m[accounts[i][j]] = i;
-                }
-            }
-        }
-        vector<vector<string>> r(accounts.size());
-        for (auto&& e : m) {
-            int s = e.second;
-            while (p[s] != -1 && p[s] != s) s = p[s];
-            if (r[s].empty()) r[s].push_back(accounts[s][0]);
-            r[s].push_back(e.first);
-        }
-        r.erase(remove(r.begin(), r.end(), vector<string>()), r.end());
-        return r;
-    }
-};
-
-class Solution {
-public:
     vector<vector<string>> accountsMerge(vector<vector<string>>& acts) {
         map<string, string> owner;
         map<string, string> parents;
