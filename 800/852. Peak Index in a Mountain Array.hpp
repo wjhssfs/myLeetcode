@@ -27,16 +27,6 @@ public:
     }
 };
 
-int peakIndexInMountainArray(vector<int> A) {
-    int l = 0, r = A.size() - 1, mid;
-    while (l < r) {
-        mid = (l + r) / 2;
-        if (A[mid] < A[mid + 1]) l = mid + 1;
-        else if (A[mid - 1] > A[mid]) r = mid;
-        else return mid;
-    }
-}
-
 int peakIndexInMountainArray(vector<int>& A) {
     int l = 0, r = A.size() - 1, mid;
     while (l < r) {
@@ -47,9 +37,9 @@ int peakIndexInMountainArray(vector<int>& A) {
     return l;
 }
 
-https://www.youtube.com/watch?v=VBFuqglVW3c
-Approach 4, Golden-section search
-It's gurentee only one peak, we can apply golden-section search.
+// https://www.youtube.com/watch?v=VBFuqglVW3c
+// Approach 4, Golden-section search
+// It's gurentee only one peak, we can apply golden-section search.
 
     def peakIndexInMountainArray(self, A):
         def gold1(l, r):

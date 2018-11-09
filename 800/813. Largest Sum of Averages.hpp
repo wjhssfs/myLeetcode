@@ -44,3 +44,22 @@ public:
         return memo[n][k];
     }
 };
+
+public double largestSumOfAverages(int[] A, int K) {
+  int N = A.length;
+  // accumulatively sum
+  double[] P = new double[N + 1];
+  for (int i = 0; i < N; i++)
+    P[i + 1] = P[i] + A[i];
+  // starts with base case, average till to end
+  double[] dp = new double[N];
+  for (int i = 0; i < N; i++)
+    dp[i] = (P[N] - P[i]) / (N - i);
+  // sum up to K - 1 times, add average's difference
+  for (int k = 0; k < K - 1; k++)
+    for (int i = 0; i < N; i++)
+      for (int j = i + 1; j < N; j++)
+        dp[i] = Math.max(dp[i], (P[j] - P[i]) / (j - i) + dp[j]);
+
+  return dp[0];
+}

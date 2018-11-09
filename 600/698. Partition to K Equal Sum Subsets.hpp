@@ -11,6 +11,36 @@
 // 1 <= k <= len(nums) <= 16.
 // 0 < nums[i] < 10000.
 
+public boolean canPartitionKSubsets2(int[] nums, int k) {
+  int N = nums.length;
+  Arrays.sort(nums);
+  int sum = Arrays.stream(nums).sum();
+  int target = sum / k;
+  if (sum % k > 0 || nums[N - 1] > target)
+    return false;
+
+  boolean[] dp = new boolean[1 << N];
+  dp[0] = true;
+  int[] total = new int[1 << N];
+
+  for (int state = 0; state < (1 << N); state++) {
+    if (!dp[state])
+      continue;
+    for (int i = 0; i < N; i++) {
+      int future = state | (1 << i);
+      if (state != future && !dp[future]) { // if i is not added yet and state of new set including i isn't reachable yet
+        if (nums[i] <= target - (total[state] % target)) { // trick, we won't be able to add nums[i] if make the current sum over target. When it is equal, it seemlessly start the next set.
+          dp[future] = true;
+          total[future] = total[state] + nums[i];
+        } else {
+          break;
+        }
+      }
+    }
+  }
+  return dp[(1 << N) - 1];
+}
+
 class Solution {
 public:
     bool dfs(vector<int> &nums, int idx, vector<int> &sums, int n, int k, int sum) {
@@ -109,3 +139,4 @@ public:
 		a = nums;		return doit((1 << a.size()) - 1, sum);
 	}
 };
+
