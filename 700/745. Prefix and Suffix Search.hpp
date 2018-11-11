@@ -1,4 +1,4 @@
-// 746. Prefix and Suffix Search
+// 745. Prefix and Suffix Search
 
 // Given many words, words[i] has weight i.
 
@@ -44,6 +44,9 @@ public:
  * WordFilter obj = new WordFilter(words);
  * int param_1 = obj.f(prefix,suffix);
  */
+
+// https://leetcode.com/problems/prefix-and-suffix-search/discuss/144432/Java-Beat-95-just-small-modifications-in-implementing-Trie.
+
 
 // https://discuss.leetcode.com/topic/113547/three-ways-to-solve-this-problem-in-java
 // Before solving this problem, we need to know which operation is called the most.

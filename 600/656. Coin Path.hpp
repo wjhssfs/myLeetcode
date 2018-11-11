@@ -23,24 +23,24 @@ class Solution {
 public:
     vector<int> cheapestJump(vector<int>& A, int B) {
         if (A[0] == -1 || A.back() == -1) return {};
-        vector<pair<int, int>> dp(A.size(), make_pair(INT_MAX, -1));
+        vector<int> dp(A.size(), INT_MAX);
         vector<vector<int>> results(A.size());
         results[0] = {1};
-        dp[0].first = A[0];
+        dp[0] = A[0];
         for (int i = 0; i < A.size(); ++i) {
-            if (A[i] == -1 || dp[i].first == INT_MAX) continue;
+            if (A[i] == -1 || dp[i] == INT_MAX) continue;
             for (int j = 1; j <= B && i + j < A.size(); ++j) {
                 if (A[i + j] == -1) continue;
-                if (dp[i + j].first >= dp[i].first + A[i + j]) {
+                if (dp[i + j] >= dp[i] + A[i + j]) {
                     auto r = results[i];
                     r.push_back(i + j + 1);
-                    if (dp[i + j].first > dp[i].first + A[i + j]) results[i + j]  = r;
+                    if (dp[i + j] > dp[i] + A[i + j]) results[i + j]  = r;
                     else results[i + j] = min(results[i + j], r);
-                    dp[i + j] = make_pair(dp[i].first + A[i + j], i);
+                    dp[i + j] = dp[i] + A[i + j];
                 }
             }
         }
-        if (dp.back().first == INT_MAX) return {};
+        if (dp.back() == INT_MAX) return {};
         return results.back();
     }
 };

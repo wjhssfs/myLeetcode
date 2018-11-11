@@ -35,6 +35,13 @@
  *     int guess(string word);
  * };
  */
+
+// Generally, we will get 0 matches and wordlist size reduce slowly.
+
+// So we compare each two words and for each word, we note how many 0 matches it gets.
+
+// Then we guess the word with minimum 0 matches.
+
 class Solution {
     int match(string a, string b) {
         int matches = 0;

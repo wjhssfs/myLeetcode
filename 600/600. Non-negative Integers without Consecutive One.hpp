@@ -33,7 +33,7 @@ public:
             mask >>= 1;
         }
 
-        // +1 for 0
+        // +1 for n
         return res + 1;
     }
 };

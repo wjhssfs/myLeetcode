@@ -115,3 +115,4 @@ private:
  * bool param_2 = obj.queryRange(left,right);
  * obj.removeRange(left,right);
  */
+

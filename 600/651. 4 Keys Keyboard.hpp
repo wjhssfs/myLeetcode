@@ -28,6 +28,7 @@
 // 1 <= N <= 50
 // Answers will be in the range of 32-bit signed integer.
 
+// https://leetcode.com/problems/4-keys-keyboard/discuss/105980/Java-4-lines-recursion-with-step-by-step-explanation-to-derive-DP
 class Solution {
 public:
     int maxA(int N) {

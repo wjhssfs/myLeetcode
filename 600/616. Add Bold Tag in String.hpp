@@ -30,7 +30,7 @@ public:
             if (i > be) {
                 if (be != -1) res += "<b>" + s.substr(bs, be - bs + 1) + "</b>";
                 if (i < s.size()) res += s[i];
-                bs = i + 1;
+                bs = i + 1; // +1 since s[i] can't be bolded
                 be = -1;
             }
         }

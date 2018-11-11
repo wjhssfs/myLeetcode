@@ -41,3 +41,24 @@ public:
         return res;
     }
 };
+
+public int longestConsecutiveSequence(int[] nums) {
+  Set<Integer> set = new HashSet<>();
+  for (int num : nums)
+    set.add(num);
+  int longestStreak = 1;
+  for (int num : nums) {
+    // only check the beginning number of the sequence
+    if (!set.contains(num - 1)) {
+      int currentNum = num;
+      int currentStreak = 1;
+      // loop until reach the end of the sequence
+      while (set.contains(currentNum + 1)) {
+        currentNum += 1;
+        currentStreak += 1;
+      }
+      longestStreak = Math.max(longestStreak, currentStreak);
+    }
+  }
+  return longestStreak;
+}

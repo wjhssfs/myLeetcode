@@ -104,10 +104,10 @@ class Solution:
         return ret
 
 // https://leetcode.com/problems/bricks-falling-when-hit/discuss/120057/C++-DFS-(similar-to-LC749)
-when there is a hit, we change grid cell to 0.
-we assign all the resulting connecting parts a unique id and judge if it falls.
-for each falling parts, we count the number, reset the falling cell = 0.
-++id (prepare to check another resulting parts of this run/start a new run of hit).
+// when there is a hit, we change grid cell to 0.
+// we assign all the resulting connecting parts a unique id and judge if it falls.
+// for each falling parts, we count the number, reset the falling cell = 0.
+// ++id (prepare to check another resulting parts of this run/start a new run of hit).
 class Solution {
 public:
     vector<int> dr = {-1, 0, 1, 0};

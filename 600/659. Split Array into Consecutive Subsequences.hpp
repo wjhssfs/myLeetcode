@@ -65,7 +65,8 @@ public:
         for (auto i : nums) ++freq[i];
         for (auto i : nums) {
             if (freq[i] == 0) continue;
-            else if (appendfreq[i] > 0) {
+            else if (appendfreq[i] > 0) { // needs to be before create new
+                // consider  1 2 3 4 5 5 6 7
                 --appendfreq[i];
                 ++appendfreq[i + 1];
             } else if (freq[i + 1] > 0 && freq[i + 2] > 0) {

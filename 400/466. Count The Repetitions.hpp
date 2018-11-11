@@ -15,6 +15,8 @@
 // Return:
 // 2
 
+// https://leetcode.com/problems/count-the-repetitions/discuss/95398/C++-solution-inspired-by-@70664914-with-organized-explanation
+
 // https://discuss.leetcode.com/topic/70667/c-0ms-o-str1-length-str2-length/6
 class Solution  {
 public:

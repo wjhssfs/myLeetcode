@@ -68,7 +68,7 @@ public:
 		return result;
 	}
 
-	// returns > 0 if BA to BC is conter clockwise
+	// returns > 0 if BA to BC is clockwise
 	int crossProductLength(Point A, Point B, Point C) {
 		// Get the vectors' coordinates.
 		int BAx = A.x - B.x;

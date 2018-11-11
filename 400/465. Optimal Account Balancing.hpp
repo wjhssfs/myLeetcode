@@ -36,6 +36,29 @@
 
 // Therefore, person #1 only need to give person #0 $4, and all debt is settled.
 
+// The question can be transferred to a 3-partition problem, which is NP-Complete.
+// https://leetcode.com/problems/optimal-account-balancing/discuss/95355/11-liner-9ms-DFS-solution-(detailed-explanation)
+
+public:
+    int minTransfers(vector<vector<int>>& trans) {
+        unordered_map<int, long> bal; // each person's overall balance
+        for(auto& t: trans) bal[t[0]] -= t[2], bal[t[1]] += t[2];
+        for(auto& p: bal) if(p.second) debt.push_back(p.second);
+        return dfs(0);
+    }
+    
+private:
+    int dfs(int s) { // min number of transactions to settle starting from debt[s]
+    	while (s < debt.size() && !debt[s]) ++s; // get next non-zero debt
+    	int res = INT_MAX;
+    	for (long i = s+1, prev = 0; i < debt.size(); ++i)
+    	  if (debt[i] != prev && debt[i]*debt[s] < 0) // skip already tested or same sign debt
+    	    debt[i] += debt[s], res = min(res, 1+dfs(s+1)), prev = debt[i]-=debt[s];
+    	return res < INT_MAX? res : 0;
+    }
+    
+    vector<long> debt; // all non-zero balances
+    
 class Solution {
 public:
 	int minTransfers(vector<vector<int>>& transactions) {
