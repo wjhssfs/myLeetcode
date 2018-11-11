@@ -18,74 +18,48 @@
 // All words contain only lowercase alphabetic characters.
 
 class Solution {
+    void dfs(unordered_map<string, unordered_set<string>>& g, string& endWord, vector<vector<string>>& res, vector<string>& cur) {
+        for (auto&& next : g[cur.back()]) {
+            cur.push_back(next);
+            next == endWord ? (void)res.push_back(cur) : (void)dfs(g, endWord, res, cur);
+            cur.pop_back();
+        }
+    }
 public:
-	vector<vector<string>> findLadders(string start, string end, unordered_set<string> &dict) {
-		vector<vector<string>> result;
-		if (start.empty() || start == end || start.size()!= end.size()) return result;
-		queue<string> q;
-		q.push(start);
-		unordered_map<string, unordered_set<string>> previousWord;
-		unordered_set<string> used = { start };
-		unordered_set<string> levelUsed;
-		bool found = false;
-		int levelLeft = 1;
-		while (!q.empty()){
-			string &cur = q.front();
-			for (size_t i = 0; i < start.size(); i++)
-			{
-				string newWord(cur);
-				for (char c = 'a'; c <= 'z'; c++){
-					if (c == cur[i]) continue;
-					newWord[i] = c;
-					if (newWord == end) {
-						found = true;
-						previousWord[end].insert(cur);
-						break;
-					}
-					if (used.count(newWord) == 0 && dict.count(newWord)){
-						previousWord[newWord].insert(cur);
-						levelUsed.insert(newWord);
-					}
-				}
-				newWord[i] = cur[i];
-			}
-			q.pop();
-			levelLeft--;
-
-			if (levelLeft == 0){
-				if (found) break;
-				for (const string & word : levelUsed){
-					used.insert(word);
-					q.push(word);
-				}
-				levelLeft = q.size();
-				levelUsed.clear();
-			}
-		}
-
-		if (found){
-			vector<string> path;
-			GetPaths(start, end, previousWord, path, result);
-		}
-		return result;
-	}
-
-	void GetPaths(const string & start, const string & end, unordered_map<string, unordered_set<string>> &previousWord,
-		vector<string> &path, vector<vector<string>> &result)
-	{
-		path.push_back(end);
-		if (end == start){
-			result.push_back(vector<string>(path.rbegin(), path.rend()));
-		}
-		else{
-			for (auto & word : previousWord[end]){
-				GetPaths(start, word, previousWord, path, result);
-			}
-		}
-		path.pop_back();
-	}
+    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> dict(wordList.begin(), wordList.end()); dict.erase(beginWord);
+        unordered_map<string, unordered_set<string>> g;
+        queue<string> q; q.push(beginWord);
+        bool ended = false;
+        while (!q.empty() && !ended) {
+            queue<string> nq;
+            unordered_set<string> filter;
+            while (!q.empty()) {
+                auto org = q.front(); q.pop();
+                for (int i = 0; i < org.size(); ++i) {
+                    auto cur = org;
+                    for (char c = 'a'; c <= 'z'; ++c) {
+                        if (c == org[i]) continue;
+                        cur[i] = c;
+                        if (dict.count(cur) == 0) continue;
+                        g[org].insert(cur);
+                        if (cur == endWord) ended = true;
+                        else {
+                            filter.insert(cur);
+                            nq.push(cur); 
+                        }
+                    }
+                }
+            }
+            for (auto &&w : filter) dict.erase(w);
+            swap(q, nq);
+        }
+        vector<vector<string>> res; if (!ended) return res;
+        vector<string> cur = {beginWord};
+        dfs(g, endWord, res, cur);
+        return res;
+    }
 };
-
 
 
 class Solution2 {

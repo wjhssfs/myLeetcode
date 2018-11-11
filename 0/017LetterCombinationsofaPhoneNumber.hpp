@@ -52,3 +52,28 @@ vector<string> letterCombinations(string digits) {
     }
     return result;
 }
+
+
+// T9   2 for a, 22 is for b, 222 for c
+class Solution {
+    vector<string> m = { "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+    void dfs(const string& digits, int i, vector<string>& res, string& cur, vector<string>& m) {
+        if (i == digits.size()) res.push_back(cur);
+        else {
+            for (int j = 0; i + j < digits.size() && j < m[digits[i] - '0'].size() && digits[i] == digits[i + j]; ++j) {
+                cur += m[digits[i]- '0'][j];
+                dfs(digits, i + j + 1, res, cur, m);
+                cur.pop_back();
+            }
+        }
+    }
+public:
+    vector<string> letterCombinations(string digits) {
+        if (digits.empty()) return {};
+        
+        vector<string> res;
+        string cur;
+        dfs(digits, 0, res, cur, m);
+        return res;
+    }
+};
