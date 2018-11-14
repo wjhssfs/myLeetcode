@@ -8,27 +8,6 @@
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
-        vector<int> productBefore(nums.size()), productAfter(nums.size()), res(nums.size());
-        for(int i = 0; i < nums.size(); i++){
-            if(i==0) {
-                productBefore[i] = 1;
-                productAfter[nums.size()-1 - i] = 1;
-            }
-            else {
-                productBefore[i] = productBefore[i-1] * nums[i-1];
-                productAfter[nums.size() -1 -i] = productAfter[nums.size() -i] * nums[nums.size() -i];
-            }
-        }
-        for(int i = 0; i < nums.size(); i++){
-            res[i] = productBefore[i] * productAfter[i]; 
-        }
-        return res;
-    }
-};
-
-class Solution {
-public:
-    vector<int> productExceptSelf(vector<int>& nums) {
         vector<int> res(nums.size());
         for(int i = 0; i < nums.size(); i++) res[i] = i == 0? 1 : res[i-1] * nums[i-1];
         int productAfter = 1;

@@ -22,14 +22,14 @@ public:
 	int shortestDistance(vector<vector<int>>& grid) {
 		int m = grid.size();
 		if (!m) return -1;
-		int n = grid[0].size(), minDist = INT_MAX, nVisitedNeg = 0, nBuildings = 0;
+		int n = grid[0].size(), minDist = INT_MAX, nVisitedNeg = 0;
 		auto total = grid;
 		vector<int> d({ 0, -1, 0, 1, 0 });
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
 				if (grid[i][j] == 2) total[i][j] = INT_MAX;
 				else if (grid[i][j] == 1) {
-					++nBuildings;
+					minDist = INT_MAX;
 					queue<pair<int, int>> q, qNext;
 					q.emplace(i, j);
 					int dist = 1;
@@ -44,6 +44,7 @@ public:
 									qNext.emplace(ni, nj);
 									total[ni][nj] += dist;
 									--grid[ni][nj];
+                                    minDist = min(minDist, total[ni][nj]);
 								}
 							}
 						}
@@ -54,16 +55,7 @@ public:
 				}
 			}
 		}
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				if (grid[i][j] == -nBuildings) {
-					minDist = min(minDist, total[i][j]);
-				}
-			}
-		}
-		if (minDist == INT_MAX)
-			return -1;
-		return minDist;
+		return minDist == INT_MAX ? -1 : minDist;
 	}
 };
 
@@ -87,7 +79,7 @@ int shortestDistance(vector<vector<int>> grid) {
                         if (i >= 0 && i < m && j >= 0 && j < n && grid[i][j] == walk) {
                             grid[i][j]--;
                             dist[i][j] = dist[ij.first][ij.second] + 1;
-                            total[i][j] += dist[i][j] - 1;
+                            total[i][j] += dist[i][j] - 1;  // dist is init with grid so initial distance is 1 which needs to be excluded.
                             q.emplace(i, j);
                             if (mindist < 0 || mindist > total[i][j])
                                 mindist = total[i][j];

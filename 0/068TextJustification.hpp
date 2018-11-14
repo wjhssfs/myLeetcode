@@ -20,51 +20,24 @@
 // Corner Cases:
 // A line other than the last line might contain only one word. What should you do in this case?
 // In this case, that line should be left-justified.
+
 class Solution {
 public:
-    vector<string> fullJustify(vector<string> &words, int L) {
+    vector<string> fullJustify(vector<string>& words, int maxWidth) {
         vector<string> res;
-        int i = 0, N = words.size();
-        while (i < N)
-        {
-            int length = words[i].size();
-            int j = i + 1;
-            while (j < N && length + words[j].size() + (j-i) <= L)
-                length += words[j++].size();
-            // build line
-            string s(words[i]);
-            bool isLastLine = (j == N);
-            bool oneWord = (j == i + 1);
-            int average = isLastLine || oneWord ? 1 : (L - length) / (j - i - 1); //oneWord guard for devide by 0
-            int extra = isLastLine || oneWord ? 0 : (L - length) % (j - i - 1);
-            for (int k = i + 1; k < j; ++k) {
-                s.append(extra > 0 ? average + 1 : average, ' ');
-                s.append(words[k]);
-                extra--;
+        for (size_t start = 0, end = 0; start < words.size(); start = end) {
+            int curLen = words[start].size();
+            for (end = start + 1; end < words.size() && curLen + words[end].size() + end - start <= maxWidth; ++end) curLen += words[end].size();
+            string curLine = words[start];
+            for (int j = start + 1; j < end; ++j) {
+                int nSpace = end == words.size() ? 1 : 
+                    ((maxWidth - curLen) / (end - start - 1) + ((j - start - 1) < (maxWidth - curLen) % (end - start - 1)));
+                curLine += string(nSpace, ' ');
+                curLine += words[j];
             }
-            s.append(L - s.size(), ' ');
-            // push line
-            res.push_back(s);
-            i = j;
+            curLine.resize(maxWidth, ' ');
+            res.push_back(curLine);
         }
         return res;
     }
 };
-
-vector<string> fullJustify(vector<string> &words, int L) {
-    vector<string> res;
-    for(int i = 0, k, l; i < words.size(); i += k) {
-        for(k = l = 0; i + k < words.size() && l + words[i+k].size() <= L - k; k++) {
-            l += words[i+k].size();
-        }
-        string tmp = words[i];
-        for(int j = 0; j < k - 1; j++) {
-            if(i + k >= words.size()) tmp += " ";
-            else tmp += string((L - l) / (k - 1) + (j < (L - l) % (k - 1)), ' ');
-            tmp += words[i+j+1];
-        }
-        tmp += string(L - tmp.size(), ' ');
-        res.push_back(tmp);
-    }
-    return res;
-}

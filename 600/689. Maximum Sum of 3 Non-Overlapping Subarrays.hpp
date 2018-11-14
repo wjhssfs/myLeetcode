@@ -17,25 +17,25 @@
 
 class Solution {
 public:
-	vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k) {
-		vector<int> kSum(nums.size() - k + 1);
-		for (int i = 0; i < k; ++i) kSum[0] += nums[i];
-		for (int i = 1; i < kSum.size(); ++i) kSum[i] = kSum[i - 1] + nums[k + i - 1] - nums[i - 1];
-		vector<vector<int>> p(2, vector<int>(sum.size(), -1)); // previous index
-		vector<int> dp = kSum;
-		for (int i = 0; i < 2; ++i) {
-			vector<int> newDp(sum.size(), 0);
-			int bestI = 0;
-			for (int j = k + k * i; j < kSum.size(); ++j) {
-				if (dp[j - k] > dp[bestI]) bestI = j - k;
-				newDp[j] = dp[bestI] + kSum[j];
-				p[i][j] = bestI;
-			}
-			swap(dp, newDp);
-		}
-		int i = max_element(dp.begin(), dp.end()) - dp.begin();
-		return { p[0][p[1][i]], p[1][i], i};
-	}
+    vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k) {
+        vector<int> ksum;
+        ksum.push_back(accumulate(nums.begin(), nums.begin() + k, 0));
+        for (int i = k; i < nums.size(); ++i) ksum.push_back(ksum.back() + nums[i] - nums[i - k]);
+        vector<int> dp = ksum; // dp[i] best ksum ending at i
+        vector<vector<int>> pre(2, vector<int>(ksum.size()));
+        for (int i = 1; i < 3; ++i) {
+            vector<int> ndp(ksum.size());
+            int bestI = k * i - k;
+            for (int j = k * i; j < ksum.size(); ++j) {
+                if (dp[j - k] > dp[bestI]) bestI = j - k;
+                ndp[j] = dp[bestI] + ksum[j];
+                pre[i - 1][j] = bestI;
+            }
+            swap(dp, ndp);
+        }
+        int right = max_element(dp.begin(), dp.end()) - dp.begin();
+        return { pre[0][pre[1][right]], pre[1][right], right };
+    }
 };
 
 class Solution {

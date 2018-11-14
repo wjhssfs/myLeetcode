@@ -73,7 +73,7 @@ public:
                     if(s[j] == close && (j == lastDelete || s[j-1] != close))
                         DFS(s.substr(0,j) + s.substr(j+1), i, j, reversed, ans);
                 }
-                return;
+                return; // recursion above should generate all results. so need to exit here.
             }
         }
         
@@ -135,7 +135,8 @@ public:
         q.emplace(s);
         bool found = false;
         while (!q.empty()) {
-            for (int sz = 0; sz < q.size(); ++sz) {
+            int qsz = q.size();
+            for (int sz = 0; sz < qsz; ++sz) {
                 auto front = q.front(); q.pop();
                 if (isValid(front)) {
                     res.emplace_back(front);

@@ -6,37 +6,18 @@
 class Solution {
 public:
     int numSquares(int n) {
-        if(n<=1) return n;
-        vector<int> ps;
-        int maxPSR = 1, maxPS = 1;
-        while(maxPS <= n) {
-            ps.push_back(maxPS);
-            ++maxPSR;
-            maxPS = maxPSR * maxPSR;
-        }
-        
-        if(n==ps.back()) return 1;
-        
-        vector<bool> m(n+1);
-        queue<int> q;
-        q.push(0);
-        int count = 0;
-        while(1){
-            ++count;
-            int curCountLeft = q.size();
-            while(curCountLeft--){
-                int cur = q.front(); q.pop();
-                for(int i = 0; i < ps.size(); i++){
-                    int next = ps[i] + cur;
-                    if(next > n) break;
-                    if(next == n) return count;
-                    if(m[next]) continue;
-                    m[next] = true;
-                    q.push(next);
+        unordered_set<int> s{0};
+        for (int i = 0; i < n; ++i) {
+            unordered_set<int> ns;
+            for (auto c : s) {
+                for (int k = 1; c + k * k <= n; ++k) {
+                    if (c + k * k == n) return i + 1;
+                    ns.insert(c + k * k);
                 }
             }
+            swap(s, ns);
         }
-        return -1;
+        return n;
     }
 };
 

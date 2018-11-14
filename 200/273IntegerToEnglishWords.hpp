@@ -91,6 +91,7 @@ class Solution {
     string digits[20] = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
     string tens[10] = {"Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
 
+    // space can be prefixed for suffixed, as long as it is consistent.
     string int2string(int n) {
         if (n >= 1000000000) {
             return int2string(n / 1000000000) + " Billion" + int2string(n % 1000000000);
@@ -105,6 +106,7 @@ class Solution {
         } else if (n >= 1) {
             return " " + digits[n];
         } else {
+            // special casing
             return "";
         }
     }
