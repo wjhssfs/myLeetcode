@@ -70,7 +70,7 @@ public:
 };
 
 
-https://leetcode.com/discuss/69392/python-clear-solution-unionfind-class-weighting-compression
+// https://leetcode.com/discuss/69392/python-clear-solution-unionfind-class-weighting-compression
 
 class Solution {
 public:

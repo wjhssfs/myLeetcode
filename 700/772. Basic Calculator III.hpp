@@ -17,6 +17,50 @@
 
 // Note: Do not use the eval built-in library function.
 
+// https://leetcode.com/problems/basic-calculator-iii/discuss/113592/Development-of-a-generic-solution-for-the-series-of-the-calculator-problems
+class Solution {
+    //parse to the end of to next ')'
+    int eval(string& s, int& i) {
+        int res = 0, cur = 0, v = 0;
+        char lastOp = '+';
+        while (i < s.size()) {
+            if (s[i] == ')') {++i; break;}
+            if (s[i] == ' ') {++i; continue;}
+            bool calc = false;
+            if (isdigit(s[i])) {
+                calc = true;
+                v = 0;
+                while (i < s.size() && isdigit(s[i])) {
+                    v = v * 10 + s[i++] - '0';
+                }
+             } else if (s[i] == '(') {
+                v = eval(s, ++i);
+                calc = true;
+            }
+            
+            if (calc) {
+                if (lastOp == '+') cur = v;
+                if (lastOp == '-') cur = -v;
+                if (lastOp == '*') cur *= v;
+                if (lastOp == '/') cur /= v;
+            }
+            
+            if (s[i] == '+' || s[i] == '-') {
+                res += cur;
+                lastOp = s[i++];
+            } else if (s[i] == '*' || s[i] == '/') {
+                lastOp = s[i++];
+            }
+        }
+        return res + cur;
+    }
+public:
+    int calculate(string s) {
+        int i = 0;
+        return eval(s, i);
+    }
+};
+
 class Solution {
     bool Parse(const string& s, int& i, char& op, int &num) {
         op = 'X';

@@ -31,40 +31,34 @@ public:
 
 class Codec {
 public:
+    // Encodes a tree to a single string.
+    string serialize(Node* root) {
+        if (!root) return {};
+        string res = to_string(root->val);
+        for (auto c : root->children) res = res +  "," +  serialize(c);
+        res += ",+";
+        return res;
+    }
 
-	// Encodes a tree to a single string.
-	string serialize(Node* root) {
-		if (!root) return "";
-		string r = to_string(root->val);
-		for (auto c : root->children) r += "," + serialize(c);
-		r += ",+";
-		return r;
-	}
-
-	// Decodes your encoded data to tree.
-	Node* deserialize(string data) {
-		if (data.empty()) return nullptr;
-		auto root = new Node();
-		stack<Node*> s;
-		s.push(root);
-		int start = 0;
-		while (true) {
-			size_t p = data.find(',', start);
-			if (p == string::npos) break;
-            if (data[start] == '+') {
+    // Decodes your encoded data to tree.
+    Node* deserialize(string data) {
+        Node* root = nullptr;
+        stack<Node*> s;
+        string val;
+        stringstream ss(data);
+        while (getline(ss, val, ',')) {
+            if (val == "+") {
                 s.pop();
+            } else if (val.size()){
+                auto cur = new Node();
+                cur->val = stoi(val);
+                if (s.size()) s.top()->children.push_back(cur);
+                else root = cur;
+                s.push(cur);
             }
-            else
-            {
-				auto cur = new Node();
-				cur->val = stoi(data.substr(start, p - start));
-				s.top()->children.push_back(cur);
-				s.push(cur);
-			}
-			start = p + 1;
-		}
-		return root->children[0];
-	}
+        }
+        return root;
+    }
 };
 
 

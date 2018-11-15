@@ -89,6 +89,7 @@ public:
     }
 };
 
+// https://leetcode.com/problems/n-queens/discuss/19808/Accepted-4ms-c++-solution-use-backtracking-and-bitmask-easy-understand.
 class Solution {
 public:
     std::vector<std::vector<std::string> > solveNQueens(int n) {

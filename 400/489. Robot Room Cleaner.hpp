@@ -68,124 +68,39 @@
  * };
  */
 class Solution {
-    void dfs(Robot& robot) {
-        if (m.count(cur)) return;
-        //cout << "clean:" << cur.first << " " << cur.second << " " << d << endl;
-        m.insert(cur);
+    int d = 0;
+    set<pair<int, int>> visited;
+    void dfs(Robot& robot, int i, int j) {
+        if (visited.count(make_pair(i, j))) return;
+        visited.emplace(i, j);
         robot.clean();
-        tryMove(robot);
-        tryLeft(robot);
-        robot.turnLeft();
-        d = (d + 1) % 4;
-        tryLeft(robot);
-        robot.turnLeft();
-        d = (d + 1) % 4;
-        tryLeft(robot);
-        robot.turnLeft();
-        robot.turnLeft();
-        d = (d + 2) % 4;
-        //cout << "exit:" << cur.first << " " << cur.second  << " " << d << endl;
-    }
-    void tryMove(Robot& robot) {
-        auto t = cur;
-        if (d == 0) {
-            cur.first--;
-        } else if (d == 1) {
-            cur.second--;
-        } else if (d == 2) {
-            cur.first++;
-        } else cur.second++;
-        
-        if (m.count(cur) ||!robot.move()) {
-            cur = t;
-            return;
-        }
-        dfs(robot);
-        // Cancle the move
-        robot.turnLeft();
-        robot.turnLeft();
-        robot.move();
-        robot.turnLeft();
-        robot.turnLeft();
-        cur = t;
-    }
-    void tryLeft(Robot& robot) {
-        robot.turnLeft();
-        d = (d + 1) % 4;
-        //cout << "tryLeft:" << cur.first << " " << cur.second << " " << d << endl;
-        tryMove(robot);
-        robot.turnRight();
-        d = (4 + d - 1) % 4;
-    }
-    set<pair<int, int>> m;
-    pair<int, int> cur;
-    int d;
-public:
-    void cleanRoom(Robot& robot) {
-        cur = make_pair(0, 0);
-        d = 0;
-        dfs(robot);
-    }
-};
-
-
- public void cleanRoom(Robot robot) {
-        // A number can be added to each visited cell
-        // use string to identify the class
-        Set<String> set = new HashSet<>();
-        int cur_dir = 0;   // 0: up, 90: right, 180: down, 270: left
-        backtrack(robot, set, 0, 0, 0);
-    }
-
-    public void backtrack(Robot robot, Set<String> set, int i, 
-                int j, int cur_dir) {
-        String tmp = i + "->" + j;
-        if(set.contains(tmp)) {
-            return;
-        }
-        
-        robot.clean();
-        set.add(tmp);
-
-        for(int n = 0; n < 4; n++) {
-        // the robot can to four directions, we use right turn
-            if(robot.move()) {
-                // can go directly. Find the (x, y) for the next cell based on current direction
-                int x = i, y = j;
-                switch(cur_dir) {
-                    case 0:
-                        // go up, reduce i
-                        x = i-1;
-                        break;
-                    case 90:
-                        // go right
-                        y = j+1;
-                        break;
-                    case 180:
-                        // go down
-                        x = i+1;
-                        break;
-                    case 270:
-                        // go left
-                        y = j-1;
-                        break;
-                    default:
-                        break;
+        for (int k = 0; k < 4; ++k) {
+            if (robot.move()) {
+                int ni = i, nj = j;
+                if (d == 0) {
+                    nj -= 1;
+                } else if (d == 1) {
+                    ni -= 1;
+                } else if (d == 2) {
+                    nj += 1;
+                } else {
+                    ni += 1;
                 }
-
-                backtrack(robot, set, x, y, cur_dir);
-                       // go back to the starting position
-            robot.turnLeft();
+                dfs(robot, ni, nj);
+                robot.turnLeft();
                 robot.turnLeft();
                 robot.move();
-                robot.turnRight();
-                robot.turnRight();
-
-            } 
-            // turn to next direction
-            robot.turnRight();
-            cur_dir += 90;
-            cur_dir %= 360;
+                robot.turnLeft();
+                robot.turnLeft();
+            }
+            robot.turnLeft();
+            d = (d + 1) % 4;
         }
-
     }
+public:
+    void cleanRoom(Robot& robot) {
+        d = 0;
+        visited.clear();
+        dfs(robot, 0, 0);
+    }
+};
