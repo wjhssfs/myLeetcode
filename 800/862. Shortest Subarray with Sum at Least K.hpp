@@ -48,7 +48,7 @@ public:
 class Solution {
 public:
     int shortestSubarray(vector<int>& A, int K) {
-               int N = A.size(), res = N + 1;
+        int N = A.size(), res = N + 1;
         vector<int> B(N + 1, 0);
         for (int i = 0; i < N; i++) B[i + 1] = B[i] + A[i];
         deque<int> d;
