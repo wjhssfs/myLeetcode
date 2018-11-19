@@ -18,18 +18,18 @@
 class Solution {
 public:
     int reversePairs(vector<int>& nums) {
-        return mergeSort(nums, 0, (int)nums.size() - 1);
+        return mergeSort(nums, 0, nums.size());
     }
     
-    int mergeSort(vector<int>& nums, int start, int end) {
-        if (start >= end) return 0;
-        int mid = start + (end - start) / 2;
-        int total = mergeSort(nums, start, mid) + mergeSort(nums, mid + 1, end);
-        for (int i = start, j = mid + 1; i < mid + 1; ++i) {
-            while (j <= end && nums[i] / 2.0 > nums[j]) ++j;
-            total += j - (mid + 1);
+    int mergeSort(vector<int>& nums, size_t start, size_t end) {
+        if (start + 1 >= end) return 0;
+        size_t mid = start + (end - start) / 2;
+        int total = mergeSort(nums, start, mid) + mergeSort(nums, mid, end);
+        for (int i = start, j = mid; i < mid; ++i) {
+            while (j < end && nums[i] / 2.0 > nums[j]) ++j;
+            total += j - mid;
         }
-        sort(nums.begin() + start, nums.begin() + end + 1);
+        inplace_merge(nums.begin() + start, nums.begin() + mid, nums.begin() + end);
         return total;
     }
 };

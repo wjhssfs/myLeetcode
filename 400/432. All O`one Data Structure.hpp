@@ -6,87 +6,72 @@
 // GetMaxKey() - Returns one of the keys with maximal value. If no element exists, return an empty string "".
 // GetMinKey() - Returns one of the keys with minimal value. If no element exists, return an empty string "".
 // Challenge: Perform all these in O(1) time complexity.
-
 class AllOne {
+	list<pair<int, unordered_set<string>>> orderedCount;
+	unordered_map<string, list<pair<int, unordered_set<string>>>::iterator> keyToSet;
 public:
 	/** Initialize your data structure here. */
-	AllOne() {
-	}
+	AllOne() {}
 
 	/** Inserts a new key <Key> with value 1. Or increments an existing key by 1. */
 	void inc(string key) {
-		if (!dataMap.count(key)) {
-			if (orderList.size() && orderList.back().first == 1) {
-				orderList.back().second.insert(key);
-				dataMap[key] = prev(orderList.end());
+		if (keyToSet.count(key) == 0) {
+			if (orderedCount.empty() || orderedCount.front().first > 1) {
+				keyToSet[key] = orderedCount.insert(orderedCount.begin(), { 1,{key}});
 			}
 			else {
-				orderList.push_back(make_pair(1, unordered_set<string>({ key })));
-				dataMap[key] = prev(orderList.end());
+				keyToSet[key] = orderedCount.begin();
+				orderedCount.front().second.insert(key);
 			}
 		}
 		else {
-			auto it = dataMap[key];
-			if (it != orderList.begin() && prev(it)->first == it->first + 1) {
-				prev(it)->second.insert(key);
-				dataMap[key] = prev(it);
+			auto it = keyToSet[key];
+			auto itN = next(it);
+			if (itN == orderedCount.end() || itN->first > it->first + 1) {
+				keyToSet[key] = orderedCount.insert(itN, {it->first + 1, {key}});
 			}
 			else {
-				orderList.insert(it, make_pair(it->first + 1, unordered_set<string>({ key })));
-				dataMap[key] = prev(it);
+				keyToSet[key] = itN;
+				itN->second.insert(key);
 			}
 			it->second.erase(key);
-			if (it->second.empty()) {
-				orderList.erase(it);
-			}
+			if (it->second.empty()) orderedCount.erase(it);
 		}
 	}
 
 	/** Decrements an existing key by 1. If Key's value is 1, remove it from the data structure. */
 	void dec(string key) {
-		if (!dataMap.count(key)) return;
-		auto it = dataMap[key];
-		if (it->first == 1) {
-			it->second.erase(key);
-			if (it->second.empty()) {
-				orderList.erase(it);
-			}
-			dataMap.erase(key);
-		}
-		else {
-			if (next(it) != orderList.end() && next(it)->first == it->first - 1) {
-				next(it)->second.insert(key);
-				dataMap[key] = next(it);
+		if (keyToSet.count(key) == 0) return;
+		auto it = keyToSet[key];
+		it->second.erase(key);
+		if (it->first != 1) {
+			auto itP = prev(it);
+			if (itP == orderedCount.end() || itP->first < it->first - 1) {
+				keyToSet[key] = orderedCount.insert(it, {it->first - 1, {key}});
 			}
 			else {
-				orderList.insert(next(it), make_pair(it->first - 1, unordered_set<string>({ key })));
-				dataMap[key] = next(it);
+				itP->second.insert(key);
+				keyToSet[key] = itP;
 			}
-
-			it->second.erase(key);
-			if (it->second.empty()) {
-				orderList.erase(it);
-			}
+		}
+		if (it->second.empty()) {
+			if (it->first == 1) keyToSet.erase(key);
+			orderedCount.erase(it);
 		}
 	}
 
 	/** Returns one of the keys with maximal value. */
 	string getMaxKey() {
-		if (orderList.empty()) return "";
-		return *orderList.front().second.begin();
+		if (orderedCount.empty()) return "";
+		return *orderedCount.back().second.begin();
 	}
 
 	/** Returns one of the keys with Minimal value. */
 	string getMinKey() {
-		if (orderList.empty()) return "";
-		return *orderList.back().second.begin();
+		if (orderedCount.empty()) return "";
+		return *orderedCount.front().second.begin();
 	}
-
-private:
-	unordered_map<string, list<pair<int, unordered_set<string>>>::iterator> dataMap;
-	list<pair<int, unordered_set<string>>> orderList;
 };
-
 /**
  * Your AllOne object will be instantiated and called as such:
  * AllOne obj = new AllOne();

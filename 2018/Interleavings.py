@@ -5,7 +5,7 @@ def interleave(a, b):
     for i in range(1, len(b) + 1):
         result.append([b[0:i]])    
     for i in range(len(a)):
-            result[0] = [a[0:i + 1]]
+        result[0] = [a[0:i + 1]]
     for j in range(1, len(b) + 1):
         print( result[j], result[j-1])
         first = []

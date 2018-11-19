@@ -157,4 +157,4 @@ private:
     }
 };
 
-// https://leetcode.com/discuss/77851/java-15ms-easiest-solution-100-00%25
+// https://leetcode.com/discuss/77851/java-15ms-easiest-solution-100-00%25https://ccfbits.org/details.php?id=148003&hit=1

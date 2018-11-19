@@ -31,24 +31,26 @@
 class Solution {
 public:
     int shortestSubarray(vector<int>& A, int K) {
-        int N = A.size(), res = N + 1;
-        deque<pair<int, int>> d; // index, sum at index;
-        int curSum = 0;
-        for (int i = 0; i < N + 1; i++) {
-            while (d.size() > 0 && curSum - d.front().second >= K)
-                res = min(res, i - d.front().first), d.pop_front();
-            while (d.size() > 0 && curSum <= d.back().second) d.pop_back();
-            d.push_back(make_pair(i, curSum));
-            curSum += i < N ? A[i] : 0;
+        int res = A.size() + 1, sum = 0;
+        deque<pair<int, int>> dq; // index, sum
+        dq.emplace_back(-1, 0);
+        for (int i = 0; i < A.size(); ++i) {
+            sum += A[i];
+            while (dq.size() && sum - dq.front().second >= K) {
+                res = min(res, i - dq.front().first);
+                dq.pop_front();
+            }
+            while (dq.size() && sum <= dq.back().second) dq.pop_back();
+            dq.emplace_back(i, sum);
         }
-        return res <= N ? res : -1; 
+        return res > A.size() ? -1 : res;
     }
 };
 
 class Solution {
 public:
     int shortestSubarray(vector<int>& A, int K) {
-               int N = A.size(), res = N + 1;
+        int N = A.size(), res = N + 1;
         vector<int> B(N + 1, 0);
         for (int i = 0; i < N; i++) B[i + 1] = B[i] + A[i];
         deque<int> d;
