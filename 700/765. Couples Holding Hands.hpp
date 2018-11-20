@@ -20,7 +20,9 @@
 // len(row) is even and in the range of [4, 60].
 // row is guaranteed to be a permutation of 0...len(row)-1.
 
-Class Solution {
+// https://leetcode.com/problems/couples-holding-hands/discuss/113362/JavaC++-O(N)-solution-using-cyclic-swapping
+
+class Solution {
 public:
     int minSwapsCouples(vector<int>& row) {
         unordered_map<int, int> m;

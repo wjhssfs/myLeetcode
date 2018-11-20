@@ -21,16 +21,20 @@
 // Note:
 // target will be a non-zero integer in the range [-10^9, 10^9].
 
+// https://leetcode.com/problems/reach-a-number/discuss/112968/Short-JAVA-Solution-with-Explanation
 class Solution {
-public:
-    int reachNumber(int target) {
-        target = abs(target);
-        int n = sqrt(target * 2) - 1, sum = n * (n + 1) / 2;
+    public int reachNumber(int target) {
+        target = Math.abs(target);
+        int step = 0;
+        int sum = 0;
         while (sum < target) {
-            sum += ++n;
+            step++;
+            sum += step;
         }
-        if (sum == target) return n;
-        if ((sum - target) % 2 == 0) return n; // change one number to negative
-        return n + 1 + n % 2; // add 1 + n % 2 number which makes the diff to be even, then change one number to negative.
+        while ((sum - target) % 2 != 0) {
+            step++;
+            sum += step;
+        }
+        return step;
     }
-};
+}

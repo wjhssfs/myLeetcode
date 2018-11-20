@@ -25,6 +25,26 @@
 
 class Solution {
     void dfs(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        int oldColor = image[sr][sc];
+        image[sr][sc] = newColor;
+        int d[] = {1, 0, -1, 0, 1};
+        for (int i = 0; i < 4; ++i) {
+            auto nsr = sr + d[i], nsc = sc + d[i + 1];
+            if (nsr < 0 || nsc < 0 || nsr == image.size() || nsc == image[0].size() ||
+                image[nsr][nsc] != oldColor) continue;
+            dfs(image, sr + d[i], sc + d[i + 1], newColor);
+        }
+    }
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        if (image[sr][sc] == newColor) return image;
+        dfs(image, sr, sc, newColor);
+        return image;
+    }
+};
+
+class Solution {
+    void dfs(vector<vector<int>>& image, int sr, int sc, int newColor) {
         int oldColor = image[sr][sc]++;
         int d[] = {1, 0, -1, 0, 1};
         for (int i = 0; i < 4; ++i) {

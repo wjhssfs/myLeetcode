@@ -22,6 +22,7 @@
 // The length of board[i] will be in the range [3, 50].
 // Each board[i][j] will initially start as an integer in the range [1, 2000].
 
+// https://leetcode.com/problems/candy-crush/discuss/109221/AC-JAVA-Solution-easy-to-understand
 class Solution {
     bool crush(vector<vector<int>>& board) {
         vector<vector<int>> nLeft(board.size(), vector<int>(board[0].size(), 1));

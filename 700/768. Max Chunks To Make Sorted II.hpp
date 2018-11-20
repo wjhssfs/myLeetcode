@@ -24,6 +24,7 @@
 // arr will have length in range [1, 2000].
 // arr[i] will be an integer in range [0, 10**8].
 
+// https://leetcode.com/problems/max-chunks-to-make-sorted-ii/discuss/113462/Java-solution-left-max-and-right-min.
 class Solution {
 public:
     int maxChunksToSorted(vector<int>& arr) {

@@ -20,11 +20,29 @@
 // 1 <= len(bits) <= 1000.
 // bits[i] is always 0 or 1.
 
+// https://leetcode.com/problems/1-bit-and-2-bit-characters/discuss/108967/JAVA-check-only-the-end-of-array
+// In problem statement, the given string will always end with a zero.
+// so just check if # of 1s before 0 is odd/even
 class Solution {
 public:
     bool isOneBitCharacter(vector<int>& bits) {
         int count1 = 0;
         for (int i = bits.size() - 2; i >= 0 && bits[i] != 0; --i) count1++;
         return count1 % 2 == 0;
+    }
+};
+
+class Solution {
+public:
+    bool isOneBitCharacter(vector<int>& bits) {
+        int i = 0;
+        bool isSingle = false;
+        while (i < bits.size()) {
+            if (bits[i] == 0) {
+                isSingle = true;
+                ++i;
+            } else { i+= 2; isSingle = false;}
+        }
+        return isSingle;
     }
 };

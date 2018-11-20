@@ -27,7 +27,6 @@ public:
             while (j < end.size() && end[j] == 'X') ++j;
             if (i == start.size() || j == end.size()) break;
             if (start[i] != end[j]) return false;
-            cout << i << " " << j << " " << start[i] << endl;
             if (start[i] == 'L' && i < j) return false;
             if (start[i] == 'R' && i > j) return false;
             ++i; ++j;

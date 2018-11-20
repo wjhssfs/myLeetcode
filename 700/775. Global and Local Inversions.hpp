@@ -23,12 +23,25 @@
 // A will have length in range [1, 5000].
 // The time limit for this problem has been reduced.
 
+// https://leetcode.com/problems/global-and-local-inversions/discuss/113656/My-3-lines-C++-Solution
 class Solution {
 public:
     bool isIdealPermutation(vector<int>& A) {
-        auto B = A;
-        for (int i = 1; i < B.size(); ++i) B[i] = max(B[i], B[i-1]);
-        for (int i = 2; i < A.size(); ++i) if (A[i] < B[i - 2]) return false;
+	for (int i = 0; i < A.size(); ++i) {
+            if (abs(A[i] - i) > 1) return false;
+        }
+	return true;
+    }
+};
+
+class Solution {
+public:
+    bool isIdealPermutation(vector<int>& A) {
+        int cmax = 0, n = A.size();
+        for (int i = 0; i < n - 2; ++i) {
+            cmax = max(cmax, A[i]);
+            if (cmax > A[i + 2]) return false;
+        }
         return true;
     }
 };

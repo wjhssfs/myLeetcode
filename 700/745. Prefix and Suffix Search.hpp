@@ -46,7 +46,10 @@ public:
  */
 
 // https://leetcode.com/problems/prefix-and-suffix-search/discuss/144432/Java-Beat-95-just-small-modifications-in-implementing-Trie.
-
+// Take "apple" as an example, we will insert add "apple{apple", "pple{apple", "ple{apple", "le{apple", "e{apple", "{apple" into the Trie Tree.
+// If the query is: prefix = "app", suffix = "le", we can find it by querying our trie for
+// "le { app".
+// We use '{' because in ASCii Table, '{' is next to 'z', so we just need to create new TrieNode[27] instead of 26. Also, compared with tradition Trie, we add the attribute weight in class TrieNode.
 
 // https://discuss.leetcode.com/topic/113547/three-ways-to-solve-this-problem-in-java
 // Before solving this problem, we need to know which operation is called the most.

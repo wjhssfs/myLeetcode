@@ -49,3 +49,6 @@ public:
         return result;
     }
 };
+
+// PRIME NUMBERS
+// https://leetcode.com/problems/shortest-completing-word/discuss/158110/Java-6ms-beats-100-PRIME-NUMBERS

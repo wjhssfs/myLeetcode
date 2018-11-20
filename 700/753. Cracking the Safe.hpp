@@ -85,6 +85,7 @@ public:
 // node with password 002 can go to 020 021 022 and can be reached by 100, 000, 200. The number of
 // edges is k^(n-1) * k, that is k^n. That is why the dimension of visited is k^(n-1) by k. After we
 // traverse all the edges in the graph, the sequence is constructed.
+// Hierholzer's Algorithm to construct the Eulerian circuit.
 class Solution {
     int n, k, v;
     vector<vector<bool> > visited;

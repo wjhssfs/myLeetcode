@@ -22,6 +22,14 @@
 
 // sx, sy, tx, ty will all be integers in the range [1, 10^9].
 
+// https://leetcode.com/problems/reaching-points/discuss/114856/Easy-and-Concise-2-line-SolutionPythonC++Java
+bool reachingPoints(int sx, int sy, int tx, int ty) {
+        while (sx<tx and sy<ty) if (tx<ty) ty%=tx; else tx%=ty;
+        // check if we reduce target points to (x, y+kx) or (x+ky, y)
+        return sx==tx and (ty-sy)%sx==0 or sy==ty and (tx-sx)%sy==0;
+    }
+
+// https://leetcode.com/problems/reaching-points/discuss/114726/C++-Simple-iterative.
 class Solution {
 public:
     bool reachingPoints(int sx, int sy, int tx, int ty) {
@@ -38,3 +46,17 @@ public:
         return false;
     }
 };
+
+    bool reachingPoints(int sx, int sy, int tx, int ty) {
+        while(tx >= sx && ty >= sy){
+            if(tx > ty){
+                if(sy == ty) return (tx - sx) % ty == 0;
+                tx %= ty;
+            }else{
+                if(sx == tx) return (ty - sy) % tx == 0;
+                ty %= tx;
+            }
+        }   
+        
+        return false;
+    }

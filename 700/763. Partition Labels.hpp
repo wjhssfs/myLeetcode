@@ -16,12 +16,9 @@
 class Solution {
 public:
     vector<int> partitionLabels(string S){
-        vector<int> first('z' + 1, -1), last('z' + 1, -1);
+        vector<int> last('z' + 1, -1);
         vector<int> res;
-        for (int i = 0; i < S.size(); ++i) {
-            if (first[S[i]] == -1) first[S[i]] = i;
-            last[S[i]] = i;
-        }
+        for (int i = 0; i < S.size(); ++i) last[S[i]] = i;
         int bound = last[S[0]], partStart = 0;
         for (int i = 1; i < S.size(); ++i) {
             if (i > bound) {
