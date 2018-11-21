@@ -87,3 +87,6 @@ class Solution {
         return low;
     }
 }
+
+// https://leetcode.com/problems/k-th-smallest-prime-fraction/discuss/115819/Summary-of-solutions-for-problems-%22reducible%22-to-LeetCode-378
+In this case there is only one array nums as input, so both a and b will refer to nums. After sorting nums in ascending order, we have matrix[i][j] = nums[i] - nums[n - 1 - j], where n = nums.length. Note that the mapping for column index is chosen to be "negative" in order to make sure the columns are sorted in ascending order. Also note that our matrix will contain all pair distances (including negative ones) while the original problem asks for the Kth smallest pair distance out of absolute pair distances (there are n(n-1)/2 such pairs). So we need to shift the rank up to K' = K + n(n+1)/2. The Kth smallest pair distance then will be the K'th smallest element in the matrix.

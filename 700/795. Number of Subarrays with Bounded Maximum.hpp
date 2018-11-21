@@ -15,6 +15,32 @@
 // L, R  and A[i] will be an integer in the range [0, 10^9].
 // The length of A will be in the range of [1, 50000].
 
+//  in every iteration, we add the number of valid subarrays that ends at the current element.
+// For example, for input A = [0, 1, 2, -1], L = 2, R = 3:
+// for 0, no valid subarray ends at 0;
+// for 1, no valid subarray ends at 1;
+// for 2, three valid subarrays end at 2, which are [0, 1, 2], [1, 2], [2];
+// for -1, the number of valid subarrays is the same as 2, which are [0, 1, 2, -1], [1, 2, -1], [2, -1];
+class Solution {
+    public int numSubarrayBoundedMax(int[] A, int L, int R) {
+        int j=0,count=0,res=0;
+        
+        for(int i=0;i<A.length;i++){
+            if(A[i]>=L && A[i]<=R){
+                res+=i-j+1;count=i-j+1;
+            }
+            else if(A[i]<L){
+                res+=count;
+            }
+            else{
+                j=i+1;
+                count=0;
+            }
+        }
+        return res;
+    }
+}
+
 class Solution {
 public:
     int numSubarrayBoundedMax(vector<int>& A, int L, int R) {

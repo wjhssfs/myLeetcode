@@ -29,16 +29,28 @@
 // A will have length at most 20000.
 // A[i] will be in the range [0, A.length].
 
+// https://leetcode.com/problems/smallest-rotation-with-highest-score/discuss/118725/C++JavaPython-Solution-with-Explanation
+    int bestRotation(vector<int>& A) {
+        int N = A.size();
+        int change[N] = {0};
+        // change[i] when making i + 1 rotate, total decrease in scores
+        for (int i = 0; i < N; ++i) change[(i - A[i] + 1 + N) % N] -= 1;
+        // resue change as score for K rotation, score[K] = score[K-1] + change[K]
+        // for + 1 Each time when we rotate, we make index 0 to index N-1, then we get one more point.
+        for (int i = 1; i < N; ++i) change[i] += change[i - 1] + 1;
+        return distance(change, max_element(change, change + N));
+    }
+
 class Solution {
 public:
     int bestRotation(vector<int>& A) {
         map<int, int> m;
         for (int i = 0; i < A.size(); ++i) {
             if (A[i] <= i) {
-                m[i-A[i] + 1]--;
-                m[i + 1]++;
+                m[i-A[i] + 1]--; // after i - A[i] + 1 rotate, score going to dec
+                m[i + 1]++; // rotated to right end
             } else if (A[i] < A.size()) {
-                m[i + 1]++;
+                m[i + 1]++; // rotated to right end
                 m[i + A.size() - A[i] + 1]--;
             }
         }

@@ -20,6 +20,34 @@
 // Each A[i] will be between 1 and 30000.
 // K will be between 1 and A.length * (A.length + 1) / 2.
 
+//https://leetcode.com/problems/k-th-smallest-prime-fraction/discuss/115819/Summary-of-solutions-for-problems-%22reducible%22-to-LeetCode-378
+
+public int kthSmallest(int[][] matrix, int k) {
+    int n = matrix.length;
+    
+    int row = 0;          // we start from the upper-right corner
+    int col = n - 1;      
+    
+    for (int cnt_le = 0, cnt_lt = 0; true; cnt_le = 0, cnt_lt = 0) {
+        for (int i = 0, j = n - 1, p = n - 1; i < n; i++) {
+            while (j >= 0 && matrix[i][j] > matrix[row][col]) j--;  // pointer j for counting cnt_le
+            cnt_le += (j + 1);
+            
+            while (p >= 0 && matrix[i][p] >= matrix[row][col]) p--;   // pointer p for counting cnt_lt
+            cnt_lt += (p + 1);
+        }
+        
+        if (cnt_le < k) {         // candidate solution too small so increase it
+            row++; 
+        } else if (cnt_lt >= k) { // candidate solution too large so decrease it
+            col--;
+        } else {                  // candidate solution equal to the kth smallest element so return
+            return matrix[row][col];
+        }
+    }
+}
+
+
 class Solution {
     const double ep = 0.000000000000001;
     int getCount(vector<int>& A, double v) {
@@ -53,6 +81,7 @@ public:
 };
 
 
+// https://leetcode.com/problems/k-th-smallest-prime-fraction/discuss/115486/Java-AC-O(max(nk)-*-logn)-Short-Easy-PriorityQueue
    public int[] kthSmallestPrimeFraction(int[] a, int k) {
         int n = a.length;
         // 0: numerator idx, 1: denominator idx
@@ -80,3 +109,4 @@ public:
         int[] peek = pq.peek();
         return new int[]{a[peek[0]], a[peek[1]]};
     }
+

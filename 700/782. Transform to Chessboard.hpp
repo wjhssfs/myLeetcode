@@ -37,13 +37,20 @@
 // board[i][j] will be only 0s or 1s.
 
 
+// https://leetcode.com/problems/transform-to-chessboard/discuss/114847/Easy-and-Concise-Solution-with-Explanation-C++JavaPython
 // https://leetcode.com/problems/transform-to-chessboard/discuss/114843/Key-Observation-on-property-of-ChessBoard
+
+// Check if the given board satisfy the validness property defined above.
+// Find minimum row swap to make the first column valid. If not possible, return -1.
+// Find minimum column swap to make the first row valid. If not possible, return -1.
+// Return the sum of step 2 and 3.
 
 class Solution {
 public:
     int movesToChessboard(vector<vector<int>>& b) {
         int N = b.size(), rowSum = 0, colSum = 0, rowSwap = 0, colSwap = 0;
         for (int i = 0; i < N; ++i) for (int j = 0; j < N; ++j)
+            // (NW xor NE) == (SW xor SE)
                 if (b[0][0]^b[i][0]^b[0][j]^b[i][j]) return -1;
         for (int i = 0; i < N; ++i) {
             rowSum += b[0][i];

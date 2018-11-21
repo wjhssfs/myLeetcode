@@ -33,6 +33,8 @@
 // All points have coordinates with absolute value <= 10000.
 // The number of ghosts will not exceed 100.
 
+// https://leetcode.com/problems/escape-the-ghosts/discuss/116678/Why-interception-in-the-middle-is-not-a-good-idea-for-ghosts.
+
 class Solution {
 public:
     bool escapeGhosts(vector<vector<int>>& ghosts, vector<int>& target) {
