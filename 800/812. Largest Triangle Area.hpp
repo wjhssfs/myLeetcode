@@ -16,6 +16,17 @@
 // Answers within 10^-6 of the true value will be accepted as correct.
 
 // https://leetcode.com/problems/largest-triangle-area/discuss/122711/C++JavaPython-Solution-with-Explanation-and-Prove
+// vector product
+    double largestTriangleArea(vector<vector<int>>& p) {
+        double res = 0;
+        for (auto &i : p)
+            for (auto &j : p)
+                for (auto &k : p)
+            res = max(res, 0.5 * abs(i[0] * j[1] + j[0] * k[1] + k[0] * i[1]- j[0] * i[1] - k[0] * j[1] - i[0] * k[1]));
+        return res;
+    }
+
+// https://leetcode.com/problems/largest-triangle-area/discuss/122711/C++JavaPython-Solution-with-Explanation-and-Prove
 class Solution {
     double area(vector<int>& A, vector<int>& B, vector<int>& C) {
         return abs((A[0] * (B[1] - C[1]) + B[0] * (C[1] - A[1]) + C[0] * (A[1] - B[1]))) / 2.0;

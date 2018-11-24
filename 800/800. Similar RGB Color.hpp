@@ -24,7 +24,7 @@ string helper(string str) {
     string dec_to_hex = "0123456789abcdef", res = "";
 
     int dec_num = stoi(str, nullptr, 16);
-    int q = dec_num / 17;
+    int q = dec_num / 17; //  [ 0x00(0) , 0x11(17), 0x22(34),  0x33(51), ........., 0xff(255) ]
     if ((dec_num % 17) > 8) q = q + 1;
     res = res + dec_to_hex[q] + dec_to_hex[q];
     return res;

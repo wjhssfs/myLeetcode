@@ -24,7 +24,7 @@ public:
         // early pruning
         bool isPossible = false;
         for (int i = 1; i <= m && !isPossible; ++i) 
-            if (totalSum*i%n == 0) isPossible = true;
+            if (totalSum*i%n == 0 /*Asum = totalSum/n*i which should be an int*/) isPossible = true;
         if (!isPossible) return false;
         // DP like knapsack
         vector<unordered_set<int>> sums(m+1);

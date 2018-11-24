@@ -1,5 +1,5 @@
 // 801. Minimum Swaps To Make Sequences Increasing
-// e have two integer sequences A and B of the same non-zero length.
+// We have two integer sequences A and B of the same non-zero length.
 
 // We are allowed to swap elements A[i] and B[i].  Note that both elements are in the same index position in their respective sequences.
 

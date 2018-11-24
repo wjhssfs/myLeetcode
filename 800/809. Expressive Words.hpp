@@ -20,6 +20,16 @@
 // 0 <= len(words[i]) <= 100.
 // S and all words in words consist only of lowercase letters
 
+    bool check(string S, string W) {
+        int n = S.size(), m = W.size(), j = 0;
+        for (int i = 0; i < n; i++)
+            if (j < m && S[i] == W[j]) j++;
+            else if (i > 1 && S[i - 2] == S[i - 1] && S[i - 1] == S[i]);
+            else if (0 < i && i < n - 1 && S[i - 1] == S[i] && S[i] == S[i + 1]);
+            else return false;
+        return j == m;
+    }
+    
 class Solution {
     bool isExtensionOf(string a, string b) {
         size_t i = 0, j = 0;
