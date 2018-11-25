@@ -37,6 +37,24 @@
 
 // return res, done.
 
+// https://leetcode.com/problems/sum-of-distances-in-tree/discuss/130583/C++JavaPython-Pre-order-and-Post-order-DFS-O(N)
+
+// Let's solve it with node 0 as root.
+
+// tree[i] contains all connected nodes to i.
+// count[i] counts all nodes in the subtree i.
+// res[i] counts sum of distance in subtree i.
+
+// Post order dfs traversal, update count and res:
+// count[root] = sum(count[i]) + 1
+// res[root] = sum(res[i]) + sum(count[i])
+
+// Pre order dfs traversal, update res:
+// When we move our root from parent to its child i, count[i] points get 1 closer to root, n - count[i] nodes get 1 futhur to root.
+// res[i] = res[root] - count[i] + N - count[i]
+
+// return res, done.
+
 class Solution {
 public:
     vector<int> sumOfDistancesInTree(int N, vector<vector<int>>& edges) {

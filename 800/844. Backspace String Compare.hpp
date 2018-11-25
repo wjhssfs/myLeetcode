@@ -31,30 +31,6 @@
 // Can you solve it in O(N) time and O(1) space?
 
 class Solution {
-public:
-    bool backspaceCompare(string S, string T) {
-        int s = 0, t = 0;
-        for (int i = 0; i < S.size(); ++i) {
-            if (S[i] == '#') {
-                --s;
-                s = max(0, s);
-            } else {
-                S[s++] = S[i];
-            }
-        }
-        for (int i = 0; i < T.size(); ++i) {
-            if (T[i] == '#') {
-                --t;
-                t = max(0, t);
-            } else {
-                T[t++] = T[i];
-            }
-        }
-        return S.substr(0, s) == T.substr(0, t);
-    }
-};
-
-class Solution {
     char getNext(const string &s, int &i) {
         int b = 1;
         while (i >= 0 && b) (s[i--] == '#') ? ++b : --b;

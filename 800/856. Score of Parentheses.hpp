@@ -33,36 +33,16 @@
 class Solution {
 public:
     int scoreOfParentheses(string S) {
-        stack<char>op;
-        stack<int>num;
-        for (int i = 0; i < S.size(); ++i) {
-            if (S[i] == '(') op.push('(');
-            else if (S[i] == ')') {
-                if (op.top() == '(') {
-                    op.pop();
-                    if (op.size() && op.top() == 'd') {
-                        num.top() += 1;
-                    } 
-                    else {
-                        num.push(1);
-                        op.push('d');
-                    }
-                } else {
-                    int n = num.top() * 2;
-                    num.pop();
-                    op.pop();
-                    op.pop();
-                    
-                    if (op.size() && op.top() == 'd') {
-                        num.top() += n;
-                    }else {
-                        op.push('d');
-                        num.push(n);
-                    }
-                }
+        stack<int> s;
+        s.push(0);
+        for (auto c : S) {
+            if (c == '(') s.push(0);
+            else {
+                auto cur = s.top();s.pop();
+                s.top() += max(cur * 2, 1);
             }
         }
-        return num.top();
+        return s.top();
     }
 };
 

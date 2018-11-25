@@ -19,20 +19,6 @@
 // Explanation: 15 = 15 = 8 + 7 = 4 + 5 + 6 = 1 + 2 + 3 + 4 + 5
 // Note: 1 <= N <= 10 ^ 9.
 
-class Solution {
-public:
-    int consecutiveNumbersSum(int N) {
-        int n = 1;
-        int k;
-        int r = 0;
-        while ((k = 2 * N + n - n * n) > 0) {
-            if (k % (2 * n) == 0) r++;
-            ++n;
-        }
-        return r;
-    }
-};
-
 // https://leetcode.com/problems/consecutive-numbers-sum/discuss/129015/5-lines-C++-solution-with-detailed-mathematical-explanation.
 // x + (x+1) + (x+2)+...+ k terms = N
 // kx + k*(k-1)/2 = N implies

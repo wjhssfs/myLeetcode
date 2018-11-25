@@ -41,11 +41,13 @@ public:
         int result = 0;
         sort(ages.begin(), ages.end());
         for (int i = 0; i < ages.size(); ++i) {
+            // # of same age other people
             int rightCount = upper_bound(ages.begin(), ages.end(), ages[i]) - ages.begin() - i - 1;
-            int leftMin = ages[i] * 0.5 + 7 + 1;
-            if (leftMin <= ages[i]) {
+            int leftMin = ages[i] * 0.5 + 7;
+            if (leftMin < ages[i]) {
                 result += rightCount;
-                result += i - (lower_bound(ages.begin(), ages.end(), leftMin) - ages.begin());
+                // # of too yong people.
+                result += i - (upper_bound(ages.begin(), ages.end(), leftMin) - ages.begin());
             }
         }
         return result;

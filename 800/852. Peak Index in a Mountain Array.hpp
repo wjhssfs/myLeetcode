@@ -19,14 +19,6 @@
 // 0 <= A[i] <= 10^6
 // A is a mountain, as defined above.
 
-class Solution {
-public:
-    int peakIndexInMountainArray(vector<int>& A) {
-        for (int i = 0; i < A.size(); ++i) if (A[i] > A[i + 1]) return i;
-        return -1;
-    }
-};
-
 int peakIndexInMountainArray(vector<int>& A) {
     int l = 0, r = A.size() - 1, mid;
     while (l < r) {

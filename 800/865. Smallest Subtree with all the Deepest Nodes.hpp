@@ -39,34 +39,6 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-// top down
-class Solution {
-    TreeNode* res;
-    int maxDepth;
-    int dfs(TreeNode* root, int depth) {
-        if (!root) return -1;
-        int leftDepth = dfs(root->left, depth + 1);
-        int rightDepth = dfs(root->right, depth + 1);
-        if (leftDepth != -1 && leftDepth == rightDepth && leftDepth == maxDepth) {
-            res = root;
-            return maxDepth;
-        }
-        int ret = depth;
-        ret = max(ret, leftDepth);
-        ret = max(ret, rightDepth);
-        if (ret > maxDepth) res = root;
-        maxDepth = max(ret, maxDepth);
-        return ret;
-    }
-    
-public:
-    TreeNode* subtreeWithAllDeepest(TreeNode* root) {
-        res = nullptr;
-        maxDepth = -1;
-        dfs(root, 0);
-        return res;
-    }
-};
 
 // bottom to up
     TreeNode* subtreeWithAllDeepest(TreeNode* root) {

@@ -21,6 +21,23 @@
 // 1 <= worker.length <= 10000
 // difficulty[i], profit[i], worker[i]  are in range [1, 10^5]
 
+// 2 pointers idea, for each worker, find his maximum profit he can make under his ability.
+// Because we have sorted jobs and worker, we will go through two lists only once.
+// It will be only O(M+N).
+
+    int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) {
+        vector<pair<int,int>> jobs;
+        int N = profit.size(), res = 0, i = 0, maxp = 0;
+        for (int j = 0; j < N; ++j) jobs.push_back(make_pair(difficulty[j], profit[j]));
+        sort(jobs.begin(), jobs.end()); sort(worker.begin(), worker.end());
+        for (int & ability: worker) {
+            // worker with higher ability can always get maxp that achivable by workers with lower ability
+            while (i < N && ability >= jobs[i].first) maxp = max(jobs[i++].second, maxp);
+            res += maxp;
+        }
+        return res;
+    }
+
 class Solution {
 public:
     int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) {
@@ -44,19 +61,3 @@ public:
     }
 };
 
-// 2 pointers idea, for each worker, find his maximum profit he can make under his ability.
-// Because we have sorted jobs and worker, we will go through two lists only once.
-// It will be only O(M+N).
-
-    int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) {
-        vector<pair<int,int>> jobs;
-        int N = profit.size(), res = 0, i = 0, maxp = 0;
-        for (int j = 0; j < N; ++j) jobs.push_back(make_pair(difficulty[j], profit[j]));
-        sort(jobs.begin(), jobs.end()); sort(worker.begin(), worker.end());
-        for (int & ability: worker) {
-            // worker with higher ability can always get maxp that achivable by workers with lower ability
-            while (i < N && ability >= jobs[i].first) maxp = max(jobs[i++].second, maxp);
-            res += maxp;
-        }
-        return res;
-    }
