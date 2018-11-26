@@ -29,7 +29,10 @@
 // 1 <= piles[i] <= 500
 // sum(piles) is odd.
 
-// Just return true
+    bool stoneGame(vector<int>& p) {
+        return true;
+    }
+    
 // Alex is first to pick pile.
 // piles.length is even, and this lead to an interesting fact:
 // Alex can always pick odd piles or always pick even piles!

@@ -52,6 +52,21 @@
 class Solution {
 public:
     string decodeAtIndex(string S, int K) {
+        size_t cur = 0, i = S.size() - 1;
+        for (auto c : S) isdigit(c) ? cur *= (c - '0') : ++cur;
+        for(; K != cur || isdigit(S[i]); --i) {
+            if (isdigit(S[i])) {
+                cur /= S[i] - '0';
+                K = (K - 1) % cur + 1;
+            } else --cur;
+        }
+        return string(1, S[i]);
+    }
+};
+
+class Solution {
+public:
+    string decodeAtIndex(string S, int K) {
         vector<uint64_t> ind;
         for (auto c : S) {
             if (isdigit(c)) ind.push_back(ind.back() * (c - '0'));

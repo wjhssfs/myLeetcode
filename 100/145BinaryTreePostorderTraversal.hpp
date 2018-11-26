@@ -19,6 +19,7 @@
  * };
  */
 
+// https://leetcode.com/discuss/36711/solutions-iterative-recursive-traversal-different-solutions
 class Solution {
 public:
     vector<int> postorderTraversal(TreeNode *root) {
@@ -218,30 +219,4 @@ public List<Integer> postorderTraversal(TreeNode root) {
         }
     }
     return result;
-}
-
-
-// https://leetcode.com/discuss/36711/solutions-iterative-recursive-traversal-different-solutions
-vector<int> postorderTraversal(TreeNode* root) {
-    vector<int> nodes;
-    stack<TreeNode*> toVisit;
-    TreeNode* curNode = root;
-    TreeNode* lastNode = NULL;
-    while (curNode || !toVisit.empty()) {
-        if (curNode) {
-            toVisit.push(curNode);
-            curNode = curNode -> left;
-        }
-        else {
-            TreeNode* topNode = toVisit.top();
-            if (topNode -> right && lastNode != topNode -> right)
-                curNode = topNode -> right;
-            else {
-                nodes.push_back(topNode -> val);
-                lastNode = topNode;
-                toVisit.pop();
-            }
-        }
-    }
-    return nodes;
 }

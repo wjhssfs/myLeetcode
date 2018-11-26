@@ -61,30 +61,3 @@ public:
         }
         return res > 2 ? res : 0;
     }
-
-class Solution {
-public:
-    int lenLongestFibSubseq(vector<int>& A) {
-        vector<vector<int>> d;
-        unordered_map<int, unordered_set<int>> m;
-        int maxL = 0; 
-        for (int i = 1; i < A.size(); ++i) {
-            //cout << A[i] << endl;
-            auto s = m[A[i]];
-            m[A[i]].clear();
-            for (int n : s) {
-                m[A[i] + d[n][1]].insert(n);
-                d[n][1] = A[i];
-                maxL = max(maxL, ++d[n][0]);
-                //cout << "Add seq:" << n << " len:" << d[n][0] << endl;
-            }
-            for (int j = 0; j < i; ++j) {
-                d.push_back({2, A[i]});
-                int exp = A[i] + A[j];
-                m[exp].insert(d.size() - 1);
-                //cout << "Seq:" << d.size() << " Exp:" << exp << " i:" << i << " j:" << j << endl;
-            }
-        }
-        return maxL;
-    }
-};
