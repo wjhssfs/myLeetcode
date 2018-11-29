@@ -29,6 +29,54 @@ public:
     }
 };
 */
+
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* left;
+    Node* right;
+
+    Node() {}
+
+    Node(int _val, Node* _left, Node* _right) {
+        val = _val;
+        left = _left;
+        right = _right;
+    }
+};
+*/
+class Solution {
+    
+public:
+    Node* treeToDoublyList(Node* root) {
+        if (!root) return root;
+        auto leftHead = treeToDoublyList(root->left), rightHead = treeToDoublyList(root->right);
+        Node* res = nullptr;
+        if (leftHead) {
+            res = leftHead;
+            auto tail = leftHead->left;
+            tail->right = root;
+            root->left = tail;
+            root->right = leftHead;
+            leftHead->left = root;
+        } else {
+            res = root;
+            root->left = root;
+            root->right = root;
+        }
+        if (rightHead) {
+            auto tail = rightHead->left;
+            res->left->right = rightHead;
+            rightHead->left = res->left;
+            tail->right = res;
+            res->left = tail;
+        }
+        return res;
+    }
+};
+
 class Solution {
     Node* last = nullptr;
     Node* head = nullptr;
