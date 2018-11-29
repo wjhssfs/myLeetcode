@@ -96,6 +96,9 @@ public:
     }
 };
 
+
+Dijkstra + Heap is O(E log E)
+Dijkstra + Fibonacci heap is O(N log N + E)
 class Solution {
 public:
     int reachableNodes(vector<vector<int>>& edges, int M, int N) {
