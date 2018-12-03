@@ -21,7 +21,7 @@ public:
         vector<int> ksum;
         ksum.push_back(accumulate(nums.begin(), nums.begin() + k, 0));
         for (int i = k; i < nums.size(); ++i) ksum.push_back(ksum.back() + nums[i] - nums[i - k]);
-        vector<int> dp = ksum; // dp[i] best ksum ending at i
+        vector<int> dp = ksum; // dp[i] best ksum starting at i
         vector<vector<int>> pre(2, vector<int>(ksum.size()));
         for (int i = 1; i < 3; ++i) {
             vector<int> ndp(ksum.size());

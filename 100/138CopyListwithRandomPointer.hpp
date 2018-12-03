@@ -38,21 +38,17 @@ public:
         return dummy.next;
     }
     
-    RandomListNode *copyRandomList_2(RandomListNode *head) {
-        if (!head) return NULL;
-        unordered_map<RandomListNode *, RandomListNode *> map;
-        RandomListNode dummy(0), *curNew = &dummy, *cur = head;
-        while (cur) 
-        {
-            if (map.find(cur) == map.end())
-                map[cur] = new RandomListNode(cur->label);
-            if (cur->random && map.find(cur->random) == map.end())
-                map[cur->random] = new RandomListNode(cur->random->label);
-            curNew->next = map[cur];
-            curNew = curNew->next;
-            curNew->random = map[cur->random];
+    RandomListNode *copyRandomList(RandomListNode *head) {
+        unordered_map<RandomListNode *, RandomListNode *> mapping;
+        auto cur = head;
+        while (cur) {
+            if (mapping.count(cur) == 0) mapping[cur] = new RandomListNode(cur->label);
+            if (cur->next && mapping.count(cur->next) == 0) mapping[cur->next] = new RandomListNode(cur->next->label);
+            if (cur->random && mapping.count(cur->random) == 0) mapping[cur->random] = new RandomListNode(cur->random->label);
+            mapping[cur]->random = mapping[cur->random];
+            mapping[cur]->next = mapping[cur->next];
             cur = cur->next;
         }
-        return dummy.next;
+        return mapping[head];
     }
 };

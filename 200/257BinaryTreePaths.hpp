@@ -62,3 +62,20 @@ public:
         return res;
     }
 };
+
+// https://leetcode.com/problems/binary-tree-paths/discuss/68272/Python-solutions-(dfs+stack-bfs+queue-dfs-recursively).
+// return shortest path first
+# bfs + queue
+def binaryTreePaths2(self, root):
+    if not root:
+        return []
+    res, queue = [], collections.deque([(root, "")])
+    while queue:
+        node, ls = queue.popleft()
+        if not node.left and not node.right:
+            res.append(ls+str(node.val))
+        if node.left:
+            queue.append((node.left, ls+str(node.val)+"->"))
+        if node.right:
+            queue.append((node.right, ls+str(node.val)+"->"))
+    return res

@@ -25,39 +25,6 @@
  *     const vector<NestedInteger> &getList() const;
  * };
  */
-class NestedIterator {
-public:
-    NestedIterator(vector<NestedInteger> &nestedList) {
-        auto itCur = nestedList.begin();
-        auto itEnd = nestedList.end();
-        itStack.push(make_pair(itCur, itEnd));
-    }
-
-    int next() {
-        auto &curIterPair = itStack.top();
-        return (*curIterPair.first++).getInteger();
-    }
-
-    bool hasNext() {
-        while (!itStack.empty()) {
-            while (itStack.top().first != itStack.top().second) {
-                if ((*itStack.top().first).isInteger()) {
-                    return true;
-                }
-                else {
-                    auto itCur = (*itStack.top().first).getList().begin();
-                    auto itEnd = (*itStack.top().first).getList().end();
-                    ++itStack.top().first;
-                    itStack.push(make_pair(itCur, itEnd));
-                }
-            }
-            itStack.pop();
-        }
-        return false;
-    }
-private:
-    stack<pair<vector<NestedInteger>::const_iterator, vector<NestedInteger>::const_iterator>> itStack;
-};
 
 /**
  * Your NestedIterator object will be instantiated and called as such:

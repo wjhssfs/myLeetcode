@@ -1,0 +1,42 @@
+FB:
+2 read
+3 try
+4 bug
+5 high freq
+6 not familiar
+
+4 76 Minimum Window Substring  missed updating res when res.empty()
+4 452 Minimum Number of Arrows to Burst Balloons    missed INT_MIN
+3 173+145 Binary Search Tree Iterator  (go right then add all left decendants. f: postOrder  (cur,last pop, pre)) 
+3 446 Arithmetic Slices II - Subsequence
+3 https://www.geeksforgeeks.org/detect-cycle-in-a-graph/
+3 426. Convert Binary Search Tree to Sorted Doubly Linked List
+4 437 Path Sum III : remove cur sum from hash
+6 https://www.geeksforgeeks.org/longest-arithmetic-progression-dp-35/
+3 683. K Empty Slots
+5 689. Maximum Sum of 3 Non-Overlapping Subarrays 1
+
+4 523. Continuous Subarray Sum      sum % k    k = 0
+4 3Sum forgot to avoid duplicate for first element.
+4 binary search   mid = left + (right - left) / 2    (overflow bug)
+2 639. Decode Ways II
+4 10. Regular Expression Matching  compaired p[j-1] instead p[j - 2]
+2 227. Basic Calculator II
+6 658. Find K Closest Elements  the first index i so that arr[i] is better than arr[i+k]
+2 825. Friends Of Appropriate Ages  O(n) use counting
+2 480 Sliding Window Median  /adjusting median iterator
+		// insert first
+		if (nums[i] < *mid) mid--;
+        // Erase nums[i-k] later after this line.
+        if (nums[i-k] <= *mid) mid++;
+
+4 430. Flatten a Multilevel Doubly Linked List     child pointer null, next->prev deref null next
+3 548 Split Array with Equal Sum   hash, fix j, then i, then k
+3 491. Increasing Subsequences how to avoid duplicate/iterative, fst, rep
+2 230 Kth Smallest Element in a BST  keep sub tree element count.
+3 105 Construct Binary Tree from Preorder and Inorder Traversal
+3 207 Course Schedule   dfs cycle detection
+----------------------------------------
+https://www.hackerrank.com/challenges/prime-xor
+
+cur 248

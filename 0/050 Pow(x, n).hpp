@@ -18,18 +18,15 @@ public:
 class Solution {
 public:
     double myPow(double x, int n) {
-        double p = 1;
         bool negN = n < 0;
-        long long lln = n;
-        lln = abs(lln);
-        while (lln) {
-            if (lln & 1) {
-                p *= x;
-            }
-            lln >>= 1;
+        unsigned un = abs(n);
+        double res = 1.0;
+        while (un) {
+            if (un & 1) res *= x;
+            un >>= 1;
             x *= x;
         }
-        if (negN) p = 1/p;
-        return p;
+        if (negN) res = 1/ res;
+        return res;
     }
 };

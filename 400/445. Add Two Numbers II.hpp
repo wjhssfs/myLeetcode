@@ -42,31 +42,38 @@ public:
     }
 };
 
-ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        int n1 = 0, n2 = 0, carry = 0;
-        ListNode *curr1 = l1, *curr2 = l2, *res = NULL;
-        while( curr1 ){ curr1=curr1->next; n1++; }
-        while( curr2 ){ curr2=curr2->next; n2++; } 
-        curr1 = l1; curr2 = l2;
-        while( n1 > 0 && n2 > 0){
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        int szl1 = 0, szl2 = 0;
+        for (auto t = l1; t; t = t->next) szl1++;
+        for (auto t = l2; t; t = t->next) szl2++;
+        ListNode *cur = nullptr;
+        while (szl1 || szl2) {
             int sum = 0;
-            if( n1 >= n2 ){ sum += curr1->val; curr1=curr1->next; n1--;}
-            if( n2 > n1 ){ sum += curr2->val; curr2=curr2->next; n2--;}
-            res = addToFront( sum, res );
+            if (szl1 >= szl2) {sum += l1->val; l1 = l1->next; --szl1;}
+            if (szl2 > szl1) {sum += l2->val; l2 = l2->next;--szl2;}
+            auto t = new ListNode(sum);
+            t->next = cur;
+            cur = t;
         }
-        curr1 = res; res = NULL;
-        while( curr1 ){
-            curr1->val += carry; carry = curr1->val/10;
-            res = addToFront( curr1->val%10, res );
-            curr2 = curr1; 
-            curr1 = curr1->next;
-            delete curr2;
+        ListNode *head = nullptr;
+        int carry = 0;
+        while (cur) {
+            cur->val += carry;
+            carry = cur->val / 10;
+            cur->val = cur->val % 10;
+            auto t = cur->next;
+            cur->next = head;
+            head = cur;
+            cur = t;
         }
-        if( carry ) res = addToFront( 1, res );
-        return res;
+        if (carry) {
+            auto t = new ListNode(carry);
+            t->next = head;
+            head = t;
+        }
+        return head;
     }
-    ListNode* addToFront( int val, ListNode* head ){
-        ListNode* temp = new ListNode(val);
-        temp->next = head;
-        return temp;
-    }
+};
+206 Reverse Linked List 

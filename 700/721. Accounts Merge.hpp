@@ -54,3 +54,39 @@ private:
         return p[s] == s ? s : find(p[s], p);
     }
 };
+
+// DFS
+class Solution {
+    set<string> dfs(vector<vector<string>>& accounts,
+                    int cur,
+                    vector<bool>& merged,
+                    unordered_map<string, unordered_set<int>>& emailIndices) {
+        merged[cur] = true;
+        set<string> res;
+        for (int i = 1; i < accounts[cur].size(); ++i) {
+            res.insert(accounts[cur][i]);
+            for (auto next : emailIndices[accounts[cur][i]]) {
+                if (merged[next]) continue;
+                auto subRes = dfs(accounts, next, merged, emailIndices);
+                res.insert(begin(subRes), end(subRes));
+            }
+        }
+        return res;
+    }
+public:
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        if (accounts.empty()) return {};
+        vector<bool> merged(accounts.size());
+        unordered_map<string, unordered_set<int>> emailIndices;
+        for (int i = 0; i < accounts.size(); ++i) for (int j = 1; j < accounts[i].size(); ++j) emailIndices[accounts[i][j]].insert(i);
+        vector<vector<string>> res;
+        for (int i = 0; i < accounts.size(); ++i) {
+            if (merged[i]) continue;
+            vector<string> account {accounts[i][0]};
+            auto subRes = dfs(accounts, i, merged, emailIndices);
+            for (auto&& s : subRes) account.push_back(s);
+            res.push_back(account);
+        }
+        return res;
+    }
+};

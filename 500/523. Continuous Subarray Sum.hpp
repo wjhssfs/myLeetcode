@@ -14,20 +14,19 @@
 // The length of the array won't exceed 10,000.
 // You may assume the sum of all the numbers is in the range of a signed 32-bit integer.
 
+
 class Solution {
 public:
     bool checkSubarraySum(vector<int>& nums, int k) {
         if (nums.size() < 2) return false;
-        k = abs(k);
-        if (!k) k = INT_MAX;
         int sum = nums[0];
         unordered_set<int> m;
         m.insert(0);
         for (int i = 1; i < nums.size(); ++i) {
             int temp = sum;
             sum += nums[i];
-            if (m.count(sum % k)) return true;
-            m.insert(temp % k);
+            if (m.count(k ? sum % k : sum)) return true;
+            m.insert(k ? temp % k : temp);
         }
         return false;
     }
@@ -47,3 +46,26 @@ public boolean checkSubarraySum(int[] nums, int k) {
     }
     return false;
 }
+
+
+Bug 
+[1, 2147483646]
+0
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        if (nums.size() < 2) return false;
+        k = abs(k);
+        if (!k) k = INT_MAX;
+        int sum = nums[0];
+        unordered_set<int> m;
+        m.insert(0);
+        for (int i = 1; i < nums.size(); ++i) {
+            int temp = sum;
+            sum += nums[i];
+            if (m.count(sum % k)) return true;
+            m.insert(temp % k);
+        }
+        return false;
+    }
+};

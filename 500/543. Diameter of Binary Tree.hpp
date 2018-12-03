@@ -38,3 +38,18 @@ private:
         return max(leftDepth, rightDepth) + 1;
     }
 };
+
+class Solution {
+    int decLen(TreeNode* root, int& res) {
+        if (!root) return -1;
+        int lLen = decLen(root->left, res), rLen = decLen(root->right, res);
+        res = max(res, 2 + lLen + rLen);
+        return max(lLen, rLen) + 1;
+    }
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        int res = 0;
+        decLen(root, res);
+        return res;
+    }
+};

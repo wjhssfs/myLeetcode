@@ -39,7 +39,6 @@ public:
 class Solution {
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
         vector<vector<int>> subs(1, vector<int>());
         for (int i = 0; i < nums.size(); i++) {
             int n = subs.size();
