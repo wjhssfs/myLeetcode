@@ -37,49 +37,14 @@
 class Solution {
 public:
     bool isCompleteTree(TreeNode* root) {
-        if (!root) return true;
-        vector<TreeNode*> curLevel, nextLevel;
-        curLevel.push_back(root);
-        bool isEnd = false;
-        while (curLevel.size()) {
-            nextLevel.clear();
-            for (int i = 0; i < curLevel.size(); ++i) {
-                if (!curLevel[i]->left) isEnd = true;
-                else if (!isEnd) nextLevel.push_back(curLevel[i]->left);
-                else return false;
-                if (!curLevel[i]->right) isEnd = true;
-                else if (!isEnd) nextLevel.push_back(curLevel[i]->right);
-                else return false;
-            }
-            swap(curLevel, nextLevel);
+        queue<TreeNode *> bfs;
+        bfs.push(root);
+        while (bfs.front()) {
+            bfs.push(bfs.front()->left);
+            bfs.push(bfs.front()->right);
+            bfs.pop();
         }
-        return true;
+        while (bfs.size() && !bfs.front()) bfs.pop();
+        return bfs.empty();
     }
 };
-
-// https://leetcode.com/articles/check-completeness-of-a-binary-tree/
-class Solution {
-    public boolean isCompleteTree(TreeNode root) {
-        List<ANode> nodes = new ArrayList();
-        nodes.add(new ANode(root, 1));
-        int i = 0;
-        while (i < nodes.size()) {
-            ANode anode = nodes.get(i++);
-            if (anode.node != null) {
-                nodes.add(new ANode(anode.node.left, anode.code * 2));
-                nodes.add(new ANode(anode.node.right, anode.code * 2 + 1));
-            }
-        }
-
-        return nodes.get(i-1).code == nodes.size();
-    }
-}
-
-class ANode {  // Annotated Node
-    TreeNode node;
-    int code;
-    ANode(TreeNode node, int code) {
-        this.node = node;
-        this.code = code;
-    }
-}
